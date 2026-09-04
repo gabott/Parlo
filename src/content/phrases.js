@@ -12,6 +12,7 @@ export const phrases = [
   { fr: "J'apprends le français.", en: "I am learning French.", category: "Se présenter", level: "A1" },
   { fr: "Je ne comprends pas.", en: "I don't understand.", category: "Se présenter", level: "A1" },
   { fr: "Pouvez-vous répéter, s'il vous plaît ?", en: "Can you repeat, please?", category: "Se présenter", level: "A1" },
+  { fr: "Bravo, Indira !", en: "Well done, Indira!", category: "Se présenter", level: "A1", featured: true },
 
   // --- Au restaurant ---
   { fr: "Une table pour deux, s'il vous plaît.", en: "A table for two, please.", category: "Au restaurant", level: "A1" },

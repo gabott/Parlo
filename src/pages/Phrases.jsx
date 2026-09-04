@@ -43,7 +43,8 @@ export default function Phrases() {
 
       <div className="phrase-list">
         {list.map((p, i) => (
-          <div key={i} className="phrase-card">
+          <div key={i} className={p.featured ? "phrase-card featured" : "phrase-card"}>
+            {p.featured && <span className="phrase-featured-icon" title="Featured phrase" aria-label="Featured phrase">★</span>}
             <div>
               <div className="phrase-fr">{p.fr}</div>
               <div className="phrase-en">{p.en}</div>

@@ -151,6 +151,22 @@ h1, h2, h3 { font-family: "Poppins", "Inter", sans-serif; line-height: 1.2; }
 }
 .speak-btn:hover { background: #ddd6fe; transform: scale(1.05); }
 
+.phrase-card.featured {
+  border-color: #f2b84b;
+  background: linear-gradient(110deg, #fffdf5, #fff8e7);
+  box-shadow: 0 8px 22px rgba(194, 137, 27, 0.16);
+  position: relative;
+}
+.phrase-featured-icon {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: #d99419;
+  font-size: 20px;
+  line-height: 1;
+}
+.phrase-card.featured > div:first-of-type { padding-left: 24px; }
+
 /* ---------- Page header banner (photo + title) ---------- */
 .page-header {
   position: relative;
