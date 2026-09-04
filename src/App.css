@@ -1,0 +1,512 @@
+/* ============================================================
+   Parlo — professional layout & theme
+   Fonts: Poppins (headings), Inter (body), Baloo 2 (brand)
+   Accent: purple #6d28d9
+   ============================================================ */
+
+:root {
+  --accent: #6d28d9;
+  --accent-2: #7c3aed;
+  --accent-soft: #ede9fe;
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --line: #e8e8f0;
+  --bg: #f6f6fb;
+  --card: #ffffff;
+  --male: #2563eb;
+  --female: #dc2626;
+  --ok: #16a34a;
+  --bad: #dc2626;
+  --shadow: 0 1px 2px rgba(16, 12, 40, 0.06), 0 8px 24px rgba(16, 12, 40, 0.06);
+  --shadow-lg: 0 12px 32px rgba(109, 40, 217, 0.18);
+  --radius: 16px;
+  --sidebar-w: 248px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.55;
+}
+
+h1, h2, h3 { font-family: "Poppins", "Inter", sans-serif; line-height: 1.2; }
+
+/* ---------- Layout ---------- */
+.layout { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: var(--sidebar-w);
+  background: linear-gradient(180deg, #4c1d95 0%, #6d28d9 60%, #7c3aed 100%);
+  color: #fff;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 40;
+}
+
+.brand {
+  display: flex; align-items: center; gap: 8px;
+  font-family: "Baloo 2", "Poppins", sans-serif;
+  font-size: 30px; font-weight: 800;
+  padding: 4px 10px 22px;
+}
+.brand-name { letter-spacing: 0.5px; }
+.brand-flag { font-size: 24px; }
+
+.nav { display: flex; flex-direction: column; gap: 5px; }
+.nav-item {
+  display: flex; align-items: center; gap: 13px;
+  background: transparent; color: #e9d5ff;
+  border: none; text-align: left;
+  padding: 12px 15px; border-radius: 12px;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px; font-weight: 500; cursor: pointer;
+  transition: background 0.15s, color 0.15s, transform 0.1s;
+}
+.nav-item:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+.nav-item.active { background: #fff; color: var(--accent); font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+.nav-icon { font-size: 18px; width: 22px; text-align: center; }
+
+.sidebar-foot {
+  margin-top: auto; padding: 16px 10px 0;
+  font-size: 12px; color: #c4b5fd; letter-spacing: 0.3px;
+}
+
+/* Main area */
+.main-wrap { flex: 1; margin-left: var(--sidebar-w); display: flex; flex-direction: column; }
+
+.topbar {
+  display: none;
+  align-items: center; gap: 12px;
+  background: var(--card); border-bottom: 1px solid var(--line);
+  padding: 12px 16px; position: sticky; top: 0; z-index: 30;
+}
+.menu-btn { font-size: 22px; background: none; border: none; cursor: pointer; color: var(--accent); }
+.topbar-title { font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 20px; }
+
+/* Center the content in a comfortable column that fills wide screens */
+.main {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 40px 48px 64px;
+}
+
+/* ---------- Generic pieces ---------- */
+.page-title { font-size: 30px; margin: 0 0 6px; }
+.page-sub { color: var(--muted); margin: 0 0 24px; font-size: 15.5px; }
+.section-h { font-size: 21px; margin: 30px 0 14px; }
+
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+.badge {
+  background: var(--accent); color: #fff; font-weight: 700;
+  font-size: 12px; padding: 3px 10px; border-radius: 20px; margin-right: 8px;
+}
+.tag {
+  display: inline-block; background: #f1f1f7; color: var(--muted);
+  font-size: 12px; padding: 3px 10px; border-radius: 20px; font-weight: 500;
+}
+.tag.level { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+
+.btn {
+  display: inline-block; border: none; border-radius: 11px;
+  padding: 11px 20px; font-family: "Poppins", sans-serif;
+  font-size: 14.5px; font-weight: 600;
+  cursor: pointer; text-decoration: none; text-align: center;
+  background: #f1f1f7; color: var(--ink);
+  transition: transform 0.1s, box-shadow 0.15s, background 0.15s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn.primary { background: var(--accent); color: #fff; box-shadow: 0 6px 16px rgba(109,40,217,0.28); }
+.btn.primary:hover { background: var(--accent-2); }
+
+.link {
+  background: none; border: none; color: var(--accent);
+  font: inherit; font-weight: 600; cursor: pointer; padding: 0; text-decoration: underline;
+}
+.back {
+  background: none; border: none; color: var(--accent);
+  cursor: pointer; font-size: 14.5px; font-weight: 600; margin-bottom: 10px; padding: 0;
+}
+.empty { color: var(--muted); }
+
+/* Speak button */
+.speak-btn {
+  background: var(--accent-soft); color: var(--accent);
+  border: none; border-radius: 10px; padding: 8px 12px;
+  font-size: 16px; cursor: pointer; flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+}
+.speak-btn:hover { background: #ddd6fe; transform: scale(1.05); }
+
+/* ---------- Page header banner (photo + title) ---------- */
+.page-header {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  min-height: 190px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+.page-header-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(120deg, rgba(76,29,149,0.88) 0%, rgba(109,40,217,0.62) 55%, rgba(124,58,237,0.25) 100%);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 28px 34px; color: #fff;
+}
+.page-header-title { margin: 0; font-size: 32px; display: flex; align-items: center; gap: 12px; }
+.page-header-emoji { font-size: 30px; }
+.page-header-sub { margin: 10px 0 0; font-size: 16px; opacity: 0.96; max-width: 620px; }
+
+/* ---------- Dashboard hero ---------- */
+.hero {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 26px;
+  box-shadow: var(--shadow);
+}
+.hero-inner {
+  background: linear-gradient(120deg, rgba(44,16,99,0.92) 0%, rgba(109,40,217,0.72) 55%, rgba(147,51,234,0.35) 100%);
+  color: #fff; padding: 42px 44px;
+}
+.hero h1 { margin: 0 0 10px; font-size: 38px; font-family: "Baloo 2", "Poppins", sans-serif; }
+.hero-sub { margin: 0 0 18px; font-size: 17px; opacity: 0.96; max-width: 640px; }
+.hero-current {
+  background: rgba(255, 255, 255, 0.16); border-radius: 12px;
+  padding: 11px 16px; display: inline-block; font-size: 14.5px;
+  backdrop-filter: blur(2px);
+}
+.hero-current .badge { background: #fff; color: var(--accent); }
+.hero .cando { margin: 16px 0 0; font-size: 15.5px; }
+.hero-cta {
+  margin-top: 20px; background: #fff; color: var(--accent);
+  font-size: 15.5px; padding: 12px 26px; box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+.hero-cta:hover { background: #f5f3ff; }
+
+/* ---------- Section cards (image tiles) ---------- */
+.section-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+}
+.section-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+  cursor: pointer; text-align: left; padding: 0;
+  transition: transform 0.14s, box-shadow 0.14s;
+  display: flex; flex-direction: column;
+}
+.section-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.section-img {
+  height: 120px; background-size: cover; background-position: center;
+  position: relative;
+}
+.section-img::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(76,29,149,0.35) 100%);
+}
+.section-badge {
+  position: absolute; top: 12px; left: 12px; z-index: 1;
+  background: rgba(255,255,255,0.92); border-radius: 12px;
+  width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
+  font-size: 22px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.section-body { padding: 16px 18px; }
+.section-name { font-family: "Poppins", sans-serif; font-weight: 700; font-size: 18px; }
+.section-count { color: var(--muted); font-size: 14.5px; margin-top: 2px; }
+.section-count strong { color: var(--accent); font-size: 16px; }
+
+.plan-card h2 { margin-top: 0; }
+.plan-list { margin: 8px 0 0; padding-left: 22px; line-height: 2.1; }
+
+/* ---------- Controls (search / select / pills) ---------- */
+.controls { display: flex; gap: 12px; margin-bottom: 22px; flex-wrap: wrap; }
+.search, .select {
+  padding: 12px 16px; border: 1px solid var(--line);
+  border-radius: 12px; font-size: 15px; background: #fff; font-family: inherit;
+}
+.search { flex: 1; min-width: 220px; }
+.search:focus, .select:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+
+.pills { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 22px; }
+.pill {
+  background: #fff; border: 1px solid var(--line); color: var(--ink);
+  border-radius: 22px; padding: 8px 16px; font-size: 14px; cursor: pointer;
+  font-family: "Poppins", sans-serif; font-weight: 500; transition: all 0.12s;
+}
+.pill:hover { border-color: var(--accent); color: var(--accent); }
+.pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.hint-m { color: var(--male); font-weight: 600; }
+.hint-f { color: var(--female); font-weight: 600; }
+
+/* ---------- Vocabulary ---------- */
+.vocab-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+}
+.vocab-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 16px 18px; box-shadow: var(--shadow);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.vocab-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.vocab-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.vocab-fr { font-family: "Poppins", sans-serif; font-size: 19px; font-weight: 700; }
+.vocab-fr.male { color: var(--male); }
+.vocab-fr.female { color: var(--female); }
+.vocab-en { color: var(--muted); margin: 4px 0 12px; }
+.vocab-meta { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ---------- Grammar ---------- */
+.topic-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.topic-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 20px; box-shadow: var(--shadow);
+  text-align: left; cursor: pointer; transition: transform 0.12s, box-shadow 0.12s;
+}
+.topic-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.topic-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.topic-title { font-family: "Poppins", sans-serif; font-size: 17px; font-weight: 700; }
+.topic-summary { color: var(--muted); font-size: 14.5px; }
+
+.explain-line { margin: 0 0 6px; line-height: 1.7; }
+.example-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
+}
+.example-row:last-child { border-bottom: none; }
+.example-fr { font-weight: 600; font-size: 16px; }
+.example-en { color: var(--muted); font-size: 14px; }
+
+.drill-q { font-weight: 600; margin: 0 0 12px; font-size: 16px; }
+.drill-options { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Shared option buttons (Quiz + Grammar drill) */
+.option {
+  background: #fff; border: 1px solid var(--line); border-radius: 11px;
+  padding: 11px 18px; font-size: 15px; cursor: pointer; font-family: inherit;
+  transition: border-color 0.12s, background 0.12s;
+}
+.option:hover { border-color: var(--accent); }
+.option.correct { background: #dcfce7; border-color: var(--ok); color: #166534; }
+.option.wrong { background: #fee2e2; border-color: var(--bad); color: #991b1b; }
+.feedback { margin: 14px 0 0; font-weight: 600; }
+.feedback.good { color: var(--ok); }
+.feedback.bad { color: var(--bad); }
+
+/* ---------- Phrases ---------- */
+.phrase-list { display: flex; flex-direction: column; gap: 12px; }
+.phrase-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 16px 20px; box-shadow: var(--shadow);
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.phrase-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.phrase-fr { font-family: "Poppins", sans-serif; font-size: 17px; font-weight: 600; }
+.phrase-en { color: var(--muted); font-size: 14.5px; }
+.phrase-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+/* ---------- Videos ---------- */
+.video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.video-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+  display: flex; flex-direction: column; transition: transform 0.12s, box-shadow 0.12s;
+}
+.video-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.video-embed { aspect-ratio: 16 / 9; background: #000; }
+.video-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
+.video-body { padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.video-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.video-channel { font-family: "Poppins", sans-serif; font-weight: 700; color: var(--accent); font-size: 14px; }
+.video-title { font-size: 16.5px; font-weight: 600; }
+.video-note { color: var(--muted); font-size: 14.5px; flex: 1; }
+.video-body .btn { margin-top: 8px; align-self: flex-start; }
+
+/* ---------- Exam ---------- */
+.exam-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 22px; }
+.exam-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 20px; box-shadow: var(--shadow);
+  display: flex; align-items: center; gap: 16px;
+}
+.exam-icon { font-size: 30px; }
+.exam-name { font-size: 16.5px; }
+.exam-detail { color: var(--muted); font-size: 14.5px; }
+.soon ul { margin: 8px 0 0; padding-left: 22px; line-height: 2; color: var(--muted); }
+
+/* ---------- Practice sub-tabs ---------- */
+.subtabs { display: flex; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; }
+.subtab {
+  background: #fff; border: 1px solid var(--line); border-radius: 12px;
+  padding: 10px 18px; font-size: 15px; cursor: pointer;
+  font-family: "Poppins", sans-serif; font-weight: 500;
+}
+.subtab:hover { border-color: var(--accent); }
+.subtab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ---------- Practice activities (Flashcards / Unscramble / Quiz) ---------- */
+.panel {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow);
+  max-width: 640px;
+}
+.panel.center { text-align: center; }
+.counter { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+
+/* Flashcard flip button (scoped so it doesn't clash with generic .card) */
+.panel .card {
+  width: 100%; min-height: 190px; margin: 0 0 16px;
+  border: 2px solid var(--accent-soft); border-radius: 16px;
+  background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+  cursor: pointer; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px; padding: 24px;
+  transition: border-color 0.15s, transform 0.1s;
+}
+.panel .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.card-fr { font-family: "Poppins", sans-serif; font-size: 30px; font-weight: 700; color: var(--accent); }
+.card-en { font-size: 24px; font-weight: 700; }
+.card-example { color: var(--muted); margin-top: 8px; font-style: italic; }
+.card-hint { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+.row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+
+.build-area {
+  min-height: 60px; border: 2px dashed var(--line); border-radius: 12px;
+  padding: 14px; margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+}
+.placeholder { color: #9ca3af; }
+.word-pool { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+.chip {
+  background: #fff; border: 1px solid var(--line); border-radius: 10px;
+  padding: 9px 15px; font-size: 15px; cursor: pointer; font-family: inherit;
+  transition: border-color 0.12s, transform 0.1s;
+}
+.chip:hover { border-color: var(--accent); transform: translateY(-1px); }
+.chip.picked { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; cursor: default; }
+
+.question { font-family: "Poppins", sans-serif; font-size: 20px; margin: 0 0 18px; }
+.options { display: flex; flex-direction: column; gap: 10px; }
+.score-big { font-family: "Poppins", sans-serif; font-size: 48px; font-weight: 800; color: var(--accent); margin: 10px 0; }
+
+/* ---------- Basics: Alphabet ---------- */
+.letter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.letter-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.letter-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.letter-top { display: flex; align-items: center; justify-content: space-between; }
+.letter-big { font-family: "Poppins", sans-serif; font-size: 34px; font-weight: 800; color: var(--accent); }
+.letter-big.accent { font-size: 30px; }
+.letter-name { color: var(--muted); font-size: 14px; margin: 2px 0 10px; }
+.letter-ex, .letter-ex-static { display: flex; align-items: center; gap: 8px; }
+.letter-ex-static { flex-direction: column; align-items: flex-start; gap: 0; }
+.letter-ex-fr { display: block; font-weight: 600; }
+.letter-ex-en { display: block; color: var(--muted); font-size: 13px; }
+
+/* ---------- Basics: Numbers ---------- */
+.num-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; margin-bottom: 8px; }
+.num-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 14px; box-shadow: var(--shadow);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.num-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.num-value { font-family: "Poppins", sans-serif; font-size: 26px; font-weight: 800; color: var(--accent); }
+.num-fr { font-weight: 600; text-align: center; }
+.note-card { background: linear-gradient(135deg, #faf5ff, #f3e8ff); border-color: var(--accent-soft); }
+.note-card h3 { margin: 0 0 10px; font-family: "Poppins", sans-serif; }
+
+/* ---------- Basics: Top 100 words ---------- */
+.common-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.common-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 12px; padding: 12px 14px; box-shadow: var(--shadow);
+  display: flex; align-items: center; gap: 12px;
+}
+.common-rank {
+  flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+}
+.common-body { flex: 1; display: flex; flex-direction: column; }
+.common-fr { font-family: "Poppins", sans-serif; font-weight: 700; font-size: 16px; }
+.common-en { color: var(--muted); font-size: 13.5px; }
+
+/* ---------- Basics: Days & Months ---------- */
+.word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 8px; }
+.word-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 16px 14px; box-shadow: var(--shadow);
+  display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.word-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.word-emoji { font-size: 26px; line-height: 1; }
+.word-fr { font-family: "Poppins", sans-serif; font-weight: 700; font-size: 17px; text-transform: capitalize; }
+.word-en { color: var(--muted); font-size: 13.5px; }
+.word-card .speak-btn { margin-top: 6px; }
+.phrase-row {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 14px 18px; box-shadow: var(--shadow);
+  display: flex; align-items: center; gap: 14px;
+}
+.phrase-body { display: flex; flex-direction: column; }
+
+/* ---------- Basics: Question words ---------- */
+.q-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.q-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.q-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.q-top { display: flex; align-items: center; gap: 10px; }
+.q-word { font-family: "Baloo 2", sans-serif; font-size: 24px; font-weight: 700; color: var(--accent); }
+.q-en { color: var(--ink); font-weight: 600; margin-top: 2px; }
+.q-note { color: var(--muted); font-size: 13px; margin: 6px 0 12px; font-style: italic; }
+.q-examples { display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--line); padding-top: 12px; }
+.q-example { display: flex; align-items: center; gap: 12px; }
+
+/* ---------- Overlay (mobile menu) ---------- */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 35; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .section-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 860px) {
+  .sidebar { transform: translateX(-100%); transition: transform 0.22s; }
+  .menu-open .sidebar { transform: translateX(0); }
+  .main-wrap { margin-left: 0; }
+  .topbar { display: flex; }
+  .menu-open .overlay { display: block; }
+  .main { padding: 22px; }
+  .hero-inner { padding: 30px 24px; }
+  .hero h1 { font-size: 30px; }
+  .section-grid { grid-template-columns: 1fr; }
+  .exam-grid { grid-template-columns: 1fr; }
+  .page-header-title { font-size: 26px; }
+}
