@@ -6,6 +6,7 @@
 //  things beginner-friendly.
 // ============================================================
 import { useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import Sidebar from "./Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Basics from "./pages/Basics";
@@ -56,6 +57,7 @@ export default function App() {
 
       {/* Dark overlay behind the mobile menu */}
       {menuOpen && <div className="overlay" onClick={() => setMenuOpen(false)} />}
+      <Analytics />
     </div>
   );
 }
