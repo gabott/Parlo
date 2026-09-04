@@ -21,6 +21,7 @@ import {
   dateNote,
 } from "../content/daysMonths";
 import { questionWords, questionNote } from "../content/questionWords";
+import { colors, colorNote } from "../content/colors";
 
 const TABS = [
   { id: "alphabet", label: "🔤 Alphabet" },
@@ -28,6 +29,7 @@ const TABS = [
   { id: "common", label: "🔥 Top 100 words" },
   { id: "days", label: "📅 Days & Months" },
   { id: "questions", label: "❓ Question words" },
+  { id: "colors", label: "🎨 Colors" },
 ];
 
 export default function Basics() {
@@ -59,6 +61,7 @@ export default function Basics() {
       {tab === "common" && <CommonTab />}
       {tab === "days" && <DaysTab />}
       {tab === "questions" && <QuestionsTab />}
+      {tab === "colors" && <ColorsTab />}
     </div>
   );
 }
@@ -153,6 +156,91 @@ function NumberCard({ n, fr }) {
       <div className="num-value">{n}</div>
       <div className="num-fr">{fr}</div>
       <SpeakButton text={fr} />
+    </div>
+  );
+}
+
+// ---------- Colors ----------
+function ColorsTab() {
+  const [targetIndex, setTargetIndex] = useState(0);
+  const [result, setResult] = useState(null);
+  const target = colors[targetIndex];
+
+  function chooseColor(color) {
+    const correct = color.fr === target.fr;
+    setResult(correct ? "correct" : "wrong");
+    if (correct) {
+      setTimeout(() => {
+        setTargetIndex((targetIndex + 1) % colors.length);
+        setResult(null);
+      }, 500);
+    }
+  }
+
+  return (
+    <div>
+      <p className="page-sub">
+        Learn the colors, then notice how adjectives change with feminine nouns.
+      </p>
+
+      <div className="color-scene" aria-label="Illustrated French room with colorful objects">
+        <div className="scene-window"><span className="scene-sun" /></div>
+        <div className="scene-shelf"><span className="scene-plant" /><span className="scene-book" /></div>
+        <div className="scene-table"><span className="scene-vase" /><span className="scene-apple" /></div>
+        <div className="scene-bag" />
+        <div className="scene-caption">Une chambre colorée</div>
+      </div>
+
+      <div className="color-grid">
+        {colors.map((color) => (
+          <div className="color-card" key={color.fr}>
+            <span className="color-swatch" style={{ backgroundColor: color.hex }} />
+            <div className="color-copy">
+              <strong>{color.fr}</strong>
+              <span>{color.en}</span>
+              <small>{color.noun}</small>
+            </div>
+            <SpeakButton text={color.fr} />
+          </div>
+        ))}
+      </div>
+
+      <h2 className="section-h">Say the whole sentence</h2>
+      <div className="color-phrase-grid">
+        {colors.slice(0, 6).map((color) => (
+          <div className="color-phrase" key={color.phrase}>
+            <span>{color.phrase}</span>
+            <SpeakButton text={color.phrase} />
+          </div>
+        ))}
+      </div>
+
+      <div className="color-practice card">
+        <div>
+          <span className="card-hint">Quick check</span>
+          <h3>Find <strong>{target.en}</strong></h3>
+          <p>Which swatch matches <strong>{target.fr}</strong>?</p>
+        </div>
+        <div className="color-options">
+          {colors.slice(0, 6).map((color) => (
+            <button
+              key={color.fr}
+              className={result && color.fr === target.fr ? "color-option correct" : "color-option"}
+              onClick={() => chooseColor(color)}
+              aria-label={color.fr}
+            >
+              <span className="color-swatch" style={{ backgroundColor: color.hex }} />
+            </button>
+          ))}
+        </div>
+        {result === "correct" && <p className="feedback good">Très bien !</p>}
+        {result === "wrong" && <p className="feedback bad">Essaie encore.</p>}
+      </div>
+
+      <div className="card note-card">
+        <h3>💡 Agreement tip</h3>
+        <p>{colorNote}</p>
+      </div>
     </div>
   );
 }

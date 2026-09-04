@@ -19,6 +19,7 @@ import { numbers0to20, numbersTens, numbersTricky } from "../src/content/numbers
 import { commonWords } from "../src/content/commonWords.js";
 import { days, months, seasons, datePhrases } from "../src/content/daysMonths.js";
 import { questionWords } from "../src/content/questionWords.js";
+import { colors } from "../src/content/colors.js";
 import { audioKey } from "../src/audioKey.js";
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync } from "node:fs";
@@ -75,6 +76,10 @@ for (const p of datePhrases) texts.add(p.fr);
 for (const q of questionWords) {
   texts.add(q.fr.replace(/ \/ .*$/, ""));
   for (const ex of q.examples) texts.add(ex.fr);
+}
+for (const c of colors) {
+  texts.add(c.fr);
+  texts.add(c.phrase);
 }
 
 // Remove the "…" placeholder so the voice doesn't stumble.
