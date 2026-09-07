@@ -11,7 +11,7 @@ import Phrases from './pages/Phrases.jsx'
 import Practice from './pages/Practice.jsx'
 import Videos from './pages/Videos.jsx'
 import Exam from './pages/Exam.jsx'
-import LearnPreview from './pages/LearnPreview.jsx'
+import LearnPreview from './pages/LearnPreview'
 import NotFound from './pages/NotFound.jsx'
 
 const router = createBrowserRouter([

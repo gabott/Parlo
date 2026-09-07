@@ -549,6 +549,11 @@ h1, h2, h3 { font-family: "Poppins", "Inter", sans-serif; line-height: 1.2; }
 
 .learn-preview .badge { display: inline-block; margin-bottom: 12px; background: #fff; color: var(--accent); }
 .learn-preview-note { margin: 18px 0 0; }
+.learn-preview-grid { display: grid; gap: 18px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.learn-preview-grid .v2-card { margin: 0; }
+.learn-preview-kicker { color: var(--v2-color-brand-700); font-size: 0.875rem; font-weight: 700; margin: 0; text-transform: uppercase; }
+.learn-preview-controls { display: grid; gap: var(--v2-space-4); }
+.learn-preview-actions { display: flex; flex-wrap: wrap; gap: var(--v2-space-3); }
 .not-found { margin-top: 10vh; }
 .not-found-code { color: var(--accent-soft); font-family: "Poppins", sans-serif; font-size: clamp(70px, 16vw, 150px); font-weight: 800; line-height: 0.9; }
 
@@ -566,6 +571,7 @@ h1, h2, h3 { font-family: "Poppins", "Inter", sans-serif; line-height: 1.2; }
   .hero-inner { padding: 30px 24px; }
   .hero h1 { font-size: 30px; }
   .section-grid { grid-template-columns: 1fr; }
+  .learn-preview-grid { grid-template-columns: 1fr; }
   .exam-grid { grid-template-columns: 1fr; }
   .page-header-title { font-size: 26px; }
   .color-practice { align-items: flex-start; flex-direction: column; }

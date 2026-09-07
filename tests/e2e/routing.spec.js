@@ -41,6 +41,24 @@ test("learn preview is reachable and preserves the current Library", async ({ pa
   await expect(page.getByRole("heading", { name: /Basics/i })).toBeVisible();
 });
 
+test("learn preview exposes accessible V2 progress and feedback", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/learn");
+
+  const progress = page.getByRole("progressbar", { name: "Preview foundation" });
+  await expect(progress).toHaveAttribute("aria-valuenow", "2");
+  await expect(progress).toHaveAttribute("aria-valuetext", "67%");
+
+  await page.getByRole("button", { name: "Check readiness" }).focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("status")).toContainText("Ready to learn");
+
+  const transitionDuration = await page.locator(".v2-progress__bar").evaluate(
+    (element) => getComputedStyle(element).transitionDuration,
+  );
+  expect(Number.parseFloat(transitionDuration)).toBeLessThan(0.001);
+});
+
 test("unknown routes show a recoverable not-found page", async ({ page }) => {
   await page.goto("/this-page-does-not-exist");
   await expect(page.getByRole("heading", { name: "Page not found" })).toBeVisible();
