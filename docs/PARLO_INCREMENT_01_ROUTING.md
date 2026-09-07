@@ -1,7 +1,16 @@
 # Parlo Increment 1: URL Routing and Portal Preservation
 
-**Status:** Implemented locally; Vercel Preview verification pending  
+**Status:** Implemented and verified in production  
 **Date:** 2026-09-07
+
+## Production verification
+
+The GitHub-connected Vercel project deployed commit `56a453d`. Live headless-browser checks confirmed direct loading and rendered page titles/headings for:
+
+- `/learn`
+- `/library/vocabulary`
+- `/tef`
+- An unknown route using the application 404 page
 
 ## Implemented
 
