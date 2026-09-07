@@ -108,7 +108,7 @@ for (const text of texts) {
     );
     console.log("done");
     made++;
-  } catch (e) {
+  } catch {
     console.log("FAILED (needs internet + edge-tts installed)");
   }
 }

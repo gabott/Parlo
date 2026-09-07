@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 .vercel
 .env*
+
+# Playwright test artifacts
+playwright-report/
+test-results/
