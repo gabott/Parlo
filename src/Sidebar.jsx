@@ -1,41 +1,37 @@
-// ============================================================
-//  Sidebar — the left navigation menu
-// ------------------------------------------------------------
-//  Shows the app name and a button for each section. The active
-//  section is highlighted. Clicking a button tells App.jsx to
-//  switch pages (via the "onNavigate" function passed in).
-// ============================================================
+import { NavLink } from "react-router-dom";
 
-// The list of sections. Add one here to add a new menu item.
 const NAV = [
-  { id: "dashboard", label: "Dashboard", icon: "🏠" },
-  { id: "basics", label: "Basics", icon: "🧱" },
-  { id: "vocabulary", label: "Vocabulary", icon: "📚" },
-  { id: "grammar", label: "Grammar", icon: "✏️" },
-  { id: "phrases", label: "Phrases", icon: "💬" },
-  { id: "practice", label: "Practice", icon: "🎯" },
-  { id: "videos", label: "Videos", icon: "▶️" },
-  { id: "exam", label: "TEF Exam", icon: "🇨🇦" },
+  { to: "/", label: "Dashboard", icon: "🏠", end: true },
+  { to: "/learn", label: "Learn", icon: "🧭" },
+  { to: "/library/basics", label: "Basics", icon: "🧱" },
+  { to: "/library/vocabulary", label: "Vocabulary", icon: "📚" },
+  { to: "/library/grammar", label: "Grammar", icon: "✏️" },
+  { to: "/library/phrases", label: "Phrases", icon: "💬" },
+  { to: "/library/practice", label: "Practice", icon: "🎯" },
+  { to: "/library/videos", label: "Videos", icon: "▶️" },
+  { to: "/tef", label: "TEF Exam", icon: "🇨🇦" },
 ];
 
-export default function Sidebar({ page, onNavigate }) {
+export default function Sidebar({ onNavigate }) {
   return (
-    <aside className="sidebar">
-      <div className="brand">
+    <aside id="primary-navigation" className="sidebar">
+      <NavLink className="brand" to="/" onClick={onNavigate} aria-label="Parlo home">
         <span className="brand-name">Parlo</span>
-        <span className="brand-flag">🇫🇷</span>
-      </div>
+        <span className="brand-flag" aria-hidden="true">🇫🇷</span>
+      </NavLink>
 
-      <nav className="nav">
+      <nav className="nav" aria-label="Primary navigation">
         {NAV.map((item) => (
-          <button
-            key={item.id}
-            className={page === item.id ? "nav-item active" : "nav-item"}
-            onClick={() => onNavigate(item.id)}
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.end}
+            className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+            onClick={onNavigate}
           >
-            <span className="nav-icon">{item.icon}</span>
+            <span className="nav-icon" aria-hidden="true">{item.icon}</span>
             <span>{item.label}</span>
-          </button>
+          </NavLink>
         ))}
       </nav>
 

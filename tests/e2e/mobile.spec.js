@@ -7,11 +7,11 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("mobile menu opens, navigates, closes, and content fits the viewport", async ({ page }) => {
-  const menu = page.getByRole("button", { name: "☰" });
+  const menu = page.getByRole("button", { name: "Open navigation" });
   await expect(menu).toBeVisible();
   await menu.click();
 
-  await page.locator(".nav").getByRole("button", { name: /Vocabulary/i }).click();
+  await page.locator(".nav").getByRole("link", { name: /Vocabulary/i }).click();
   await expect(page.getByRole("heading", { name: /Vocabulary/i })).toBeVisible();
   await expect(page.locator(".layout")).not.toHaveClass(/menu-open/);
 
@@ -22,7 +22,7 @@ test("mobile menu opens, navigates, closes, and content fits the viewport", asyn
 });
 
 test("mobile overlay closes the open navigation", async ({ page }) => {
-  await page.getByRole("button", { name: "☰" }).click();
+  await page.getByRole("button", { name: "Open navigation" }).click();
   await expect(page.locator(".layout")).toHaveClass(/menu-open/);
 
   await page.locator(".overlay").click({ position: { x: 380, y: 100 } });

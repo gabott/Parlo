@@ -7,8 +7,21 @@ import { grammar } from "../content/grammar";
 import { phrases } from "../content/phrases";
 import { videos } from "../content/videos";
 import { imageUrl } from "./pageImages";
+import { useNavigate } from "react-router-dom";
 
-export default function Dashboard({ onNavigate }) {
+const SECTION_PATHS = {
+  basics: "/library/basics",
+  vocabulary: "/library/vocabulary",
+  grammar: "/library/grammar",
+  phrases: "/library/phrases",
+  practice: "/library/practice",
+  videos: "/library/videos",
+  exam: "/tef",
+};
+
+export default function Dashboard() {
+  const navigate = useNavigate();
+  const onNavigate = (page) => navigate(SECTION_PATHS[page]);
   // Section cards with a photo, count, and where they lead.
   const sections = [
     { label: "Basics", value: 5, unit: "starters", page: "basics", icon: "🧱", img: "basics.jpg" },

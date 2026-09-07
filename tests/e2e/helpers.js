@@ -25,6 +25,6 @@ export async function preparePage(page) {
 }
 
 export async function openSection(page, name, expectedHeading = name) {
-  await page.locator(".nav").getByRole("button", { name: new RegExp(name, "i") }).click();
+  await page.locator(".nav").getByRole("link", { name: new RegExp(name, "i") }).click();
   await expect(page.getByRole("heading", { name: expectedHeading, exact: false })).toBeVisible();
 }
