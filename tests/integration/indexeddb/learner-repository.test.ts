@@ -14,8 +14,15 @@ describe("IndexedDB learner repository", () => {
     const repo = repository(); const { profile, enrollment } = await repo.startA1();
     const input = { learnerId: profile.learnerId, enrollmentId: enrollment.id, sessionId: "session.test", lessonId: "lesson.greetings", activityId: "activity.meaning", itemId: "item.one", response: "Bonjour", correct: true, idempotencyKey: "submission-one" };
     const first = await repo.submitAttempt(input); const duplicate = await repo.submitAttempt(input);
-    expect(first.progress).toMatchObject({ attemptCount: 1, correctCount: 1 }); expect(duplicate.duplicate).toBe(true);
+    expect(first.progress).toMatchObject({ attemptCount: 1, correctCount: 1, currentStep: 0, furthestStep: 0 }); expect(duplicate.duplicate).toBe(true);
     expect((await repo.exportProgress()).attempts).toHaveLength(1);
+  });
+  it("persists an exact lesson position and durable completion", async () => {
+    const repo = repository(); await repo.startA1();
+    expect(await repo.saveLessonPosition("lesson.greetings", 4)).toMatchObject({ currentStep: 4, furthestStep: 4, status: "in_progress" });
+    expect(await repo.saveLessonPosition("lesson.greetings", 2)).toMatchObject({ currentStep: 2, furthestStep: 4 });
+    expect(await repo.completeLesson("lesson.greetings")).toMatchObject({ currentStep: 7, furthestStep: 7, status: "completed" });
+    expect(await repo.getLessonProgress("lesson.greetings")).toMatchObject({ currentStep: 7, furthestStep: 7, status: "completed" });
   });
   it("preserves an attempt and marks progress for recalculation when projection fails", async () => {
     const repo = new IndexedDbLearnerRepository(`parlo-test-${crypto.randomUUID()}`, () => { throw new Error("projection failed"); });

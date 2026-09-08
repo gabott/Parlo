@@ -7,6 +7,8 @@ export interface LearnerRepository {
   endSession(sessionId: string): Promise<void>;
   submitAttempt(input: AttemptInput): Promise<{ attempt: Attempt; progress: LessonProgress; duplicate: boolean }>;
   getLessonProgress(lessonId: string): Promise<LessonProgress | undefined>;
+  saveLessonPosition(lessonId: string, currentStep: number): Promise<LessonProgress>;
+  completeLesson(lessonId: string): Promise<LessonProgress>;
   getAttemptHistory(itemId: string): Promise<AttemptHistorySummary | undefined>;
   saveDraft(itemId: string, value: string): Promise<DraftResponse>;
   getDraft(itemId: string): Promise<DraftResponse | undefined>;

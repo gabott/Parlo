@@ -28,3 +28,12 @@ test("mobile overlay closes the open navigation", async ({ page }) => {
   await page.locator(".overlay").click({ position: { x: 380, y: 100 } });
   await expect(page.locator(".layout")).not.toHaveClass(/menu-open/);
 });
+
+test("Lesson 1 player remains usable without horizontal overflow", async ({ page }) => {
+  await page.goto("/learn/a1/unit/first-contact/lesson/greetings");
+  await expect(page.getByRole("heading", { name: "A morning at language school" })).toBeVisible();
+  await expect(page.getByRole("list", { name: "Lesson steps" })).toBeVisible();
+  await page.getByRole("button", { name: "They are arriving" }).click();
+  await expect(page.getByRole("button", { name: /Continue to Notice/ })).toBeEnabled();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBe(false);
+});

@@ -79,8 +79,13 @@ test("Lesson 1 review flow presents context, audio, and explanatory feedback", a
   await page.goto("/learn/a1/unit/first-contact/lesson/greetings");
   await expect(page.getByRole("heading", { name: "Greetings and farewells" })).toBeVisible();
   await expect(page.getByRole("img", { name: /Sofia and Ira greet each other/ })).toBeVisible();
-  await page.getByRole("button", { name: "Replay with transcript" }).click();
-  await expect(page.getByRole("button", { name: "Play Sofia saying Bonjour !", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Show French" }).click();
+  await expect(page.getByRole("button", { name: "Play Sofia's line", exact: true }).first()).toBeVisible();
+  await page.getByRole("button", { name: "They are arriving" }).click();
+  await page.getByRole("button", { name: /Continue to Notice/ }).click();
+  await page.getByRole("group", { name: /Daytime: you are entering/ }).getByRole("button", { name: "Bonjour !" }).click();
+  await page.getByRole("group", { name: /Evening: you are leaving/ }).getByRole("button", { name: "Bonne soirée !" }).click();
+  await page.getByRole("button", { name: /Continue to Choose/ }).click();
   const firstPractice = page.getByRole("group", { name: "It is 9:00 a.m. You greet your teacher." });
   await firstPractice.getByRole("button", { name: "Bonsoir !" }).click();
   await expect(firstPractice.getByRole("alert")).toContainText("evening greeting");
@@ -91,20 +96,59 @@ test("Lesson 1 review flow presents context, audio, and explanatory feedback", a
 });
 
 test("complete Lesson 1 exposes listening, building, speaking, and exit stages", async ({ page }) => {
+  await page.goto("/learn/a1");
+  await page.getByRole("button", { name: "Start A1" }).click();
   await page.goto("/learn/a1/unit/first-contact/lesson/greetings");
+  await page.getByRole("button", { name: "They are arriving" }).click();
+  await page.getByRole("button", { name: /Continue to Notice/ }).click();
+  await page.getByRole("group", { name: /Daytime: you are entering/ }).getByRole("button", { name: "Bonjour !" }).click();
+  await page.getByRole("group", { name: /Evening: you are leaving/ }).getByRole("button", { name: "Bonne soirée !" }).click();
+  await page.getByRole("button", { name: /Continue to Choose/ }).click();
+  for (const item of [
+    ["It is 9:00 a.m. You greet your teacher.", "Bonjour !"], ["You leave a store.", "Au revoir !"],
+    ["You greet a close friend informally.", "Salut !"], ["It is evening and you enter a restaurant.", "Bonsoir !"],
+  ]) await page.getByRole("group", { name: item[0] }).getByRole("button", { name: item[1] }).click();
+  await page.getByRole("button", { name: /Continue to Listen/ }).click();
   await expect(page.getByRole("heading", { name: "Hear the difference" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Play the hidden French expression", exact: true })).toHaveCount(5);
-  await expect(page.getByRole("button", { name: "Play the hidden French expression slowly" })).toHaveCount(5);
-  await expect(page.getByRole("heading", { name: "Put the phrase together" })).toBeVisible();
-  const builder = page.locator(".sentence-builder").first();
-  await builder.getByRole("button", { name: "Bonne" }).click();
-  await builder.getByRole("button", { name: "journée" }).click();
-  await builder.getByRole("button", { name: "!" }).click();
-  await builder.getByRole("button", { name: "Check sentence" }).click();
-  await expect(builder.getByRole("status")).toContainText("Bonne journée");
+  const listeningAnswers = ["Bonjour !", "À demain !", "Bonne soirée !", "Salut !"];
+  for (let index = 0; index < listeningAnswers.length; index += 1) await page.locator(".listening-activity").nth(index).getByRole("button", { name: listeningAnswers[index] }).click();
+  await page.getByRole("button", { name: /Continue to Build/ }).click();
+  await expect(page.getByRole("heading", { name: "Bring the expressions back from memory" })).toBeVisible();
+  for (const [index, tokens] of [[0, ["Bonne", "journée", "!"]], [1, ["À", "demain", "!"]], [2, ["Bonjour", "!"]]]) {
+    const builder = page.locator(".sentence-builder").nth(index);
+    for (const token of tokens) await builder.locator(".sentence-builder__tokens").getByRole("button", { name: token, exact: true }).click();
+    await builder.getByRole("button", { name: "Check sentence" }).click();
+  }
+  await page.getByRole("textbox", { name: /See you tomorrow/ }).fill("À demain"); await page.getByRole("button", { name: "Check answer" }).click();
+  await page.getByRole("group", { name: /Choose your final words/ }).getByRole("button", { name: "Bonne soirée !" }).click();
+  await page.getByRole("button", { name: /Continue to Speak/ }).click();
   await expect(page.getByRole("heading", { name: "Make the phrases yours" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Record my answer" })).toHaveCount(2);
+  for (let index = 0; index < 2; index += 1) {
+    const speaking = page.locator(".speaking-practice").nth(index);
+    await speaking.getByRole("button", { name: "Record my answer" }).click();
+    await speaking.getByRole("checkbox", { name: /fits the situation/ }).check();
+    await speaking.getByRole("checkbox", { name: /understand my words/ }).check();
+    await speaking.getByRole("button", { name: "Submit self-review" }).click();
+  }
+  await page.getByRole("button", { name: /Continue to Check/ }).click();
   await expect(page.getByRole("heading", { name: "Can you use it without hints?" })).toBeVisible();
+  await page.locator(".listening-activity").getByRole("button", { name: "Bonsoir !" }).click();
+  await page.getByRole("group", { name: /polite arrival/ }).getByRole("button", { name: "Bonjour !" }).click();
+  await page.getByRole("group", { name: /leave during the day/ }).getByRole("button", { name: "Bonne journée !" }).click();
+  await page.getByRole("textbox", { name: /See you soon/ }).fill("A bientot");
+  await page.getByRole("button", { name: "Check answer" }).click();
+  await page.getByRole("button", { name: "Check my lesson result" }).click();
+  await expect(page.getByText(/One short review before retrying/)).toBeVisible();
+  await page.getByRole("button", { name: "Retry lesson check" }).click();
+  await page.locator(".listening-activity").getByRole("button", { name: "Bonsoir !" }).click();
+  await page.getByRole("group", { name: /polite arrival/ }).getByRole("button", { name: "Bonjour !" }).click();
+  await page.getByRole("group", { name: /leave during the day/ }).getByRole("button", { name: "Bonne journée !" }).click();
+  await page.getByRole("textbox", { name: /See you soon/ }).fill("À bientôt");
+  await page.getByRole("button", { name: "Check answer" }).click();
+  await page.getByRole("button", { name: "Check my lesson result" }).click();
+  await expect(page.getByRole("heading", { name: /enter and leave a simple French interaction/ })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole("heading", { name: /enter and leave a simple French interaction/ })).toBeVisible();
 });
 
 test("guest enrollment saves Lesson 1 attempts across refresh and can be deleted", async ({ page }) => {
@@ -112,12 +156,11 @@ test("guest enrollment saves Lesson 1 attempts across refresh and can be deleted
   await page.getByRole("button", { name: "Start A1" }).click();
   await expect(page.getByRole("heading", { name: "A1 is active on this device" })).toBeVisible();
   await page.goto("/learn/a1/unit/first-contact/lesson/greetings");
-  await page.getByRole("group", { name: "It is 9:00 a.m. You greet your teacher." }).getByRole("button", { name: "Bonjour !" }).click();
-  await expect(page.getByText("Saved locally · 1 practice attempt")).toBeVisible();
+  await page.getByRole("button", { name: "They are arriving" }).click();
+  await expect(page.getByText(/Position saved · 1 attempts/)).toBeVisible();
+  await page.getByRole("button", { name: /Continue to Notice/ }).click();
   await page.reload();
-  await expect(page.getByText("Saved locally · 1 practice attempt")).toBeVisible();
-  await expect(page.getByText("Previously practiced")).toBeVisible();
-  await expect(page.getByText(/1 attempt on the first question · Last practiced/)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Arrival is different from a leaving wish" })).toBeVisible();
   await page.goto("/learn/a1");
   await page.getByRole("button", { name: "Delete local progress" }).click();
   await expect(page.getByRole("group", { name: "Confirm local progress deletion" })).toBeVisible();

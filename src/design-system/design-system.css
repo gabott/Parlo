@@ -34,6 +34,8 @@
 .v2-progress__copy { display: flex; font-size: 0.875rem; justify-content: space-between; }
 .v2-progress__track { background: #e7e5ee; border-radius: 999px; height: 0.75rem; overflow: hidden; }
 .v2-progress__bar { background: var(--v2-color-brand-600); height: 100%; transition: width var(--v2-motion-fast); }
+.v2-progress__scale { color: var(--v2-color-muted); display: flex; font-size: 0.75rem; justify-content: space-between; margin-top: calc(var(--v2-space-1) * -1); }
+.v2-progress--scaled .v2-progress__copy { justify-content: flex-start; gap: var(--v2-space-2); }
 .v2-feedback { border-left: 4px solid; border-radius: var(--v2-radius-sm); padding: var(--v2-space-3) var(--v2-space-4); }
 .v2-feedback--success { background: var(--v2-color-success-soft); border-color: var(--v2-color-success); color: #105f32; }
 .v2-feedback--error { background: var(--v2-color-danger-soft); border-color: var(--v2-color-danger); color: #8f1c14; }
