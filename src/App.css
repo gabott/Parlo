@@ -562,6 +562,11 @@ h1, h2, h3 { font-family: "Poppins", "Inter", sans-serif; line-height: 1.2; }
 .lesson-outline .v2-card { padding: var(--v2-space-4) var(--v2-space-6); }
 .lesson-outline p { margin: 0 0 var(--v2-space-3); }
 .content-provenance { color: var(--v2-color-muted); font-size: 0.8125rem; }
+.local-progress { background: #f6f3ff; border: 1px solid #ddd4fb; border-radius: var(--v2-radius-md); display: grid; gap: var(--v2-space-4); padding: var(--v2-space-6); }
+.local-progress h2, .local-progress p { margin: 0; }
+.local-progress__actions, .local-progress__confirm { align-items: center; display: flex; flex-wrap: wrap; gap: var(--v2-space-3); }
+.local-progress__confirm { background: #fff; border: 1px solid var(--v2-color-danger); border-radius: var(--v2-radius-sm); padding: var(--v2-space-3); width: 100%; }
+.lesson-save-status { color: var(--v2-color-muted); font-size: 0.875rem; margin: var(--v2-space-1) 0 0; }
 .lesson-outline__action { margin-top: var(--v2-space-3); }
 .lesson-flow { display: grid; gap: var(--v2-space-6); margin: 0 auto; max-width: 980px; }
 .lesson-flow__header { display: grid; gap: var(--v2-space-2); }

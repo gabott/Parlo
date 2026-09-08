@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { LevelSummary } from "../domain/content";
 import { Card, Feedback, Link } from "../design-system";
 import { contentRepository } from "../repositories/content";
+import { LocalProgressPanel } from "../features/learner/LocalProgressPanel";
 
 export default function CoursePreview() {
   const [level, setLevel] = useState<LevelSummary>();
@@ -12,6 +13,7 @@ export default function CoursePreview() {
     <h1>{level.title.en}</h1>
     <p className="page-sub">{level.description.en}</p>
     <Feedback title="Content review in progress" tone="info">This structure is live for engineering review; lessons are not yet available to complete.</Feedback>
+    <LocalProgressPanel />
     <div className="course-unit-list">
       {level.units.map((unit, index) => <Card key={unit.id} title={`Unit ${index + 1} · ${unit.title.en}`}>
         <p>{unit.description.en}</p>

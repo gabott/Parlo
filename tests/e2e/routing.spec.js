@@ -90,6 +90,22 @@ test("Lesson 1 review flow presents context, audio, and explanatory feedback", a
   expect(await page.evaluate(() => window.__parloAudioPlays.at(-1))).toMatch(/\/audio\/a964860a4\.mp3$/);
 });
 
+test("guest enrollment saves Lesson 1 attempts across refresh and can be deleted", async ({ page }) => {
+  await page.goto("/learn/a1");
+  await page.getByRole("button", { name: "Start A1" }).click();
+  await expect(page.getByRole("heading", { name: "A1 is active on this device" })).toBeVisible();
+  await page.goto("/learn/a1/unit/first-contact/lesson/greetings");
+  await page.getByRole("button", { name: "Bonjour !" }).click();
+  await expect(page.getByText("Saved locally · 1 practice attempt")).toBeVisible();
+  await page.reload();
+  await expect(page.getByText("Saved locally · 1 practice attempt")).toBeVisible();
+  await page.goto("/learn/a1");
+  await page.getByRole("button", { name: "Delete local progress" }).click();
+  await expect(page.getByRole("group", { name: "Confirm local progress deletion" })).toBeVisible();
+  await page.getByRole("button", { name: "Yes, delete" }).click();
+  await expect(page.getByRole("button", { name: "Start A1" })).toBeVisible();
+});
+
 test("unknown routes show a recoverable not-found page", async ({ page }) => {
   await page.goto("/this-page-does-not-exist");
   await expect(page.getByRole("heading", { name: "Page not found" })).toBeVisible();

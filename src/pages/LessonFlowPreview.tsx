@@ -3,15 +3,19 @@ import type { MediaContent, UnitBundle } from "../domain/content";
 import { AudioControl, Button, Card, Feedback, Link, Progress } from "../design-system";
 import { contentRepository } from "../repositories/content";
 import { speak } from "../speak";
+import { useGuestLearner } from "../features/learner/useGuestLearner";
 
 type Activity = UnitBundle["activities"][number];
 type Item = UnitBundle["items"][number];
 
 export default function LessonFlowPreview() {
+  const lessonId = "lesson.fr-general.a1.first-contact.greetings";
+  const learner = useGuestLearner(lessonId);
   const [activity, setActivity] = useState<Activity>();
   const [item, setItem] = useState<Item>();
   const [media, setMedia] = useState<MediaContent>();
   const [selected, setSelected] = useState<string>();
+  const [saveError, setSaveError] = useState<string>();
 
   useEffect(() => {
     void Promise.all([
@@ -24,9 +28,15 @@ export default function LessonFlowPreview() {
   if (!activity || !item || !media) return <p role="status">Loading lesson preview…</p>;
   const correct = item.payload.options?.find((option) => option.correct)?.text;
   const answered = Boolean(selected);
-  const chooseOption = (text: string) => {
+  const chooseOption = async (text: string) => {
     setSelected(text);
     speak(text.replace(/[.!?]\s*$/, "").trim());
+    if (learner.enrollment) {
+      try {
+        await learner.repository.submitAttempt({ learnerId: learner.enrollment.learnerId, enrollmentId: learner.enrollment.id, sessionId: "session_lesson-preview", lessonId, activityId: "activity.a1.u01.l01.meaning", itemId: item.id, response: text, correct: text === correct, idempotencyKey: crypto.randomUUID() });
+        setSaveError(undefined); await learner.refresh();
+      } catch { setSaveError("This attempt could not be saved. Your answer is still shown on this page."); }
+    }
   };
 
   return <article className="lesson-flow">
@@ -36,6 +46,9 @@ export default function LessonFlowPreview() {
       <h1>Greetings and farewells</h1>
       <p className="page-sub">I can choose and use an appropriate greeting or farewell.</p>
       <Progress label="Lesson preview progress" value={1} max={5} />
+      {learner.enrollment ? <p className="lesson-save-status" role="status">Saved locally · {learner.progress?.attemptCount ?? 0} practice attempt{learner.progress?.attemptCount === 1 ? "" : "s"}</p> : <p className="lesson-save-status">Preview mode · <Link to="/learn/a1">Start A1 to save progress</Link></p>}
+      {learner.error && <Feedback title="Progress is not being saved" tone="error">{learner.error}</Feedback>}
+      {saveError && <Feedback title="Save failed" tone="error">{saveError}</Feedback>}
     </header>
 
     <section className="lesson-scene" aria-labelledby="scene-title">
@@ -62,7 +75,7 @@ export default function LessonFlowPreview() {
           <legend>{item.prompt.en}</legend>
           <p className="lesson-audio-hint" id="answer-audio-hint">Choose an answer to hear it in a French voice.</p>
           <div className="lesson-options">
-            {item.payload.options?.map((option) => <Button key={option.text} variant={selected === option.text ? "primary" : "secondary"} aria-describedby="answer-audio-hint" aria-pressed={selected === option.text} onClick={() => chooseOption(option.text)}><span aria-hidden="true">🔊</span>{option.text}</Button>)}
+            {item.payload.options?.map((option) => <Button key={option.text} variant={selected === option.text ? "primary" : "secondary"} aria-describedby="answer-audio-hint" aria-pressed={selected === option.text} onClick={() => void chooseOption(option.text)}><span aria-hidden="true">🔊</span>{option.text}</Button>)}
           </div>
         </fieldset>
         {answered && (selected === correct
