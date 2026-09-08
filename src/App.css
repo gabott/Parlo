@@ -583,6 +583,7 @@ h1, h2, h3 { font-family: "Poppins", "Inter", sans-serif; line-height: 1.2; }
 .phrase-contrast small { color: var(--v2-color-muted); }
 .lesson-question { border: 0; margin: 0; padding: 0; }
 .lesson-question legend { font-weight: 650; margin-bottom: var(--v2-space-4); }
+.lesson-audio-hint { color: var(--v2-color-muted); font-size: 0.875rem; margin: calc(var(--v2-space-2) * -1) 0 var(--v2-space-4); }
 .lesson-options { display: flex; flex-wrap: wrap; gap: var(--v2-space-2); }
 .lesson-question + .v2-feedback { margin-top: var(--v2-space-4); }
 .lesson-flow__footer { align-items: center; background: #f6f3ff; border-radius: var(--v2-radius-md); display: flex; gap: var(--v2-space-4); justify-content: space-between; padding: var(--v2-space-6); }

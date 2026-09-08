@@ -80,11 +80,14 @@ test("Lesson 1 review flow presents context, audio, and explanatory feedback", a
   await expect(page.getByRole("heading", { name: "Greetings and farewells" })).toBeVisible();
   await expect(page.getByRole("img", { name: /Sofia and Ira greet each other/ })).toBeVisible();
   await expect(page.getByRole("button", { name: "Play Sofia saying Bonjour" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Bonsoir !" })).toHaveAccessibleDescription(/Choose an answer to hear it in a French voice/);
 
   await page.getByRole("button", { name: "Bonsoir !" }).click();
   await expect(page.getByRole("alert")).toContainText("Use bonjour during the day");
+  expect(await page.evaluate(() => window.__parloAudioPlays.at(-1))).toMatch(/\/audio\/a9650c9c1\.mp3$/);
   await page.getByRole("button", { name: "Bonjour !" }).click();
   await expect(page.getByRole("status")).toContainText("Bonjour is the polite daytime greeting");
+  expect(await page.evaluate(() => window.__parloAudioPlays.at(-1))).toMatch(/\/audio\/a964860a4\.mp3$/);
 });
 
 test("unknown routes show a recoverable not-found page", async ({ page }) => {

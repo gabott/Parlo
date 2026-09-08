@@ -2,17 +2,10 @@ import { useEffect, useState } from "react";
 import type { MediaContent, UnitBundle } from "../domain/content";
 import { AudioControl, Button, Card, Feedback, Link, Progress } from "../design-system";
 import { contentRepository } from "../repositories/content";
+import { speak } from "../speak";
 
 type Activity = UnitBundle["activities"][number];
 type Item = UnitBundle["items"][number];
-
-const speak = (text: string) => {
-  if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "fr-FR";
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
-};
 
 export default function LessonFlowPreview() {
   const [activity, setActivity] = useState<Activity>();
@@ -31,6 +24,10 @@ export default function LessonFlowPreview() {
   if (!activity || !item || !media) return <p role="status">Loading lesson preview…</p>;
   const correct = item.payload.options?.find((option) => option.correct)?.text;
   const answered = Boolean(selected);
+  const chooseOption = (text: string) => {
+    setSelected(text);
+    speak(text.replace(/[.!?]\s*$/, "").trim());
+  };
 
   return <article className="lesson-flow">
     <header className="lesson-flow__header">
@@ -63,8 +60,9 @@ export default function LessonFlowPreview() {
       <Card title="Try it">
         <fieldset className="lesson-question">
           <legend>{item.prompt.en}</legend>
+          <p className="lesson-audio-hint" id="answer-audio-hint">Choose an answer to hear it in a French voice.</p>
           <div className="lesson-options">
-            {item.payload.options?.map((option) => <Button key={option.text} variant={selected === option.text ? "primary" : "secondary"} aria-pressed={selected === option.text} onClick={() => setSelected(option.text)}>{option.text}</Button>)}
+            {item.payload.options?.map((option) => <Button key={option.text} variant={selected === option.text ? "primary" : "secondary"} aria-describedby="answer-audio-hint" aria-pressed={selected === option.text} onClick={() => chooseOption(option.text)}><span aria-hidden="true">🔊</span>{option.text}</Button>)}
           </div>
         </fieldset>
         {answered && (selected === correct
