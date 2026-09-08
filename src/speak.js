@@ -35,10 +35,16 @@ export function speak(text) {
   const file = `${import.meta.env.BASE_URL}audio/${audioKey(text)}.mp3`;
   const audio = new Audio(file);
   currentAudio = audio;
+  let fallbackStarted = false;
+  const fallbackOnce = () => {
+    if (fallbackStarted) return;
+    fallbackStarted = true;
+    browserFallback(text);
+  };
 
   // If the MP3 is missing, fall back to the browser voice.
-  audio.onerror = () => browserFallback(text);
-  audio.play().catch(() => browserFallback(text));
+  audio.onerror = fallbackOnce;
+  audio.play().catch(fallbackOnce);
 }
 
 // --- 2) Browser built-in voice (used only if MP3 missing) ---

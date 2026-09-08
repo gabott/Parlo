@@ -21,6 +21,7 @@ import { days, months, seasons, datePhrases } from "../src/content/daysMonths.js
 import { questionWords } from "../src/content/questionWords.js";
 import { colors } from "../src/content/colors.js";
 import { audioKey } from "../src/audioKey.js";
+import unitOneBundle from "../generated/bundles/a1-0.1.0-draft.json" with { type: "json" };
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync } from "node:fs";
 import path from "node:path";
@@ -81,6 +82,13 @@ for (const c of colors) {
   texts.add(c.fr);
   texts.add(c.phrase);
 }
+// Compiled Learn content: reviewed phrases plus visible activity options.
+for (const phrase of unitOneBundle.phrases) texts.add(phrase.french.text);
+for (const item of unitOneBundle.items) {
+  for (const option of item.payload.options ?? []) texts.add(option.text);
+}
+// Dialogue lines are authored as presentation copy until dialogue entities land.
+texts.add("Bonjour ! Ça va ?");
 
 // Remove the "…" placeholder so the voice doesn't stumble.
 function clean(t) {
@@ -112,5 +120,4 @@ for (const text of texts) {
     console.log("FAILED (needs internet + edge-tts installed)");
   }
 }
-
 console.log(`\nAudio ready. Created ${made}, skipped ${skipped} existing.`);
