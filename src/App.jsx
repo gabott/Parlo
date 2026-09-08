@@ -14,6 +14,9 @@ const PAGE_TITLES = {
   "/library/videos": "Videos & resources",
   "/tef": "TEF Exam",
   "/learn": "Learn Preview",
+  "/learn/a1": "Beginner A1",
+  "/learn/a1/unit/first-contact": "French sounds and first contact",
+  "/learn/a1/unit/first-contact/lesson/greetings": "Greetings and farewells",
 };
 
 export default function App() {

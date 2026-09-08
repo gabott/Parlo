@@ -1,0 +1,351 @@
+schema_version: 1.0.0
+bundle_version: a1-0.1.0-draft
+
+course:
+  id: course.fr-general
+  revision: 1
+  status: draft
+  review: &pending_review { linguistic: pending, pedagogical: pending, accessibility: pending }
+  title: { en: General French, fr: Français général }
+  description: { en: A practical French course for everyday communication. }
+  target_language: fr
+  support_locales: [en]
+  level_ids: [level.fr-general.a1]
+
+level:
+  id: level.fr-general.a1
+  revision: 1
+  status: draft
+  review: *pending_review
+  course_id: course.fr-general
+  cefr: a1
+  title: { en: Beginner A1, fr: Débutant A1 }
+  description: { en: "Build a foundation for simple, familiar interactions." }
+  ordered_unit_ids: [unit.fr-general.a1.first-contact]
+
+unit:
+  id: unit.fr-general.a1.first-contact
+  revision: 1
+  status: draft
+  review: *pending_review
+  level_id: level.fr-general.a1
+  matrix_id: A1-U01
+  title: { en: French sounds and first contact, fr: Sons français et premier contact }
+  description: { en: "Greet someone, spell a name, recognize key sounds, and ask for help." }
+  capability: { en: "I can recognize key French sounds, greet someone, and use basic classroom survival expressions." }
+  prerequisite_unit_ids: []
+  ordered_lesson_ids:
+    - lesson.fr-general.a1.first-contact.greetings
+    - lesson.fr-general.a1.first-contact.names-alphabet
+    - lesson.fr-general.a1.first-contact.sound-map
+    - lesson.fr-general.a1.first-contact.courtesy
+    - lesson.fr-general.a1.first-contact.classroom-survival
+    - lesson.fr-general.a1.first-contact.review
+    - lesson.fr-general.a1.first-contact.assessment
+  estimated_minutes: 120
+  content_role: required
+
+lessons:
+  - id: lesson.fr-general.a1.first-contact.greetings
+    revision: 1
+    status: in_review
+    review: *pending_review
+    unit_id: unit.fr-general.a1.first-contact
+    matrix_id: A1-U01-L01
+    title: { en: Greetings and farewells, fr: Salutations et formules de départ }
+    objective: { en: I can choose and use an appropriate greeting or farewell. }
+    prerequisite_lesson_ids: []
+    concept_ids: [concept.pragmatics.greeting-time, concept.pragmatics.formality-awareness]
+    ordered_activity_ids: [activity.a1.u01.l01.context, activity.a1.u01.l01.meaning, activity.a1.u01.l01.builder, activity.a1.u01.l01.exit]
+    estimated_minutes: 15
+    difficulty: 1
+    content_role: required
+  - &lesson_base
+    id: lesson.fr-general.a1.first-contact.names-alphabet
+    revision: 1
+    status: draft
+    review: *pending_review
+    unit_id: unit.fr-general.a1.first-contact
+    matrix_id: A1-U01-L02
+    title: { en: Names and alphabet }
+    objective: { en: I can recognize French letter names and spell a first name. }
+    prerequisite_lesson_ids: [lesson.fr-general.a1.first-contact.greetings]
+    concept_ids: [concept.orthography.french-alphabet]
+    ordered_activity_ids: []
+    estimated_minutes: 18
+    difficulty: 1
+    content_role: required
+  - <<: *lesson_base
+    id: lesson.fr-general.a1.first-contact.sound-map
+    matrix_id: A1-U01-L03
+    title: { en: Core sound map }
+    objective: { en: I can distinguish several high-value French sound contrasts. }
+    prerequisite_lesson_ids: [lesson.fr-general.a1.first-contact.names-alphabet]
+    concept_ids: []
+  - <<: *lesson_base
+    id: lesson.fr-general.a1.first-contact.courtesy
+    matrix_id: A1-U01-L04
+    title: { en: Courtesy }
+    objective: { en: I can use basic polite expressions appropriately. }
+    prerequisite_lesson_ids: [lesson.fr-general.a1.first-contact.sound-map]
+    concept_ids: [concept.pragmatics.formality-awareness]
+  - <<: *lesson_base
+    id: lesson.fr-general.a1.first-contact.classroom-survival
+    matrix_id: A1-U01-L05
+    title: { en: Classroom survival }
+    objective: { en: "I can ask for repetition, clarification, or slower speech." }
+    prerequisite_lesson_ids: [lesson.fr-general.a1.first-contact.courtesy]
+    concept_ids: [concept.strategy.communication-repair]
+  - <<: *lesson_base
+    id: lesson.fr-general.a1.first-contact.review
+    matrix_id: A1-U01-R01
+    title: { en: Integrated review }
+    objective: { en: I can retrieve Unit 1 language across several modalities. }
+    prerequisite_lesson_ids: [lesson.fr-general.a1.first-contact.classroom-survival]
+    concept_ids: [concept.pragmatics.greeting-time, concept.pragmatics.formality-awareness, concept.strategy.communication-repair]
+    estimated_minutes: 15
+    content_role: review
+  - <<: *lesson_base
+    id: lesson.fr-general.a1.first-contact.assessment
+    matrix_id: A1-U01-A01
+    title: { en: Capability assessment }
+    objective: { en: I can handle a first-contact classroom exchange. }
+    prerequisite_lesson_ids: [lesson.fr-general.a1.first-contact.review]
+    concept_ids: [concept.pragmatics.greeting-time, concept.pragmatics.formality-awareness, concept.strategy.communication-repair]
+    estimated_minutes: 20
+    content_role: assessment
+
+concepts:
+  - id: concept.orthography.french-alphabet
+    revision: 1
+    status: draft
+    review: *pending_review
+    kind: orthography
+    cefr: a1
+    title: { en: French alphabet }
+    summary: { en: Map spoken French letter names to written letters. }
+    prerequisites: []
+  - id: concept.pragmatics.greeting-time
+    revision: 1
+    status: in_review
+    review: *pending_review
+    kind: communicative_function
+    cefr: a1
+    title: { en: Greetings for time of day }
+    summary: { en: Select a daytime or evening greeting. }
+    prerequisites: []
+  - id: concept.pragmatics.formality-awareness
+    revision: 1
+    status: in_review
+    review: *pending_review
+    kind: culture_usage
+    cefr: a1
+    title: { en: Informal and polite greetings }
+    summary: { en: Recognize when salut is informal and when a polite expression is safer. }
+    prerequisites: []
+  - id: concept.strategy.communication-repair
+    revision: 1
+    status: draft
+    review: *pending_review
+    kind: strategy
+    cefr: a1
+    title: { en: Ask for help understanding }
+    summary: { en: Indicate non-understanding and request repetition or slower speech. }
+    prerequisites:
+      - { concept_id: concept.pragmatics.formality-awareness, relationship: required }
+
+lexemes:
+  - id: lexeme.bonjour.interjection
+    revision: 1
+    status: in_review
+    review: *pending_review
+    lemma: bonjour
+    language: fr
+    part_of_speech: interjection
+    cefr: a1
+    frequency_band: core
+    senses: [{ id: sense.bonjour.greeting, gloss: { en: hello or good morning }, register: neutral }]
+    concept_ids: [concept.pragmatics.greeting-time]
+    audio_ids: []
+  - id: lexeme.bonsoir.interjection
+    revision: 1
+    status: in_review
+    review: *pending_review
+    lemma: bonsoir
+    language: fr
+    part_of_speech: interjection
+    cefr: a1
+    frequency_band: core
+    senses: [{ id: sense.bonsoir.greeting, gloss: { en: good evening }, register: neutral }]
+    concept_ids: [concept.pragmatics.greeting-time]
+    audio_ids: []
+  - id: lexeme.salut.interjection
+    revision: 1
+    status: in_review
+    review: *pending_review
+    lemma: salut
+    language: fr
+    part_of_speech: interjection
+    cefr: a1
+    frequency_band: core
+    senses: [{ id: sense.salut.greeting, gloss: { en: hi or bye }, register: informal }]
+    concept_ids: [concept.pragmatics.formality-awareness]
+    audio_ids: []
+
+phrases:
+  - &phrase_base
+    id: phrase.greeting.bonjour
+    revision: 1
+    status: in_review
+    review: *pending_review
+    french: { text: Bonjour !, language: fr, variety: neutral, register: neutral }
+    meaning: { en: Hello! or Good morning! }
+    function: daytime_greeting
+    cefr: a1
+    concept_ids: [concept.pragmatics.greeting-time]
+    audio_ids: []
+  - <<: *phrase_base
+    id: phrase.greeting.bonsoir
+    french: { text: Bonsoir !, language: fr, variety: neutral, register: neutral }
+    meaning: { en: Good evening! }
+    function: evening_greeting
+  - <<: *phrase_base
+    id: phrase.greeting.salut
+    french: { text: Salut !, language: fr, variety: neutral, register: informal }
+    meaning: { en: Hi! or Bye! }
+    function: informal_greeting
+    concept_ids: [concept.pragmatics.formality-awareness]
+  - <<: *phrase_base
+    id: phrase.farewell.au-revoir
+    french: { text: Au revoir !, language: fr, variety: neutral, register: neutral }
+    meaning: { en: Goodbye! }
+    function: farewell
+  - <<: *phrase_base
+    id: phrase.farewell.a-demain
+    french: { text: À demain !, language: fr, variety: neutral, register: neutral }
+    meaning: { en: See you tomorrow! }
+    function: farewell_tomorrow
+  - <<: *phrase_base
+    id: phrase.farewell.bonne-journee
+    french: { text: Bonne journée !, language: fr, variety: neutral, register: neutral }
+    meaning: { en: Have a good day! }
+    function: daytime_leaving_wish
+  - <<: *phrase_base
+    id: phrase.classroom.i-do-not-understand
+    status: draft
+    french: { text: Je ne comprends pas., language: fr, variety: neutral, register: neutral }
+    meaning: { en: I do not understand. }
+    function: indicate_non_understanding
+    concept_ids: [concept.strategy.communication-repair]
+  - <<: *phrase_base
+    id: phrase.classroom.repeat-formal
+    status: draft
+    french: { text: "Pouvez-vous répéter, s'il vous plaît ?", language: fr, variety: neutral, register: formal }
+    meaning: { en: "Can you repeat, please?" }
+    function: request_repetition
+    concept_ids: [concept.strategy.communication-repair]
+
+activities:
+  - id: activity.a1.u01.l01.context
+    revision: 1
+    status: in_review
+    review: *pending_review
+    lesson_id: lesson.fr-general.a1.first-contact.greetings
+    kind: presentation
+    content_role: required
+    title: { en: Arriving and leaving }
+    instructions: { en: Notice which phrases are used when people arrive and leave. }
+    body: { en: "Use bonjour during the day and bonsoir in the evening. Salut is informal. When leaving, au revoir is a safe general choice." }
+    item_ids: []
+    media_ids: [media.image.a1.u01.l01.arrival.v3]
+  - &activity_base
+    id: activity.a1.u01.l01.meaning
+    revision: 1
+    status: in_review
+    review: *pending_review
+    lesson_id: lesson.fr-general.a1.first-contact.greetings
+    kind: meaning_select
+    content_role: required
+    title: { en: Choose the appropriate greeting }
+    instructions: { en: Select the best expression for each situation. }
+    item_ids: [item.a1.u01.l01.meaning.001, item.a1.u01.l01.meaning.002, item.a1.u01.l01.meaning.003]
+  - <<: *activity_base
+    id: activity.a1.u01.l01.builder
+    kind: sentence_build
+    title: { en: Build the expression }
+    instructions: { en: Put the tokens in the correct order. }
+    item_ids: [item.a1.u01.l01.builder.001]
+  - <<: *activity_base
+    id: activity.a1.u01.l01.exit
+    kind: meaning_select
+    content_role: assessment
+    title: { en: Lesson check }
+    instructions: { en: Choose the best answer without hints. }
+    item_ids: [item.a1.u01.l01.exit.001]
+
+items:
+  - &selection_base
+    id: item.a1.u01.l01.meaning.001
+    revision: 1
+    status: in_review
+    review: *pending_review
+    activity_kind: meaning_select
+    cefr: a1
+    difficulty: 1
+    prompt: { en: It is 9:00 a.m. You greet your teacher. }
+    concept_ids: [concept.pragmatics.greeting-time]
+    evidence_mode: recognition
+    payload:
+      options:
+        - { text: Bonjour !, correct: true }
+        - { text: Bonsoir !, correct: false }
+        - { text: Au revoir !, correct: false }
+  - <<: *selection_base
+    id: item.a1.u01.l01.meaning.002
+    prompt: { en: You greet a close friend informally. }
+    concept_ids: [concept.pragmatics.formality-awareness]
+    payload:
+      options:
+        - { text: Salut !, correct: true }
+        - { text: Bonne journée !, correct: false }
+        - { text: Au revoir !, correct: false }
+  - <<: *selection_base
+    id: item.a1.u01.l01.meaning.003
+    prompt: { en: It is evening and you enter a restaurant. }
+    payload:
+      options:
+        - { text: Bonsoir !, correct: true }
+        - { text: Bonne journée !, correct: false }
+        - { text: À demain !, correct: false }
+  - id: item.a1.u01.l01.builder.001
+    revision: 1
+    status: in_review
+    review: *pending_review
+    activity_kind: sentence_build
+    cefr: a1
+    difficulty: 1
+    prompt: { en: "Build ‘Can you repeat, please?’" }
+    concept_ids: [concept.strategy.communication-repair]
+    evidence_mode: recall_supported
+    payload:
+      tokens: [Pouvez-vous, répéter, ",", "s'il", vous, plaît, "?"]
+      accepted_answers: ["Pouvez-vous répéter, s'il vous plaît?"]
+  - <<: *selection_base
+    id: item.a1.u01.l01.exit.001
+    prompt: { en: You leave during the day and wish someone well. }
+    evidence_mode: recall
+    payload:
+      options:
+        - { text: Bonne journée !, correct: true }
+        - { text: Bonjour !, correct: false }
+        - { text: Bonsoir !, correct: false }
+
+media:
+  - id: media.image.a1.u01.l01.arrival.v3
+    revision: 1
+    status: draft
+    review: *pending_review
+    kind: image
+    uri: /images/course/a1/unit-01/greetings-arrival-v3.png
+    mime_type: image/png
+    accessibility_description: Sofia and Ira greet each other outside their neighborhood language school on a bright morning.

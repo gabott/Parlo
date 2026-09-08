@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run content:build && vite build",
     "audio": "node scripts/gen-audio.mjs",
+    "content:validate": "node scripts/content/validate.mjs",
+    "content:build": "node scripts/content/build.mjs",
     "lint": "oxlint",
     "typecheck": "tsc --noEmit",
     "test:unit": "vitest run",
@@ -14,14 +16,16 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "playwright show-report",
-    "check": "npm run lint && npm run typecheck && npm run test:unit && npm run test:e2e && npm run build",
+    "check": "npm run lint && npm run typecheck && npm run content:validate && npm run test:unit && npm run test:e2e && npm run build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
+    "ajv": "^8.20.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "react-router-dom": "^7.18.3"
+    "react-router-dom": "^7.18.3",
+    "yaml": "^2.9.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",

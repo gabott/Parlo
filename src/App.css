@@ -554,6 +554,39 @@ h1, h2, h3 { font-family: "Poppins", "Inter", sans-serif; line-height: 1.2; }
 .learn-preview-kicker { color: var(--v2-color-brand-700); font-size: 0.875rem; font-weight: 700; margin: 0; text-transform: uppercase; }
 .learn-preview-controls { display: grid; gap: var(--v2-space-4); }
 .learn-preview-actions { display: flex; flex-wrap: wrap; gap: var(--v2-space-3); }
+.learn-preview-course-link { margin-top: var(--v2-space-4); }
+.course-preview, .unit-preview { display: grid; gap: var(--v2-space-4); }
+.course-preview h1, .unit-preview h1 { margin: 0; }
+.course-unit-list { display: grid; gap: var(--v2-space-4); }
+.lesson-outline { display: grid; gap: var(--v2-space-4); list-style: none; margin: 0; padding: 0; }
+.lesson-outline .v2-card { padding: var(--v2-space-4) var(--v2-space-6); }
+.lesson-outline p { margin: 0 0 var(--v2-space-3); }
+.content-provenance { color: var(--v2-color-muted); font-size: 0.8125rem; }
+.lesson-outline__action { margin-top: var(--v2-space-3); }
+.lesson-flow { display: grid; gap: var(--v2-space-6); margin: 0 auto; max-width: 980px; }
+.lesson-flow__header { display: grid; gap: var(--v2-space-2); }
+.lesson-flow__header h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0; }
+.lesson-flow__header .v2-progress { margin-top: var(--v2-space-2); max-width: 34rem; }
+.lesson-scene { background: #fff; border: 1px solid var(--v2-color-border); border-radius: 22px; box-shadow: var(--v2-shadow-card); display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr); overflow: hidden; }
+.lesson-scene > img { height: 100%; min-height: 420px; object-fit: cover; width: 100%; }
+.lesson-scene__copy { align-content: center; display: grid; gap: var(--v2-space-3); padding: var(--v2-space-8); }
+.lesson-scene__copy h2 { margin: 0; }
+.lesson-scene__copy > p { margin: 0; }
+.dialogue { border-top: 1px solid var(--v2-color-border); display: grid; }
+.dialogue > div { align-items: center; border-bottom: 1px solid var(--v2-color-border); display: grid; gap: var(--v2-space-2); grid-template-columns: 3.5rem 1fr auto; padding: var(--v2-space-3) 0; }
+.dialogue span { font-size: 1.05rem; }
+.dialogue .v2-audio { font-size: 0; padding: var(--v2-space-2); }
+.dialogue .v2-audio span { font-size: 1rem; }
+.lesson-flow__grid { display: grid; gap: var(--v2-space-4); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.phrase-contrast { display: grid; gap: var(--v2-space-3); grid-template-columns: repeat(2, 1fr); }
+.phrase-contrast span { background: var(--v2-color-brand-100); border-radius: var(--v2-radius-sm); display: grid; padding: var(--v2-space-3); }
+.phrase-contrast small { color: var(--v2-color-muted); }
+.lesson-question { border: 0; margin: 0; padding: 0; }
+.lesson-question legend { font-weight: 650; margin-bottom: var(--v2-space-4); }
+.lesson-options { display: flex; flex-wrap: wrap; gap: var(--v2-space-2); }
+.lesson-question + .v2-feedback { margin-top: var(--v2-space-4); }
+.lesson-flow__footer { align-items: center; background: #f6f3ff; border-radius: var(--v2-radius-md); display: flex; gap: var(--v2-space-4); justify-content: space-between; padding: var(--v2-space-6); }
+.lesson-flow__footer p { color: var(--v2-color-muted); margin: var(--v2-space-1) 0 0; }
 .not-found { margin-top: 10vh; }
 .not-found-code { color: var(--accent-soft); font-family: "Poppins", sans-serif; font-size: clamp(70px, 16vw, 150px); font-weight: 800; line-height: 0.9; }
 
@@ -572,6 +605,11 @@ h1, h2, h3 { font-family: "Poppins", "Inter", sans-serif; line-height: 1.2; }
   .hero h1 { font-size: 30px; }
   .section-grid { grid-template-columns: 1fr; }
   .learn-preview-grid { grid-template-columns: 1fr; }
+  .lesson-scene { grid-template-columns: 1fr; }
+  .lesson-scene > img { min-height: 260px; }
+  .lesson-scene__copy { padding: var(--v2-space-6); }
+  .lesson-flow__grid { grid-template-columns: 1fr; }
+  .lesson-flow__footer { align-items: stretch; flex-direction: column; }
   .exam-grid { grid-template-columns: 1fr; }
   .page-header-title { font-size: 26px; }
   .color-practice { align-items: flex-start; flex-direction: column; }

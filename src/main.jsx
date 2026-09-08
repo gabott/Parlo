@@ -12,6 +12,9 @@ import Practice from './pages/Practice.jsx'
 import Videos from './pages/Videos.jsx'
 import Exam from './pages/Exam.jsx'
 import LearnPreview from './pages/LearnPreview'
+import CoursePreview from './pages/CoursePreview'
+import UnitPreview from './pages/UnitPreview'
+import LessonFlowPreview from './pages/LessonFlowPreview'
 import NotFound from './pages/NotFound.jsx'
 
 const router = createBrowserRouter([
@@ -21,6 +24,9 @@ const router = createBrowserRouter([
     children: [
       { index: true, Component: Dashboard },
       { path: 'learn', Component: LearnPreview },
+      { path: 'learn/a1', Component: CoursePreview },
+      { path: 'learn/a1/unit/first-contact', Component: UnitPreview },
+      { path: 'learn/a1/unit/first-contact/lesson/greetings', Component: LessonFlowPreview },
       { path: 'library/basics', Component: Basics },
       { path: 'library/vocabulary', Component: Vocabulary },
       { path: 'library/grammar', Component: Grammar },

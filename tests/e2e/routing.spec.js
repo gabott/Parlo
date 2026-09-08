@@ -59,6 +59,34 @@ test("learn preview exposes accessible V2 progress and feedback", async ({ page 
   expect(Number.parseFloat(transitionDuration)).toBeLessThan(0.001);
 });
 
+test("compiled A1 manifest and lazy Unit 1 bundle drive Learn routes", async ({ page }) => {
+  await page.goto("/learn/a1");
+  await expect(page.getByRole("heading", { name: "Beginner A1" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Unit 1 · French sounds and first contact/ })).toBeVisible();
+  await expect(page).toHaveTitle("Beginner A1 · Parlo");
+
+  await page.getByRole("link", { name: "View unit outline" }).click();
+  await expect(page).toHaveURL(/\/learn\/a1\/unit\/first-contact$/);
+  await expect(page.getByRole("heading", { name: "French sounds and first contact" })).toBeVisible();
+  await expect(page.locator(".lesson-outline > li")).toHaveCount(7);
+  await expect(page.getByText(/8 initial phrases · 5 initial items/)).toBeVisible();
+
+  await page.reload();
+  await expect(page.getByRole("heading", { name: "Greetings and farewells" })).toBeVisible();
+});
+
+test("Lesson 1 review flow presents context, audio, and explanatory feedback", async ({ page }) => {
+  await page.goto("/learn/a1/unit/first-contact/lesson/greetings");
+  await expect(page.getByRole("heading", { name: "Greetings and farewells" })).toBeVisible();
+  await expect(page.getByRole("img", { name: /Sofia and Ira greet each other/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Play Sofia saying Bonjour" })).toBeVisible();
+
+  await page.getByRole("button", { name: "Bonsoir !" }).click();
+  await expect(page.getByRole("alert")).toContainText("Use bonjour during the day");
+  await page.getByRole("button", { name: "Bonjour !" }).click();
+  await expect(page.getByRole("status")).toContainText("Bonjour is the polite daytime greeting");
+});
+
 test("unknown routes show a recoverable not-found page", async ({ page }) => {
   await page.goto("/this-page-does-not-exist");
   await expect(page.getByRole("heading", { name: "Page not found" })).toBeVisible();

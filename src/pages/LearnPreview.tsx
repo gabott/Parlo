@@ -24,6 +24,7 @@ export default function LearnPreview() {
           <li>Personal information</li>
         </ol>
         <Progress label="Preview foundation" value={2} max={3} />
+        <div className="learn-preview-course-link"><Link to="/learn/a1" variant="button">Preview the A1 course</Link></div>
       </Card>
 
       <Card title="Try the new controls">
