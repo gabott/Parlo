@@ -1,92 +1,76 @@
-import { useEffect, useState } from "react";
-import type { MediaContent, UnitBundle } from "../domain/content";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { AudioTextSelectRenderer, MeaningSelectRenderer, SentenceBuildRenderer, TypedRecallRenderer } from "../activities/registry";
+import type { MediaContent } from "../domain/content";
 import { AudioControl, Button, Card, Feedback, Link, Progress } from "../design-system";
+import { useGuestLearner } from "../features/learner/useGuestLearner";
 import { contentRepository } from "../repositories/content";
 import { speak } from "../speak";
-import { useGuestLearner } from "../features/learner/useGuestLearner";
 
-type Activity = UnitBundle["activities"][number];
-type Item = UnitBundle["items"][number];
+const lessonId = "lesson.fr-general.a1.first-contact.greetings";
+const firstItemId = "item.a1.u01.l01.meaning.001";
+const cleanSpeech = (text: string) => text.replace(/[.!?]\s*$/, "").trim();
+const dialogue = {
+  arriving: [["Sofia", "Bonjour !", "Hello!"], ["Ira", "Bonjour !", "Hello!"], ["Sofia", "Ça va ?", "How are you?"], ["Ira", "Ça va bien, merci.", "I’m well, thank you."]],
+  leaving: [["Sofia", "Au revoir !", "Goodbye!"], ["Ira", "À demain ! Bonne journée !", "See you tomorrow! Have a good day!"]],
+} as const;
+const phraseGuide = [
+  ["Bonjour !", "Hello / Good morning", "daytime · polite"], ["Bonsoir !", "Good evening", "evening · polite"],
+  ["Salut !", "Hi / Bye", "informal"], ["Au revoir !", "Goodbye", "leaving · safe choice"],
+  ["À bientôt !", "See you soon", "leaving · soon"], ["À demain !", "See you tomorrow", "leaving · tomorrow"],
+  ["Bonne journée !", "Have a good day", "daytime leaving wish"], ["Bonne soirée !", "Have a good evening", "evening leaving wish"],
+] as const;
+const practice = [
+  { id: firstItemId, prompt: "It is 9:00 a.m. You greet your teacher.", options: ["Bonjour !", "Bonsoir !", "Au revoir !"], answer: "Bonjour !", feedback: "Bonjour is the polite daytime greeting.", errors: { "Bonsoir !": "Bonsoir is an evening greeting.", "Au revoir !": "Au revoir is used when leaving." } },
+  { id: "item.a1.u01.l01.meaning.002", prompt: "You leave a store.", options: ["Au revoir !", "Bonjour !", "Salut !"], answer: "Au revoir !", feedback: "Au revoir is a safe general goodbye.", errors: { "Bonjour !": "Bonjour greets someone as you arrive during the day.", "Salut !": "Salut can mean bye, but it is informal." } },
+  { id: "item.a1.u01.l01.meaning.003", prompt: "You greet a close friend informally.", options: ["Salut !", "Bonne journée !", "Au revoir !"], answer: "Salut !", feedback: "Salut is the informal choice for a close friend.", errors: { "Bonne journée !": "Bonne journée is a wish used when leaving.", "Au revoir !": "Au revoir is a goodbye." } },
+  { id: "item.a1.u01.l01.meaning.004", prompt: "It is evening and you enter a restaurant.", options: ["Bonsoir !", "Bonne soirée !", "À demain !"], answer: "Bonsoir !", feedback: "Bonsoir greets someone in the evening; bonne soirée is usually said when leaving.", errors: { "Bonne soirée !": "Bonne soirée is normally an evening wish when leaving.", "À demain !": "À demain means you will see the person tomorrow." } },
+] as const;
+const builders = [
+  { id: "item.a1.u01.l01.builder.001", prompt: "Build ‘Have a good day!’", tokens: ["journée", "!", "Bonne"], answer: "Bonne journée !" },
+  { id: "item.a1.u01.l01.builder.002", prompt: "Build ‘See you tomorrow!’", tokens: ["demain", "!", "À"], answer: "À demain !" },
+  { id: "item.a1.u01.l01.builder.003", prompt: "Build a daytime greeting.", tokens: ["!", "Bonjour"], answer: "Bonjour !" },
+] as const;
+type Complete = (id: string, response: string, correct: boolean) => Promise<void>;
+
+function ChoiceActivity({ answer, id, onComplete, options, prompt, feedback, errors = {} }: { answer: string; id: string; onComplete: Complete; options: readonly string[]; prompt: string; feedback: string; errors?: Record<string, string> }) {
+  return <MeaningSelectRenderer activityId={id.replace("item", "activity").replace(/\.\d+$/, "")} itemId={id} prompt={prompt} options={options} answer={answer} feedback={{ [answer]: feedback, ...errors }} onSubmit={({ envelope, evaluation }) => onComplete(id, String(envelope.response), evaluation.outcome === "correct")} />;
+}
+
+function ListeningActivity({ id, audio, options, answer, onComplete }: { id: string; audio: string; options: readonly string[]; answer: string; onComplete: Complete }) {
+  return <div className="listening-activity"><strong>Which expression do you hear?</strong><AudioTextSelectRenderer activityId={id.replace("item", "activity").replace(/\.\d+$/, "")} itemId={id} audio={audio} options={options} answer={answer} onSubmit={({ envelope, evaluation }) => onComplete(id, String(envelope.response), evaluation.outcome === "correct")} /></div>;
+}
+
+function SentenceBuilder({ item, onComplete }: { item: typeof builders[number]; onComplete: Complete }) {
+  return <SentenceBuildRenderer activityId="activity.a1.u01.l01.builder" itemId={item.id} prompt={item.prompt} tokens={item.tokens} answer={item.answer} onSubmit={({ envelope, evaluation }) => onComplete(item.id, Array.isArray(envelope.response) ? envelope.response.join(" ") : String(envelope.response), evaluation.outcome === "correct")} />;
+}
+
+function SpeakingPractice({ id, model, prompt, onComplete }: { id: string; model: string; prompt: string; onComplete: Complete }) {
+  const recorder = useRef<MediaRecorder | undefined>(undefined); const chunks = useRef<Blob[]>([]);
+  const [recording, setRecording] = useState(false); const [recordingUrl, setRecordingUrl] = useState<string>(); const [reviewed, setReviewed] = useState(false); const [micError, setMicError] = useState(false); const [checks, setChecks] = useState([false, false, false]);
+  const start = async () => { try { const stream = await navigator.mediaDevices.getUserMedia({ audio: true }); chunks.current = []; const next = new MediaRecorder(stream); recorder.current = next; next.ondataavailable = event => chunks.current.push(event.data); next.onstop = () => { setRecordingUrl(URL.createObjectURL(new Blob(chunks.current, { type: next.mimeType }))); stream.getTracks().forEach(track => track.stop()); }; next.start(); setRecording(true); } catch { setMicError(true); } };
+  useEffect(() => () => { if (recordingUrl) URL.revokeObjectURL(recordingUrl); }, [recordingUrl]);
+  const selfReview = ["The expression fits the situation", "I can understand my words", "I spoke it as one short group"];
+  return <div className="speaking-practice"><div><p className="learn-preview-kicker">Your turn</p><h3>{prompt}</h3><p>Say the phrase aloud. Your recording stays on this page and is never saved.</p></div><div className="lesson-inline-actions"><AudioControl label="Hear the model answer" onPlay={() => speak(cleanSpeech(model))} onPlaySlow={() => speak(cleanSpeech(model), { rate: 0.75 })} />{!recording ? <Button onClick={() => void start()}>Record my answer</Button> : <Button onClick={() => { recorder.current?.stop(); setRecording(false); }}>Stop recording</Button>}</div>{micError && <Feedback title="Microphone unavailable" tone="info">You can still say the phrase aloud and compare it with the model.</Feedback>}{recordingUrl && <audio controls src={recordingUrl} aria-label="Play your French recording" />}{(recordingUrl || micError) && !reviewed && <fieldset className="speaking-checklist"><legend>Review your speaking</legend>{selfReview.map((label, index) => <label key={label}><input type="checkbox" checked={checks[index]} onChange={() => setChecks(current => current.map((value, i) => i === index ? !value : value))} /> {label}</label>)}<Button variant="secondary" disabled={!checks.some(Boolean)} onClick={() => { setReviewed(true); void onComplete(id, "self-reviewed", checks.filter(Boolean).length >= 2); }}>Submit self-review</Button></fieldset>}{reviewed && <Feedback title="Speaking practice complete" tone="success">Model: <strong>{model}</strong> Aim for one clear, smooth phrase.</Feedback>}</div>;
+}
 
 export default function LessonFlowPreview() {
-  const lessonId = "lesson.fr-general.a1.first-contact.greetings";
-  const learner = useGuestLearner(lessonId);
-  const [activity, setActivity] = useState<Activity>();
-  const [item, setItem] = useState<Item>();
-  const [media, setMedia] = useState<MediaContent>();
-  const [selected, setSelected] = useState<string>();
-  const [saveError, setSaveError] = useState<string>();
-
-  useEffect(() => {
-    void Promise.all([
-      contentRepository.getActivity("activity.a1.u01.l01.context"),
-      contentRepository.getItems(["item.a1.u01.l01.meaning.001"]),
-      contentRepository.resolveMedia("media.image.a1.u01.l01.arrival.v3"),
-    ]).then(([nextActivity, items, nextMedia]) => { setActivity(nextActivity); setItem(items[0]); setMedia(nextMedia); });
-  }, []);
-
-  if (!activity || !item || !media) return <p role="status">Loading lesson preview…</p>;
-  const correct = item.payload.options?.find((option) => option.correct)?.text;
-  const answered = Boolean(selected);
-  const chooseOption = async (text: string) => {
-    setSelected(text);
-    speak(text.replace(/[.!?]\s*$/, "").trim());
-    if (learner.enrollment) {
-      try {
-        await learner.repository.submitAttempt({ learnerId: learner.enrollment.learnerId, enrollmentId: learner.enrollment.id, sessionId: "session_lesson-preview", lessonId, activityId: "activity.a1.u01.l01.meaning", itemId: item.id, response: text, correct: text === correct, idempotencyKey: crypto.randomUUID() });
-        setSaveError(undefined); await learner.refresh();
-      } catch { setSaveError("This attempt could not be saved. Your answer is still shown on this page."); }
-    }
-  };
-
-  return <article className="lesson-flow">
-    <header className="lesson-flow__header">
-      <Link to="/learn/a1/unit/first-contact">← Unit 1 outline</Link>
-      <p className="learn-preview-kicker">Lesson 1 · Beta preview</p>
-      <h1>Greetings and farewells</h1>
-      <p className="page-sub">I can choose and use an appropriate greeting or farewell.</p>
-      <Progress label="Lesson preview progress" value={1} max={5} />
-      {learner.enrollment ? <p className="lesson-save-status" role="status">Saved locally · {learner.progress?.attemptCount ?? 0} practice attempt{learner.progress?.attemptCount === 1 ? "" : "s"}</p> : <p className="lesson-save-status">Preview mode · <Link to="/learn/a1">Start A1 to save progress</Link></p>}
-      {learner.error && <Feedback title="Progress is not being saved" tone="error">{learner.error}</Feedback>}
-      {saveError && <Feedback title="Save failed" tone="error">{saveError}</Feedback>}
-    </header>
-
-    <section className="lesson-scene" aria-labelledby="scene-title">
-      <img src={media.uri} alt={media.accessibility_description ?? ""} />
-      <div className="lesson-scene__copy">
-        <p className="learn-preview-kicker">Step 1 · Meet the language</p>
-        <h2 id="scene-title">{activity.title.en}</h2>
-        <p>{activity.instructions.en}</p>
-        <div className="dialogue" aria-label="Morning greeting dialogue">
-          <div><strong>Sofia</strong><span>Bonjour !</span><AudioControl label="Play Sofia saying Bonjour" onPlay={() => speak("Bonjour !")} /></div>
-          <div><strong>Ira</strong><span>Bonjour ! Ça va ?</span><AudioControl label="Play Ira saying Bonjour, ça va" onPlay={() => speak("Bonjour ! Ça va ?")} /></div>
-        </div>
-      </div>
-    </section>
-
-    <div className="lesson-flow__grid">
-      <Card title="Notice the pattern">
-        <p>{activity.body?.en}</p>
-        <div className="phrase-contrast"><span><strong>Bonjour</strong><small>arriving · daytime</small></span><span><strong>Au revoir</strong><small>leaving · any time</small></span></div>
-      </Card>
-
-      <Card title="Try it">
-        <fieldset className="lesson-question">
-          <legend>{item.prompt.en}</legend>
-          <p className="lesson-audio-hint" id="answer-audio-hint">Choose an answer to hear it in a French voice.</p>
-          <div className="lesson-options">
-            {item.payload.options?.map((option) => <Button key={option.text} variant={selected === option.text ? "primary" : "secondary"} aria-describedby="answer-audio-hint" aria-pressed={selected === option.text} onClick={() => void chooseOption(option.text)}><span aria-hidden="true">🔊</span>{option.text}</Button>)}
-          </div>
-        </fieldset>
-        {answered && (selected === correct
-          ? <Feedback title="Correct" tone="success">Bonjour is the polite daytime greeting.</Feedback>
-          : <Feedback title="Try once more" tone="error">Use <strong>bonjour</strong> during the day. Bonsoir is for the evening; au revoir is for leaving.</Feedback>)}
-      </Card>
-    </div>
-
-    <footer className="lesson-flow__footer">
-      <div><strong>What comes next</strong><p>Listening contrast → sentence building → guided speaking → exit check</p></div>
-      <Button disabled>More activities coming soon</Button>
-    </footer>
+  const learner = useGuestLearner(lessonId, firstItemId); const sessionId = useRef<string | undefined>(undefined);
+  const [media, setMedia] = useState<MediaContent>(); const [phase, setPhase] = useState<keyof typeof dialogue>("arriving"); const [transcript, setTranscript] = useState(false); const [sceneAnswer, setSceneAnswer] = useState<string>(); const [completed, setCompleted] = useState<Set<string>>(new Set()); const [saveError, setSaveError] = useState<string>();
+  useEffect(() => { void contentRepository.resolveMedia("media.image.a1.u01.l01.arrival.v3").then(setMedia); }, []);
+  useEffect(() => () => { if (sessionId.current) void learner.repository.endSession(sessionId.current); }, [learner.repository]);
+  const complete: Complete = async (itemId, response, correct) => { setCompleted(current => new Set(current).add(itemId)); if (!learner.enrollment) return; try { if (!sessionId.current) sessionId.current = (await learner.repository.startSession(lessonId, "deep_link")).id; await learner.repository.submitAttempt({ learnerId: learner.enrollment.learnerId, enrollmentId: learner.enrollment.id, sessionId: sessionId.current, lessonId, activityId: itemId.replace("item", "activity").replace(/\.\d+$/, ""), itemId, response, correct, idempotencyKey: crypto.randomUUID() }); setSaveError(undefined); await learner.refresh(); } catch { setSaveError("This attempt could not be saved. You can keep using the lesson."); } };
+  const dialogueText = useMemo(() => dialogue[phase].map(line => line[1]).join(" "), [phase]);
+  if (!media) return <p role="status">Loading Lesson 1…</p>;
+  const selectPhase = (next: keyof typeof dialogue) => { setPhase(next); setTranscript(false); setSceneAnswer(undefined); };
+  const answerScene = (answer: string) => { setSceneAnswer(answer); void complete(`item.a1.u01.l01.notice.${phase}`, answer, answer === phase); };
+  return <article className="lesson-flow lesson-one">
+    <header className="lesson-flow__header"><Link to="/learn/a1/unit/first-contact">← Unit 1 outline</Link><p className="learn-preview-kicker">Unit 1 · Lesson 1 · 15 minutes</p><h1>Greetings and farewells</h1><p className="page-sub">I can choose and use an appropriate greeting or farewell.</p><Progress label="Lesson progress" value={completed.size} max={18} />{learner.enrollment ? <p className="lesson-save-status" role="status">Saved locally · {learner.progress?.attemptCount ?? 0} practice attempt{learner.progress?.attemptCount === 1 ? "" : "s"}</p> : <p className="lesson-save-status">Preview mode · <Link to="/learn/a1">Start A1 to save progress</Link></p>}{(learner.error || saveError) && <Feedback title="Progress is not being saved" tone="error">{learner.error ?? saveError}</Feedback>}</header>
+    <section className="lesson-stage lesson-scene" aria-labelledby="scene-title"><img src={media.uri} alt={media.accessibility_description ?? ""} /><div className="lesson-scene__copy"><p className="learn-preview-kicker">1 · Meet the language</p><h2 id="scene-title">A morning at language school</h2><div className="lesson-tabs" role="group" aria-label="Choose scene"><Button variant={phase === "arriving" ? "primary" : "secondary"} onClick={() => selectPhase("arriving")}>Arriving</Button><Button variant={phase === "leaving" ? "primary" : "secondary"} onClick={() => selectPhase("leaving")}>Leaving later</Button></div><p>Listen once. What is happening?</p><AudioControl label={`Play the ${phase} dialogue`} onPlay={() => speak(dialogueText)} onPlaySlow={() => speak(dialogueText, { rate: 0.75 })} /><div className="lesson-options"><Button variant={sceneAnswer === "arriving" ? "primary" : "secondary"} onClick={() => answerScene("arriving")}>They are arriving</Button><Button variant={sceneAnswer === "leaving" ? "primary" : "secondary"} onClick={() => answerScene("leaving")}>They are leaving</Button></div>{sceneAnswer && <Feedback title={sceneAnswer === phase ? "That’s right" : "Listen again"} tone={sceneAnswer === phase ? "success" : "error"}>{phase === "arriving" ? "Bonjour tells us they are meeting during the day." : "Au revoir and à demain tell us they are leaving."}</Feedback>}<Button variant="secondary" onClick={() => setTranscript(value => !value)}>{transcript ? "Hide transcript" : "Replay with transcript"}</Button>{transcript && <div className="dialogue" aria-label={`${phase} dialogue transcript`}>{dialogue[phase].map(([speaker, french, english]) => <div key={`${speaker}-${french}`}><strong>{speaker}</strong><span><b lang="fr">{french}</b><small>{english}</small></span><AudioControl label={`Play ${speaker} saying ${french}`} onPlay={() => speak(french)} onPlaySlow={() => speak(french, { rate: 0.75 })} /></div>)}</div>}</div></section>
+    <section className="lesson-stage" aria-labelledby="notice-title"><p className="learn-preview-kicker">2 · Notice the pattern</p><h2 id="notice-title">Arriving, leaving, and time of day</h2><div className="lesson-rule-grid"><Card title="When you arrive"><p><strong>Bonjour</strong> during the day. <strong>Bonsoir</strong> in the evening. <strong>Salut</strong> with people you know well.</p></Card><Card title="When you leave"><p><strong>Au revoir</strong> is always safe. <strong>Bonne journée</strong> and <strong>bonne soirée</strong> are wishes said as you leave.</p></Card></div><div className="phrase-guide">{phraseGuide.map(([fr, en, use]) => <button key={fr} onClick={() => speak(cleanSpeech(fr))}><span aria-hidden="true">🔊</span><strong lang="fr">{fr}</strong><span>{en}</span><small>{use}</small></button>)}</div></section>
+    <section className="lesson-stage" aria-labelledby="practice-title"><p className="learn-preview-kicker">3 · Choose for the situation</p><h2 id="practice-title">Which expression fits?</h2>{learner.history && <p className="lesson-history" role="status"><strong>Previously practiced</strong><span>{learner.history.attemptCount} attempt{learner.history.attemptCount === 1 ? "" : "s"} on the first question · Last practiced {new Date(learner.history.lastPracticedAt).toLocaleDateString(undefined, { month: "short", day: "numeric" })}</span></p>}<div className="activity-stack">{practice.map(item => <ChoiceActivity key={item.id} {...item} onComplete={complete} />)}</div></section>
+    <section className="lesson-stage" aria-labelledby="listen-title"><p className="learn-preview-kicker">4 · Train your ear</p><h2 id="listen-title">Hear the difference</h2><div className="activity-stack"><ListeningActivity id="item.a1.u01.l01.listening.001" audio="Bonjour !" options={["Bonjour !", "Bonne journée !", "Bonsoir !"]} answer="Bonjour !" onComplete={complete} /><ListeningActivity id="item.a1.u01.l01.listening.002" audio="À demain !" options={["Au revoir !", "À demain !", "À bientôt !"]} answer="À demain !" onComplete={complete} /><ListeningActivity id="item.a1.u01.l01.listening.003" audio="Bonne soirée !" options={["Bonsoir !", "Bonne soirée !", "Bonjour !"]} answer="Bonne soirée !" onComplete={complete} /><ListeningActivity id="item.a1.u01.l01.listening.004" audio="Salut !" options={["Salut !", "S'il vous plaît !", "Merci !"]} answer="Salut !" onComplete={complete} /></div></section>
+    <section className="lesson-stage" aria-labelledby="build-title"><p className="learn-preview-kicker">5 · Build it</p><h2 id="build-title">Put the phrase together</h2><div className="activity-stack">{builders.map(item => <SentenceBuilder key={item.id} item={item} onComplete={complete} />)}</div></section>
+    <section className="lesson-stage" aria-labelledby="speak-title"><p className="learn-preview-kicker">6 · Say it</p><h2 id="speak-title">Make the phrases yours</h2><div className="activity-stack"><SpeakingPractice id="item.a1.u01.l01.speaking.001" prompt="It is morning. Greet your teacher." model="Bonjour !" onComplete={complete} /><SpeakingPractice id="item.a1.u01.l01.speaking.002" prompt="You are leaving and will return tomorrow." model="Au revoir ! À demain !" onComplete={complete} /></div></section>
+    <section className="lesson-stage lesson-check" aria-labelledby="check-title"><p className="learn-preview-kicker">7 · Lesson check</p><h2 id="check-title">Can you use it without hints?</h2><ListeningActivity id="item.a1.u01.l01.exit.listening" audio="Bonsoir !" options={["Bonjour !", "Bonsoir !", "Bonne soirée !"]} answer="Bonsoir !" onComplete={complete} /><ChoiceActivity id="item.a1.u01.l01.exit.arrival" prompt="It is daytime. Choose a polite expression as you arrive." options={["Bonjour !", "Salut !", "Au revoir !"]} answer="Bonjour !" feedback="Bonjour is polite and appropriate for a daytime arrival." onComplete={complete} /><ChoiceActivity id="item.a1.u01.l01.exit.001" prompt="You leave during the day and wish someone well." options={["Bonne journée !", "Bonjour !", "Bonsoir !"]} answer="Bonne journée !" feedback="Bonne journée is the daytime wish used when leaving." onComplete={complete} /><TypedRecallRenderer activityId="activity.a1.u01.l01.exit" itemId="item.a1.u01.l01.exit.typed" prompt="Type ‘See you soon!’ in French." answers={["À bientôt !"]} policy={{ accents: "required", punctuation: "optional" }} onSubmit={({ envelope, evaluation }) => complete("item.a1.u01.l01.exit.typed", String(envelope.response), evaluation.outcome === "correct")} />{completed.size >= 18 ? <Feedback title="Lesson complete" tone="success">You have practised the core ways to greet and say goodbye. Next: Names and alphabet.</Feedback> : <p className="lesson-check__hint">Complete the activities above to finish the lesson.</p>}</section>
   </article>;
 }

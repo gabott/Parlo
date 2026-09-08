@@ -83,12 +83,28 @@ for (const c of colors) {
   texts.add(c.phrase);
 }
 // Compiled Learn content: reviewed phrases plus visible activity options.
-for (const phrase of unitOneBundle.phrases) texts.add(phrase.french.text);
+for (const phrase of unitOneBundle.phrases) {
+  texts.add(phrase.french.text);
+  texts.add(phrase.french.text.replace(/[.!?]\s*$/, "").trim());
+}
 for (const item of unitOneBundle.items) {
-  for (const option of item.payload.options ?? []) texts.add(option.text);
+  for (const option of item.payload.options ?? []) {
+    texts.add(option.text);
+    texts.add(option.text.replace(/[.!?]\s*$/, "").trim());
+  }
+  if (item.payload.audio_text) {
+    texts.add(item.payload.audio_text);
+    texts.add(item.payload.audio_text.replace(/[.!?]\s*$/, "").trim());
+  }
 }
 // Dialogue lines are authored as presentation copy until dialogue entities land.
 texts.add("Bonjour ! Ça va ?");
+texts.add("Ça va ?");
+texts.add("Ça va bien, merci.");
+texts.add("À demain ! Bonne journée !");
+texts.add("Au revoir ! À demain !");
+texts.add("Bonjour ! Bonjour ! Ça va ? Ça va bien, merci.");
+texts.add("Au revoir ! À demain ! Bonne journée !");
 
 // Remove the "…" placeholder so the voice doesn't stumble.
 function clean(t) {

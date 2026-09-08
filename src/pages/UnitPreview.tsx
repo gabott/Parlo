@@ -12,13 +12,13 @@ export default function UnitPreview() {
     <Link to="/learn/a1">← Back to A1</Link>
     <p className="learn-preview-kicker">A1 · Unit 1 · Draft</p>
     <h1>{bundle.unit.title.en}</h1>
-    <Feedback title="Outline only" tone="info">Lesson activities will become playable in a later increment after content review.</Feedback>
+    <Feedback title="Lesson 1 available" tone="info">Greetings and farewells is now available as a complete lesson preview. The remaining lessons are still outlines.</Feedback>
     <ol className="lesson-outline">
       {orderedLessons.map((lesson) => <li key={lesson.id}>
         <Card title={lesson.title.en}>
           <p>{lesson.objective.en}</p>
           <span className="tag">{lesson.matrix_id}</span> <span className="tag">{lesson.estimated_minutes} min</span> <span className="tag">{lesson.status.replace("_", " ")}</span>
-          {lesson.matrix_id === "A1-U01-L01" && <div className="lesson-outline__action"><Link to="/learn/a1/unit/first-contact/lesson/greetings">Try lesson beta</Link></div>}
+          {lesson.matrix_id === "A1-U01-L01" && <div className="lesson-outline__action"><Link to="/learn/a1/unit/first-contact/lesson/greetings">Start complete lesson</Link></div>}
         </Card>
       </li>)}
     </ol>

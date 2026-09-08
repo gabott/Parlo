@@ -41,6 +41,8 @@
 .v2-feedback__title { display: block; margin-bottom: var(--v2-space-1); }
 .v2-audio { background: var(--v2-color-brand-100); border: 1px solid transparent; border-radius: var(--v2-radius-sm); color: var(--v2-color-brand-700); cursor: pointer; font: 600 0.9rem/1.2 inherit; min-height: 2.75rem; padding: var(--v2-space-3) var(--v2-space-4); }
 .v2-audio:disabled { cursor: not-allowed; opacity: 0.52; }
+.v2-audio-group { align-items: center; display: inline-flex; flex-wrap: wrap; gap: var(--v2-space-2); }
+.v2-audio--slow { background: var(--v2-color-surface); border-color: var(--v2-color-border); }
 .v2-visually-hidden { border: 0; clip: rect(0 0 0 0); clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; white-space: nowrap; width: 1px; }
 @media (prefers-reduced-motion: reduce) {
   .v2-button, .v2-link, .v2-progress__bar { transition-duration: 0.01ms; }

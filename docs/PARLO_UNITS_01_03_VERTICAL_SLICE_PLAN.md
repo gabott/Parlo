@@ -491,6 +491,30 @@ Unit 1 records remain namespaced/versioned. A rollback hides `/learn` but does n
 - Adaptive Today plan.
 - Automated speech scoring.
 
+### Lesson-experience commitments
+
+The following are required learning-quality commitments, not optional enhancement ideas. Increment 6 cannot receive product approval until every Increment 5/6 item below is implemented and verified in Lesson 1. Increment 7 cannot receive product approval until the retained-learning items are implemented. Later lesson work must reuse these capabilities rather than silently dropping them.
+
+| Commitment | Delivery increment | Acceptance evidence |
+|---|---:|---|
+| Progressive transcript: audio first, French transcript second, English support on demand | 5–6 | Lesson 1 browser test covers each support level. |
+| Normal and learner-speed native audio with replay | 5–6 | Every required Lesson 1 audio control exposes both speeds and never silently uses browser speech when reviewed media exists. |
+| Error-specific feedback and an explicit retry state | 5 | Confusing options explain why they do not fit; retry emits a separate attempt. |
+| Direct contrast practice for `bonjour` / `bonne journée` and `bonsoir` / `bonne soirée` | 6 | Lesson 1 contains scored arrival-versus-leaving and day-versus-evening contrasts. |
+| Interactive dialogue participation as Sofia or Ira | 6 | Learner selects or speaks the missing turn in both arrival and leaving scenes. |
+| Pronunciation support using short sound/phrase groups | 6 | Core phrases provide model, segmented support, replay, and a non-judgmental self-check. |
+| Guided speaking self-review | 5–6 | Checklist covers situational fit, intelligibility, and phrase grouping; recordings remain local and disposable. |
+| Delayed no-hint recall within Lesson 1 | 6 | An earlier phrase returns after intervening activities without transcript or meaning support. |
+| New-context transfer challenge | 6 | Learner completes an unseen shop, café, classroom, or neighbour exchange. |
+| Confidence input (`Easy`, `Unsure`, `Hard`) | 7 | Confidence is stored as evidence metadata and influences review priority without overriding performance. |
+| Meaningful completion summary | 6–7 | Summary shows ability gained, strengths, phrases to revisit, and a recommended next action—not points alone. |
+| Scheduled post-lesson review | 7 | Incorrect or low-confidence expressions enter a deterministic review queue. |
+| Cross-lesson retrieval | 7 and later content | Lesson 2 naturally retrieves one or two Lesson 1 phrases; automated content checks require planned retrieval links. |
+| Consistent memory cues | 6 and later content | Sun, moon, arrival, friendship, and departure cues follow the illustration guide and have accessible alternatives. |
+| Capability-based celebration | 6 | Completion copy states the real-world interaction the learner can now perform. |
+
+Current Lesson 1 UI work is a prototype of several rows above; presence in the prototype does not mark a commitment complete. Completion requires the reusable renderer/orchestrator implementation and its stated acceptance evidence.
+
 ## 12. Increment 7 — Evidence, mastery, review, and mistakes
 
 ### Goal

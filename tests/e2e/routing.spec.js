@@ -69,7 +69,7 @@ test("compiled A1 manifest and lazy Unit 1 bundle drive Learn routes", async ({ 
   await expect(page).toHaveURL(/\/learn\/a1\/unit\/first-contact$/);
   await expect(page.getByRole("heading", { name: "French sounds and first contact" })).toBeVisible();
   await expect(page.locator(".lesson-outline > li")).toHaveCount(7);
-  await expect(page.getByText(/8 initial phrases · 5 initial items/)).toBeVisible();
+  await expect(page.getByText(/10 initial phrases · 14 initial items/)).toBeVisible();
 
   await page.reload();
   await expect(page.getByRole("heading", { name: "Greetings and farewells" })).toBeVisible();
@@ -79,15 +79,32 @@ test("Lesson 1 review flow presents context, audio, and explanatory feedback", a
   await page.goto("/learn/a1/unit/first-contact/lesson/greetings");
   await expect(page.getByRole("heading", { name: "Greetings and farewells" })).toBeVisible();
   await expect(page.getByRole("img", { name: /Sofia and Ira greet each other/ })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Play Sofia saying Bonjour" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Bonsoir !" })).toHaveAccessibleDescription(/Choose an answer to hear it in a French voice/);
+  await page.getByRole("button", { name: "Replay with transcript" }).click();
+  await expect(page.getByRole("button", { name: "Play Sofia saying Bonjour !", exact: true })).toBeVisible();
+  const firstPractice = page.getByRole("group", { name: "It is 9:00 a.m. You greet your teacher." });
+  await firstPractice.getByRole("button", { name: "Bonsoir !" }).click();
+  await expect(firstPractice.getByRole("alert")).toContainText("evening greeting");
+  expect(await page.evaluate(() => window.__parloAudioPlays.at(-1))).toMatch(/\/audio\/a6daa39c0\.mp3$/);
+  await firstPractice.getByRole("button", { name: "Bonjour !" }).click();
+  await expect(firstPractice.getByRole("status")).toContainText("Bonjour is the polite daytime greeting");
+  expect(await page.evaluate(() => window.__parloAudioPlays.at(-1))).toMatch(/\/audio\/a49e315a5\.mp3$/);
+});
 
-  await page.getByRole("button", { name: "Bonsoir !" }).click();
-  await expect(page.getByRole("alert")).toContainText("Use bonjour during the day");
-  expect(await page.evaluate(() => window.__parloAudioPlays.at(-1))).toMatch(/\/audio\/a9650c9c1\.mp3$/);
-  await page.getByRole("button", { name: "Bonjour !" }).click();
-  await expect(page.getByRole("status")).toContainText("Bonjour is the polite daytime greeting");
-  expect(await page.evaluate(() => window.__parloAudioPlays.at(-1))).toMatch(/\/audio\/a964860a4\.mp3$/);
+test("complete Lesson 1 exposes listening, building, speaking, and exit stages", async ({ page }) => {
+  await page.goto("/learn/a1/unit/first-contact/lesson/greetings");
+  await expect(page.getByRole("heading", { name: "Hear the difference" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Play the hidden French expression", exact: true })).toHaveCount(5);
+  await expect(page.getByRole("button", { name: "Play the hidden French expression slowly" })).toHaveCount(5);
+  await expect(page.getByRole("heading", { name: "Put the phrase together" })).toBeVisible();
+  const builder = page.locator(".sentence-builder").first();
+  await builder.getByRole("button", { name: "Bonne" }).click();
+  await builder.getByRole("button", { name: "journée" }).click();
+  await builder.getByRole("button", { name: "!" }).click();
+  await builder.getByRole("button", { name: "Check sentence" }).click();
+  await expect(builder.getByRole("status")).toContainText("Bonne journée");
+  await expect(page.getByRole("heading", { name: "Make the phrases yours" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Record my answer" })).toHaveCount(2);
+  await expect(page.getByRole("heading", { name: "Can you use it without hints?" })).toBeVisible();
 });
 
 test("guest enrollment saves Lesson 1 attempts across refresh and can be deleted", async ({ page }) => {
@@ -95,10 +112,12 @@ test("guest enrollment saves Lesson 1 attempts across refresh and can be deleted
   await page.getByRole("button", { name: "Start A1" }).click();
   await expect(page.getByRole("heading", { name: "A1 is active on this device" })).toBeVisible();
   await page.goto("/learn/a1/unit/first-contact/lesson/greetings");
-  await page.getByRole("button", { name: "Bonjour !" }).click();
+  await page.getByRole("group", { name: "It is 9:00 a.m. You greet your teacher." }).getByRole("button", { name: "Bonjour !" }).click();
   await expect(page.getByText("Saved locally · 1 practice attempt")).toBeVisible();
   await page.reload();
   await expect(page.getByText("Saved locally · 1 practice attempt")).toBeVisible();
+  await expect(page.getByText("Previously practiced")).toBeVisible();
+  await expect(page.getByText(/1 attempt on the first question · Last practiced/)).toBeVisible();
   await page.goto("/learn/a1");
   await page.getByRole("button", { name: "Delete local progress" }).click();
   await expect(page.getByRole("group", { name: "Confirm local progress deletion" })).toBeVisible();

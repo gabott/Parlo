@@ -12,7 +12,7 @@ export function LocalProgressPanel() {
   if (loading) return <p role="status">Checking local progress…</p>;
   return <section className="local-progress" aria-labelledby="local-progress-title">
     <div><p className="learn-preview-kicker">Private guest progress</p><h2 id="local-progress-title">{enrollment ? "A1 is active on this device" : "Ready to start A1?"}</h2><p>{enrollment ? "Your lesson attempts and progress are stored only in this browser." : "Start explicitly to save lesson progress locally. No account is required."}</p></div>
-    {error && <Feedback title="Storage unavailable" tone="error">{error}</Feedback>}
+    {error && <Feedback title="Storage unavailable" tone="error"><p>{error}</p><div className="local-progress__actions"><Button variant="secondary" onClick={() => void refresh()}>Try storage again</Button><Button variant="secondary" onClick={() => void remove()}>Clear local data</Button></div></Feedback>}
     {!enrollment && !error && <Button onClick={start}>Start A1</Button>}
     {enrollment && <div className="local-progress__actions"><Button variant="secondary" onClick={exportData}>Export progress</Button>{!confirmingDelete ? <Button variant="secondary" onClick={() => setConfirmingDelete(true)}>Delete local progress</Button> : <div className="local-progress__confirm" role="group" aria-label="Confirm local progress deletion"><strong>Delete all progress on this device?</strong><Button onClick={remove}>Yes, delete</Button><Button variant="secondary" onClick={() => setConfirmingDelete(false)}>Cancel</Button></div>}</div>}
     {notice && <Feedback title="Local progress" tone="info">{notice}</Feedback>}

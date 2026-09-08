@@ -56,7 +56,7 @@ lessons:
     objective: { en: I can choose and use an appropriate greeting or farewell. }
     prerequisite_lesson_ids: []
     concept_ids: [concept.pragmatics.greeting-time, concept.pragmatics.formality-awareness]
-    ordered_activity_ids: [activity.a1.u01.l01.context, activity.a1.u01.l01.meaning, activity.a1.u01.l01.builder, activity.a1.u01.l01.exit]
+    ordered_activity_ids: [activity.a1.u01.l01.context, activity.a1.u01.l01.meaning, activity.a1.u01.l01.listening, activity.a1.u01.l01.builder, activity.a1.u01.l01.speaking, activity.a1.u01.l01.exit]
     estimated_minutes: 15
     difficulty: 1
     content_role: required
@@ -226,10 +226,20 @@ phrases:
     meaning: { en: See you tomorrow! }
     function: farewell_tomorrow
   - <<: *phrase_base
+    id: phrase.farewell.a-bientot
+    french: { text: À bientôt !, language: fr, variety: neutral, register: neutral }
+    meaning: { en: See you soon! }
+    function: farewell_soon
+  - <<: *phrase_base
     id: phrase.farewell.bonne-journee
     french: { text: Bonne journée !, language: fr, variety: neutral, register: neutral }
     meaning: { en: Have a good day! }
     function: daytime_leaving_wish
+  - <<: *phrase_base
+    id: phrase.farewell.bonne-soiree
+    french: { text: Bonne soirée !, language: fr, variety: neutral, register: neutral }
+    meaning: { en: Have a good evening! }
+    function: evening_leaving_wish
   - <<: *phrase_base
     id: phrase.classroom.i-do-not-understand
     status: draft
@@ -268,13 +278,25 @@ activities:
     content_role: required
     title: { en: Choose the appropriate greeting }
     instructions: { en: Select the best expression for each situation. }
-    item_ids: [item.a1.u01.l01.meaning.001, item.a1.u01.l01.meaning.002, item.a1.u01.l01.meaning.003]
+    item_ids: [item.a1.u01.l01.meaning.001, item.a1.u01.l01.meaning.002, item.a1.u01.l01.meaning.003, item.a1.u01.l01.meaning.004, item.a1.u01.l01.meaning.005, item.a1.u01.l01.meaning.006]
+  - <<: *activity_base
+    id: activity.a1.u01.l01.listening
+    kind: audio_text_select
+    title: { en: Hear the difference }
+    instructions: { en: "Listen, then choose the expression you hear." }
+    item_ids: [item.a1.u01.l01.listening.001, item.a1.u01.l01.listening.002, item.a1.u01.l01.listening.003, item.a1.u01.l01.listening.004]
   - <<: *activity_base
     id: activity.a1.u01.l01.builder
     kind: sentence_build
     title: { en: Build the expression }
     instructions: { en: Put the tokens in the correct order. }
-    item_ids: [item.a1.u01.l01.builder.001]
+    item_ids: [item.a1.u01.l01.builder.001, item.a1.u01.l01.builder.002, item.a1.u01.l01.builder.003]
+  - <<: *activity_base
+    id: activity.a1.u01.l01.speaking
+    kind: guided_speaking
+    title: { en: Say it }
+    instructions: { en: "Record a short greeting and farewell, then compare them with the models." }
+    item_ids: []
   - <<: *activity_base
     id: activity.a1.u01.l01.exit
     kind: meaning_select
@@ -302,6 +324,14 @@ items:
         - { text: Au revoir !, correct: false }
   - <<: *selection_base
     id: item.a1.u01.l01.meaning.002
+    prompt: { en: You leave a store. }
+    payload:
+      options:
+        - { text: Au revoir !, correct: true }
+        - { text: Bonjour !, correct: false }
+        - { text: Salut !, correct: false }
+  - <<: *selection_base
+    id: item.a1.u01.l01.meaning.003
     prompt: { en: You greet a close friend informally. }
     concept_ids: [concept.pragmatics.formality-awareness]
     payload:
@@ -310,13 +340,73 @@ items:
         - { text: Bonne journée !, correct: false }
         - { text: Au revoir !, correct: false }
   - <<: *selection_base
-    id: item.a1.u01.l01.meaning.003
+    id: item.a1.u01.l01.meaning.004
     prompt: { en: It is evening and you enter a restaurant. }
     payload:
       options:
         - { text: Bonsoir !, correct: true }
         - { text: Bonne journée !, correct: false }
         - { text: À demain !, correct: false }
+  - <<: *selection_base
+    id: item.a1.u01.l01.meaning.005
+    prompt: { en: You will see your classmate tomorrow. }
+    payload:
+      options:
+        - { text: À demain !, correct: true }
+        - { text: À bientôt !, correct: false }
+        - { text: Bonjour !, correct: false }
+  - <<: *selection_base
+    id: item.a1.u01.l01.meaning.006
+    prompt: { en: You leave during the day and wish someone well. }
+    payload:
+      options:
+        - { text: Bonne journée !, correct: true }
+        - { text: Bonjour !, correct: false }
+        - { text: Bonsoir !, correct: false }
+  - <<: *selection_base
+    id: item.a1.u01.l01.listening.001
+    activity_kind: audio_text_select
+    prompt: { en: Listen and choose what you hear. }
+    evidence_mode: recognition_supported
+    payload:
+      audio_text: Bonjour !
+      options:
+        - { text: Bonjour !, correct: true }
+        - { text: Bonne journée !, correct: false }
+        - { text: Bonsoir !, correct: false }
+  - <<: *selection_base
+    id: item.a1.u01.l01.listening.002
+    activity_kind: audio_text_select
+    prompt: { en: Listen and choose what you hear. }
+    evidence_mode: recognition_supported
+    payload:
+      audio_text: À demain !
+      options:
+        - { text: Au revoir !, correct: false }
+        - { text: À demain !, correct: true }
+        - { text: À bientôt !, correct: false }
+  - <<: *selection_base
+    id: item.a1.u01.l01.listening.003
+    activity_kind: audio_text_select
+    prompt: { en: Listen and choose what you hear. }
+    evidence_mode: recognition_supported
+    payload:
+      audio_text: Bonne soirée !
+      options:
+        - { text: Bonsoir !, correct: false }
+        - { text: Bonne soirée !, correct: true }
+        - { text: Bonjour !, correct: false }
+  - <<: *selection_base
+    id: item.a1.u01.l01.listening.004
+    activity_kind: audio_text_select
+    prompt: { en: Listen and choose what you hear. }
+    evidence_mode: recognition_supported
+    payload:
+      audio_text: Salut !
+      options:
+        - { text: Salut !, correct: true }
+        - { text: S'il vous plaît !, correct: false }
+        - { text: Merci !, correct: false }
   - id: item.a1.u01.l01.builder.001
     revision: 1
     status: in_review
@@ -324,12 +414,38 @@ items:
     activity_kind: sentence_build
     cefr: a1
     difficulty: 1
-    prompt: { en: "Build ‘Can you repeat, please?’" }
-    concept_ids: [concept.strategy.communication-repair]
+    prompt: { en: "Build ‘Have a good day!’" }
+    concept_ids: [concept.pragmatics.greeting-time]
     evidence_mode: recall_supported
     payload:
-      tokens: [Pouvez-vous, répéter, ",", "s'il", vous, plaît, "?"]
-      accepted_answers: ["Pouvez-vous répéter, s'il vous plaît?"]
+      tokens: [Bonne, journée, "!"]
+      accepted_answers: ["Bonne journée!"]
+  - id: item.a1.u01.l01.builder.002
+    revision: 1
+    status: in_review
+    review: *pending_review
+    activity_kind: sentence_build
+    cefr: a1
+    difficulty: 1
+    prompt: { en: "Build ‘See you tomorrow!’" }
+    concept_ids: [concept.pragmatics.greeting-time]
+    evidence_mode: recall_supported
+    payload:
+      tokens: [À, demain, "!"]
+      accepted_answers: ["À demain!"]
+  - id: item.a1.u01.l01.builder.003
+    revision: 1
+    status: in_review
+    review: *pending_review
+    activity_kind: sentence_build
+    cefr: a1
+    difficulty: 1
+    prompt: { en: Build a daytime greeting. }
+    concept_ids: [concept.pragmatics.greeting-time]
+    evidence_mode: recall_supported
+    payload:
+      tokens: [Bonjour, "!"]
+      accepted_answers: ["Bonjour!"]
   - <<: *selection_base
     id: item.a1.u01.l01.exit.001
     prompt: { en: You leave during the day and wish someone well. }

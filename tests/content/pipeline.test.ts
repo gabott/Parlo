@@ -44,6 +44,8 @@ describe("content pipeline", () => {
   it("preserves contractions as single sentence-builder tokens", async () => {
     const content = await validContent();
     const builder = content.items.find(({ activity_kind }: { activity_kind: string }) => activity_kind === "sentence_build");
+    builder.payload.tokens = ["s'il", "vous", "plaît", "?"];
+    builder.payload.accepted_answers = ["s'il vous plaît?"];
     expect(builder.payload.tokens).toContain("s'il");
     expect(await validateContent(content, "contraction.yaml")).toEqual([]);
   });

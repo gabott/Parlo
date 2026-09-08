@@ -18,7 +18,7 @@ import { audioKey } from "./audioKey";
 let currentAudio = null;
 
 // Speak a piece of French text aloud.
-export function speak(text) {
+export function speak(text, { rate = 1, allowBrowserFallback = true } = {}) {
   if (!text) return;
 
   // Stop anything already playing (audio or browser voice).
@@ -34,12 +34,13 @@ export function speak(text) {
   // BASE_URL keeps this working both locally and when hosted.
   const file = `${import.meta.env.BASE_URL}audio/${audioKey(text)}.mp3`;
   const audio = new Audio(file);
+  audio.playbackRate = rate;
   currentAudio = audio;
   let fallbackStarted = false;
   const fallbackOnce = () => {
     if (fallbackStarted) return;
     fallbackStarted = true;
-    browserFallback(text);
+    if (allowBrowserFallback) browserFallback(text, rate);
   };
 
   // If the MP3 is missing, fall back to the browser voice.
@@ -48,12 +49,12 @@ export function speak(text) {
 }
 
 // --- 2) Browser built-in voice (used only if MP3 missing) ---
-function browserFallback(text) {
+function browserFallback(text, rate = 0.9) {
   if (!("speechSynthesis" in window)) return;
 
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "fr-FR";   // French pronunciation
-  utterance.rate = 0.9;       // slightly slower — easier for beginners
+  utterance.rate = rate;
 
   // Try to pick an actual French voice if one is installed.
   const frenchVoice = window.speechSynthesis
