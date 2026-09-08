@@ -27,6 +27,13 @@ const listening = [
   ["001", "Bonjour !", ["Bonjour !", "Bonne journée !", "Bonsoir !"]], ["002", "À demain !", ["Au revoir !", "À demain !", "À bientôt !"]],
   ["003", "Bonne soirée !", ["Bonsoir !", "Bonne soirée !", "Bonjour !"]], ["004", "Salut !", ["Salut !", "S'il vous plaît !", "Merci !"]],
 ] as const;
+const listeningGuidance: Record<string, string> = {
+  "Bonjour !": "Bonjour means ‘Hello’ or ‘Good morning.’ Use it to greet someone during the day.",
+  "À demain !": "À demain means ‘See you tomorrow.’ Use it when leaving someone you expect to see the next day.",
+  "Bonne soirée !": "Bonne soirée means ‘Have a good evening.’ It is a friendly wish used when leaving in the evening.",
+  "Salut !": "Salut means ‘Hi’ or ‘Bye.’ Use it informally with friends and people you know well.",
+  "Bonsoir !": "Bonsoir means ‘Good evening.’ Use it to greet someone in the evening.",
+};
 const builders = [
   ["001", "Build ‘Have a good day!’", ["journée", "!", "Bonne"], "Bonne journée !"],
   ["002", "Build ‘See you tomorrow!’", ["demain", "!", "À"], "À demain !"],
@@ -38,7 +45,7 @@ function Choice({ id, prompt, options, answer, feedback, onComplete }: { id: str
   return <MeaningSelectRenderer activityId={id.replace("item", "activity").replace(/\.\w+$/, "")} itemId={id} prompt={prompt} options={options} answer={answer} feedback={feedback} onSubmit={({ envelope, evaluation }) => onComplete(id, String(envelope.response), evaluation.outcome === "correct")} />;
 }
 function Listening({ id, audio, options, onComplete, assessment = false }: { id: string; audio: string; options: readonly string[]; onComplete: Complete; assessment?: boolean }) {
-  return <div className="listening-activity"><strong>Which expression do you hear?</strong><AudioTextSelectRenderer activityId="activity.a1.u01.l01.listening" itemId={id} audio={audio} options={options} answer={audio} assessment={assessment} onSubmit={({ envelope, evaluation }) => onComplete(id, String(envelope.response), evaluation.outcome === "correct")} /></div>;
+  return <div className="listening-activity"><strong>Which expression do you hear?</strong><AudioTextSelectRenderer activityId="activity.a1.u01.l01.listening" itemId={id} audio={audio} options={options} answer={audio} assessment={assessment} feedback={{ [audio]: listeningGuidance[audio] }} onSubmit={({ envelope, evaluation }) => onComplete(id, String(envelope.response), evaluation.outcome === "correct")} /></div>;
 }
 function Builder({ item, onComplete }: { item: typeof builders[number]; onComplete: Complete }) {
   return <SentenceBuildRenderer activityId="activity.a1.u01.l01.builder" itemId={`item.a1.u01.l01.builder.${item[0]}`} prompt={item[1]} tokens={item[2]} answer={item[3]} onSubmit={({ envelope, evaluation }) => onComplete(`item.a1.u01.l01.builder.${item[0]}`, Array.isArray(envelope.response) ? envelope.response.join(" ") : String(envelope.response), evaluation.outcome === "correct")} />;

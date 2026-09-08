@@ -41,6 +41,13 @@ describe("activity renderers", () => {
     expect(screen.getByRole("button", { name: "Play the hidden French expression" })).toBeVisible();
     expect(screen.getByRole("button", { name: "Play the hidden French expression slowly" })).toBeVisible();
   });
+  it("reinforces listening meaning and usage after a correct answer", async () => {
+    const user = userEvent.setup();
+    render(<AudioTextSelectRenderer {...base} audio="À demain !" options={["Au revoir !", "À demain !"]} answer="À demain !" feedback={{ "À demain !": "À demain means ‘See you tomorrow.’ Use it when leaving someone you will see the next day." }} onSubmit={() => undefined} />);
+    await user.click(screen.getByRole("button", { name: "À demain !" }));
+    expect(screen.getByRole("status")).toHaveTextContent("See you tomorrow");
+    expect(screen.getByRole("status")).toHaveTextContent("when leaving");
+  });
   it("provides a transcript fallback for learning but blocks an assessment with missing audio", () => {
     const { rerender } = render(<AudioTextSelectRenderer {...base} audio="Bonjour" audioAvailable={false} options={["Bonjour", "Bonsoir"]} answer="Bonjour" onSubmit={() => undefined} />);
     expect(screen.getByRole("status")).toHaveTextContent("accessible transcript");
