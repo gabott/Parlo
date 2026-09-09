@@ -119,6 +119,8 @@ test("complete Lesson 1 exposes listening, building, speaking, and exit stages",
     for (const token of tokens) await builder.locator(".sentence-builder__tokens").getByRole("button", { name: token, exact: true }).click();
     await builder.getByRole("button", { name: "Check sentence" }).click();
   }
+  await page.getByRole("textbox", { name: /See you tomorrow/ }).fill("Au revoir"); await page.getByRole("button", { name: "Check answer" }).click();
+  await page.getByRole("button", { name: "Try again" }).click();
   await page.getByRole("textbox", { name: /See you tomorrow/ }).fill("À demain"); await page.getByRole("button", { name: "Check answer" }).click();
   await page.getByRole("group", { name: /Choose your final words/ }).getByRole("button", { name: "Bonne soirée !" }).click();
   await page.getByRole("button", { name: /Continue to Speak/ }).click();

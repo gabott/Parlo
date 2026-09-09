@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import type { ActivityKind, ResponseEnvelope, ScoredResponse, TextScoringPolicy } from "../../domain/attempts";
 import { scoreChoice, scoreFrenchText } from "../../domain/attempts";
 import { AudioControl, Button, Feedback } from "../../design-system";
@@ -32,9 +32,10 @@ export function SentenceBuildRenderer(props: BaseProps & { prompt: string; token
 }
 
 export function TypedRecallRenderer(props: BaseProps & { prompt: string; answers: readonly string[]; policy: TextScoringPolicy; kind?: "typed_recall" | "dictation" }) {
-  const id = useId(); const [value, setValue] = useState(""); const [result, setResult] = useState<ScoredResponse>(); const kind = props.kind ?? "typed_recall";
+  const id = useId(); const inputRef = useRef<HTMLInputElement>(null); const [value, setValue] = useState(""); const [result, setResult] = useState<ScoredResponse>(); const kind = props.kind ?? "typed_recall";
   const submit = async () => { const evaluation = scoreFrenchText(value, props.answers, props.policy); setResult(evaluation); await props.onSubmit({ envelope: envelope(props, kind, value), evaluation }); };
-  return <div className="activity-renderer typed-recall"><label htmlFor={id}>{props.prompt}</label><input id={id} lang="fr" value={value} onChange={event => setValue(event.target.value)} /><Button disabled={!value.trim() || Boolean(result)} onClick={() => void submit()}>Check answer</Button>{result && <Feedback title={result.outcome === "correct" ? "Correct" : result.outcome === "needs_review" ? "Review needed" : "Keep practising"} tone={result.outcome === "correct" ? "success" : "error"}>{result.outcome === "correct" ? "Your French matches the model." : `Model: ${props.answers[0]}`}</Feedback>}</div>;
+  const retry = () => { setValue(""); setResult(undefined); inputRef.current?.focus(); };
+  return <div className="activity-renderer typed-recall"><label htmlFor={id}>{props.prompt}</label><input ref={inputRef} id={id} lang="fr" value={value} disabled={result?.outcome === "correct"} onChange={event => setValue(event.target.value)} /><div className="lesson-inline-actions"><Button disabled={!value.trim() || Boolean(result)} onClick={() => void submit()}>Check answer</Button>{result && result.outcome !== "correct" && <Button variant="secondary" onClick={retry}>Try again</Button>}</div>{result && <Feedback title={result.outcome === "correct" ? "Correct" : result.outcome === "needs_review" ? "Review needed" : "Keep practising"} tone={result.outcome === "correct" ? "success" : "error"}>{result.outcome === "correct" ? "Your French matches the model." : `Model: ${props.answers[0]}`}</Feedback>}</div>;
 }
 
 export function DictationRenderer(props: BaseProps & { audio: string; answers: readonly string[]; policy: TextScoringPolicy }) { return <div className="activity-renderer"><AudioControl label="Play dictation" onPlay={() => speak(props.audio)} onPlaySlow={() => speak(props.audio, { rate: 0.75 })} /><TypedRecallRenderer {...props} kind="dictation" prompt="Type what you hear." /></div>; }

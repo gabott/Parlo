@@ -36,6 +36,18 @@ describe("activity renderers", () => {
     await user.click(screen.getByRole("checkbox", { name: /fits the situation/ })); await user.click(screen.getByRole("checkbox", { name: /understand my words/ })); await user.click(screen.getByRole("button", { name: "Submit self-review" }));
     expect(speaking.mock.calls[0][0]).toMatchObject({ envelope: { kind: "guided_speaking" }, evaluation: { outcome: "correct" } });
   });
+  it("lets typed recall recover from a wrong answer", async () => {
+    const user = userEvent.setup(); const onSubmit = vi.fn();
+    render(<TypedRecallRenderer {...base} prompt="Type tomorrow" answers={["À demain !"]} policy={{ accents: "required", punctuation: "optional" }} onSubmit={onSubmit} />);
+    const input = screen.getByRole("textbox", { name: "Type tomorrow" });
+    await user.type(input, "Au revoir"); await user.click(screen.getByRole("button", { name: "Check answer" }));
+    expect(screen.getByRole("button", { name: "Try again" })).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Try again" }));
+    expect(input).toHaveValue(""); expect(input).toHaveFocus();
+    await user.type(input, "À demain"); await user.click(screen.getByRole("button", { name: "Check answer" }));
+    expect(screen.getByRole("status")).toHaveTextContent("Correct");
+    expect(onSubmit).toHaveBeenCalledTimes(2);
+  });
   it("exposes normal and slow audio controls", () => {
     render(<AudioTextSelectRenderer {...base} audio="Bonjour" options={["Bonjour", "Bonsoir"]} answer="Bonjour" onSubmit={() => undefined} />);
     expect(screen.getByRole("button", { name: "Play the hidden French expression" })).toBeVisible();
