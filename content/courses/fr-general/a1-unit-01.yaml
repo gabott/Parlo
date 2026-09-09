@@ -63,7 +63,7 @@ lessons:
   - &lesson_base
     id: lesson.fr-general.a1.first-contact.names-alphabet
     revision: 1
-    status: draft
+    status: in_review
     review: *pending_review
     unit_id: unit.fr-general.a1.first-contact
     matrix_id: A1-U01-L02
@@ -71,8 +71,8 @@ lessons:
     objective: { en: I can recognize French letter names and spell a first name. }
     prerequisite_lesson_ids: [lesson.fr-general.a1.first-contact.greetings]
     concept_ids: [concept.orthography.french-alphabet]
-    ordered_activity_ids: []
-    estimated_minutes: 18
+    ordered_activity_ids: [activity.a1.u01.l02.context, activity.a1.u01.l02.letters, activity.a1.u01.l02.names, activity.a1.u01.l02.phrases, activity.a1.u01.l02.exit]
+    estimated_minutes: 20
     difficulty: 1
     content_role: required
   - <<: *lesson_base
@@ -304,6 +304,44 @@ activities:
     title: { en: Lesson check }
     instructions: { en: Choose the best answer without hints. }
     item_ids: [item.a1.u01.l01.exit.001]
+  - <<: *activity_base
+    id: activity.a1.u01.l02.context
+    lesson_id: lesson.fr-general.a1.first-contact.names-alphabet
+    kind: presentation
+    title: { en: A name at the class desk }
+    instructions: { en: Listen for the name and its spelling. }
+    body: { en: "Use Comment ça s'écrit ? to ask how a word or name is spelled." }
+    item_ids: []
+    media_ids: [media.image.a1.u01.l02.reception.v1]
+  - <<: *activity_base
+    id: activity.a1.u01.l02.letters
+    lesson_id: lesson.fr-general.a1.first-contact.names-alphabet
+    kind: audio_text_select
+    title: { en: Hear French letter names }
+    instructions: { en: Listen and choose the written letter. }
+    item_ids: [item.a1.u01.l02.letter.g, item.a1.u01.l02.letter.i, item.a1.u01.l02.letter.p, item.a1.u01.l02.letter.u]
+  - <<: *activity_base
+    id: activity.a1.u01.l02.names
+    lesson_id: lesson.fr-general.a1.first-contact.names-alphabet
+    kind: typed_recall
+    title: { en: Write a spelled name }
+    instructions: { en: Listen to the ordered letters and type the name. }
+    item_ids: [item.a1.u01.l02.name.lea, item.a1.u01.l02.name.amir, item.a1.u01.l02.name.sofia]
+  - <<: *activity_base
+    id: activity.a1.u01.l02.phrases
+    lesson_id: lesson.fr-general.a1.first-contact.names-alphabet
+    kind: sentence_build
+    title: { en: Ask about spelling }
+    instructions: { en: Build and retrieve the useful spelling phrases. }
+    item_ids: [item.a1.u01.l02.phrase.build, item.a1.u01.l02.phrase.recall]
+  - <<: *activity_base
+    id: activity.a1.u01.l02.exit
+    lesson_id: lesson.fr-general.a1.first-contact.names-alphabet
+    kind: mixed_review
+    content_role: assessment
+    title: { en: Names and alphabet check }
+    instructions: { en: Recognize letters and spell a name without learning cues. }
+    item_ids: [item.a1.u01.l02.exit.g, item.a1.u01.l02.exit.u, item.a1.u01.l02.exit.phrase, item.a1.u01.l02.exit.name]
 
 items:
   - &selection_base
@@ -455,6 +493,89 @@ items:
         - { text: Bonne journée !, correct: true }
         - { text: Bonjour !, correct: false }
         - { text: Bonsoir !, correct: false }
+  - <<: *selection_base
+    id: item.a1.u01.l02.letter.g
+    activity_kind: audio_text_select
+    concept_ids: [concept.orthography.french-alphabet]
+    prompt: { en: Which letter do you hear? }
+    payload: { audio_text: G, options: [{ text: G, correct: true }, { text: J, correct: false }] }
+  - <<: *selection_base
+    id: item.a1.u01.l02.letter.i
+    activity_kind: audio_text_select
+    concept_ids: [concept.orthography.french-alphabet]
+    prompt: { en: Which letter do you hear? }
+    payload: { audio_text: I, options: [{ text: E, correct: false }, { text: I, correct: true }] }
+  - <<: *selection_base
+    id: item.a1.u01.l02.letter.p
+    activity_kind: audio_text_select
+    concept_ids: [concept.orthography.french-alphabet]
+    prompt: { en: Which letter do you hear? }
+    payload: { audio_text: P, options: [{ text: B, correct: false }, { text: P, correct: true }] }
+  - <<: *selection_base
+    id: item.a1.u01.l02.letter.u
+    activity_kind: audio_text_select
+    concept_ids: [concept.orthography.french-alphabet]
+    prompt: { en: Which letter do you hear? }
+    payload: { audio_text: U, options: [{ text: Q, correct: false }, { text: U, correct: true }] }
+  - &typed_l02
+    id: item.a1.u01.l02.name.lea
+    revision: 1
+    status: in_review
+    review: *pending_review
+    activity_kind: typed_recall
+    cefr: a1
+    difficulty: 1
+    prompt: { en: "You hear L–É–A. Type the name." }
+    concept_ids: [concept.orthography.french-alphabet]
+    evidence_mode: recall_supported
+    payload: { accepted_answers: [Léa], accents: required, punctuation: optional }
+  - <<: *typed_l02
+    id: item.a1.u01.l02.name.amir
+    prompt: { en: "You hear A–M–I–R. Type the name." }
+    payload: { accepted_answers: [Amir], accents: required, punctuation: optional }
+  - <<: *typed_l02
+    id: item.a1.u01.l02.name.sofia
+    prompt: { en: "You hear S–O–F–I–A. Type the name." }
+    evidence_mode: recall
+    payload: { accepted_answers: [Sofia], accents: required, punctuation: optional }
+  - id: item.a1.u01.l02.phrase.build
+    revision: 1
+    status: in_review
+    review: *pending_review
+    activity_kind: sentence_build
+    cefr: a1
+    difficulty: 1
+    prompt: { en: "Build ‘It is spelled…’" }
+    concept_ids: [concept.orthography.french-alphabet]
+    evidence_mode: recall_supported
+    payload: { tokens: [Ça, "s'écrit", "…"], accepted_answers: ["Ça s'écrit …"] }
+  - <<: *typed_l02
+    id: item.a1.u01.l02.phrase.recall
+    prompt: { en: "Type ‘How is that spelled?’ in French." }
+    payload: { accepted_answers: ["Comment ça s'écrit"], accents: forgiving, punctuation: optional }
+  - <<: *selection_base
+    id: item.a1.u01.l02.exit.g
+    activity_kind: audio_text_select
+    concept_ids: [concept.orthography.french-alphabet]
+    evidence_mode: recall
+    payload: { audio_text: G, options: [{ text: G, correct: true }, { text: J, correct: false }] }
+  - <<: *selection_base
+    id: item.a1.u01.l02.exit.u
+    activity_kind: audio_text_select
+    concept_ids: [concept.orthography.french-alphabet]
+    evidence_mode: recall
+    payload: { audio_text: U, options: [{ text: Q, correct: false }, { text: U, correct: true }] }
+  - <<: *selection_base
+    id: item.a1.u01.l02.exit.phrase
+    concept_ids: [concept.orthography.french-alphabet]
+    evidence_mode: recall
+    prompt: { en: Choose “How is that spelled?” }
+    payload: { options: [{ text: "Comment ça s'écrit ?", correct: true }, { text: "Votre prénom ?", correct: false }, { text: "Ça s'écrit…", correct: false }] }
+  - <<: *typed_l02
+    id: item.a1.u01.l02.exit.name
+    prompt: { en: "You hear S–O–F–I–A. Type the name." }
+    evidence_mode: recall
+    payload: { accepted_answers: [Sofia], accents: required, punctuation: optional }
 
 media:
   - id: media.image.a1.u01.l01.arrival.v3
@@ -465,3 +586,11 @@ media:
     uri: /images/course/a1/unit-01/greetings-arrival-v3.png
     mime_type: image/png
     accessibility_description: Sofia and Ira greet each other outside their neighborhood language school on a bright morning.
+  - id: media.image.a1.u01.l02.reception.v1
+    revision: 1
+    status: draft
+    review: *pending_review
+    kind: image
+    uri: /images/course/a1/unit-01/names-alphabet-reception-v1.png
+    mime_type: image/png
+    accessibility_description: Ira gives her name at a language-school reception desk while Sofia listens supportively nearby.

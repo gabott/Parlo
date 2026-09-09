@@ -37,3 +37,10 @@ test("Lesson 1 player remains usable without horizontal overflow", async ({ page
   await expect(page.getByRole("button", { name: /Continue to Notice/ })).toBeEnabled();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBe(false);
 });
+
+test("Lesson 2 player remains usable without horizontal overflow", async ({ page }) => {
+  await page.goto("/learn/a1/unit/first-contact/lesson/names-alphabet");
+  await expect(page.getByRole("heading", { name: "Bring back two greetings" })).toBeVisible();
+  await expect(page.getByRole("list", { name: "Lesson steps" })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBe(false);
+});

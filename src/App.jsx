@@ -17,6 +17,7 @@ const PAGE_TITLES = {
   "/learn/a1": "Beginner A1",
   "/learn/a1/unit/first-contact": "French sounds and first contact",
   "/learn/a1/unit/first-contact/lesson/greetings": "Greetings and farewells",
+  "/learn/a1/unit/first-contact/lesson/names-alphabet": "Names and alphabet",
   "/debug/activities": "Activity renderer gallery",
 };
 

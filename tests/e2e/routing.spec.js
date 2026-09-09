@@ -69,7 +69,7 @@ test("compiled A1 manifest and lazy Unit 1 bundle drive Learn routes", async ({ 
   await expect(page).toHaveURL(/\/learn\/a1\/unit\/first-contact$/);
   await expect(page.getByRole("heading", { name: "French sounds and first contact" })).toBeVisible();
   await expect(page.locator(".lesson-outline > li")).toHaveCount(7);
-  await expect(page.getByText(/10 initial phrases · 14 initial items/)).toBeVisible();
+  await expect(page.getByText(/10 initial phrases · 27 initial items/)).toBeVisible();
 
   await page.reload();
   await expect(page.getByRole("heading", { name: "Greetings and farewells" })).toBeVisible();
@@ -149,8 +149,37 @@ test("complete Lesson 1 exposes listening, building, speaking, and exit stages",
   await page.getByRole("button", { name: "Check answer" }).click();
   await page.getByRole("button", { name: "Check my lesson result" }).click();
   await expect(page.getByRole("heading", { name: /enter and leave a simple French interaction/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Next: Names and alphabet/ })).toHaveAttribute("href", "/learn/a1/unit/first-contact/lesson/names-alphabet");
   await page.reload();
   await expect(page.getByRole("heading", { name: /enter and leave a simple French interaction/ })).toBeVisible();
+});
+
+test("Lesson 2 teaches alphabet groups, name spelling, and completes its check", async ({ page }) => {
+  await page.goto("/learn/a1/unit/first-contact/lesson/names-alphabet");
+  await page.getByRole("group", { name: "You arrive during the day." }).getByRole("button", { name: "Bonjour !" }).click();
+  await page.getByRole("group", { name: "You leave and will return tomorrow." }).getByRole("button", { name: "À demain !" }).click();
+  await page.getByRole("button", { name: /Continue to Meet/ }).click();
+  await page.getByRole("group", { name: /What does Ira provide/ }).getByRole("button", { name: "Its spelling" }).click();
+  await page.getByRole("button", { name: /Continue to Alphabet/ }).click();
+  for (let index = 0; index < 4; index += 1) await page.getByRole("button", { name: "I practised this group" }).click();
+  await page.getByRole("button", { name: /Continue to Contrast/ }).click();
+  for (const [index, letter] of ["G", "I", "P", "T", "U", "N", "Z"].entries()) await page.locator(".listening-activity").nth(index).getByRole("button", { name: letter, exact: true }).click();
+  await page.getByRole("button", { name: /Continue to Spell/ }).click();
+  await page.getByRole("textbox", { name: /L – É – A/ }).fill("Lea"); await page.getByRole("button", { name: "Check answer" }).first().click();
+  await page.getByRole("button", { name: "Try again" }).click(); await page.getByRole("textbox", { name: /L – É – A/ }).fill("Léa"); await page.getByRole("button", { name: "Check answer" }).first().click();
+  await page.getByRole("textbox", { name: /A – M – I – R/ }).fill("Amir"); await page.getByRole("button", { name: "Check answer" }).last().click();
+  await page.getByRole("button", { name: /Continue to Use/ }).click();
+  const builder = page.locator(".sentence-builder");
+  for (const token of ["Ça", "s’écrit", "…"]) await builder.locator(".sentence-builder__tokens").getByRole("button", { name: token, exact: true }).click();
+  await builder.getByRole("button", { name: "Check sentence" }).click();
+  await page.getByRole("textbox", { name: /How is that spelled/ }).fill("Comment ca s'ecrit"); await page.getByRole("button", { name: "Check answer" }).click();
+  await page.getByRole("button", { name: /Continue to Check/ }).click();
+  await page.locator(".listening-activity").nth(0).getByRole("button", { name: "G", exact: true }).click();
+  await page.locator(".listening-activity").nth(1).getByRole("button", { name: "U", exact: true }).click();
+  await page.getByRole("group", { name: /Choose ‘How is that spelled/ }).getByRole("button", { name: "Comment ça s’écrit ?" }).click();
+  await page.getByRole("textbox", { name: /S – O – F – I – A/ }).fill("Sofia"); await page.getByRole("button", { name: "Check answer" }).click();
+  await page.getByRole("button", { name: "Check my lesson result" }).click();
+  await expect(page.getByRole("heading", { name: /recognize French letters and spell a name/ })).toBeVisible();
 });
 
 test("guest enrollment saves Lesson 1 attempts across refresh and can be deleted", async ({ page }) => {

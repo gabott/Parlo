@@ -577,11 +577,25 @@ h1, h2, h3 { font-family: "Poppins", "Inter", sans-serif; line-height: 1.2; }
 .lesson-history span { color: var(--v2-color-text-muted); font-size: 0.9rem; }
 .lesson-stage { background: #fff; border: 1px solid var(--v2-color-border); border-radius: 22px; box-shadow: var(--v2-shadow-card); display: grid; gap: 1.75rem; padding: clamp(1.5rem, 4vw, 3rem); }
 .lesson-stage > h2, .lesson-stage > p { margin: 0; }
+.lesson-stage-intro { display: grid; gap: 0.65rem; max-width: 46rem; }
+.lesson-stage-intro h2, .lesson-stage-intro p { margin: 0; }
 .lesson-scene { background: #fff; border: 1px solid var(--v2-color-border); border-radius: 22px; box-shadow: var(--v2-shadow-card); display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr); overflow: hidden; padding: 0; }
 .lesson-scene > img { height: 100%; min-height: 420px; object-fit: cover; width: 100%; }
 .lesson-scene__copy { align-content: center; display: grid; gap: 1rem; padding: clamp(1.5rem, 4vw, 2.75rem); }
 .lesson-scene__copy h2 { margin: 0; }
 .lesson-scene__copy > p { margin: 0; }
+.lesson-two-scene { grid-template-columns: 1fr; }
+.lesson-two-scene > img { aspect-ratio: 3 / 2; height: auto; min-height: 0; object-fit: contain; object-position: center; }
+.lesson-two-scene .lesson-scene__copy { align-content: start; gap: 1.5rem; margin: 0 auto; max-width: 56rem; padding: clamp(1.75rem, 5vw, 3.5rem); width: 100%; }
+.lesson-two-scene .lesson-question { background: #faf9fe; border-radius: var(--v2-radius-md); padding: 1.5rem; }
+.lesson-two-scene .lesson-question legend, .lesson-two-warmup .lesson-question legend { float: left; width: 100%; }
+.lesson-two-scene .lesson-question legend + .lesson-options, .lesson-two-warmup .lesson-question legend + .lesson-options { clear: both; }
+.lesson-two-scene .dialogue > div { grid-template-columns: minmax(7.5rem, 9rem) minmax(0, 1fr); }
+.lesson-two-scene .v2-card { margin: 0; }
+.lesson-two-warmup { gap: 2.25rem; }
+.lesson-two-warmup .contrast-grid { gap: 1.5rem; }
+.lesson-two-warmup .lesson-question { display: block; padding: 1.65rem; }
+.lesson-two-warmup .lesson-question legend { font-size: 1.05rem; line-height: 1.55; margin-bottom: 1.15rem; }
 .dialogue { border-top: 1px solid var(--v2-color-border); display: grid; }
 .dialogue > div { align-items: center; border-bottom: 1px solid var(--v2-color-border); display: grid; gap: var(--v2-space-2); grid-template-columns: 3.5rem 1fr auto; padding: var(--v2-space-3) 0; }
 .dialogue span { display: grid; font-size: 1.05rem; }
@@ -631,6 +645,7 @@ h1, h2, h3 { font-family: "Poppins", "Inter", sans-serif; line-height: 1.2; }
 .lesson-stepper li.is-current span { background: var(--v2-color-brand-700); color: #fff; }
 .lesson-stepper li.is-done span { background: #dff4e8; color: #17633a; }
 .lesson-navigation { align-items: center; background: #fff; border: 1px solid var(--v2-color-border); border-radius: var(--v2-radius-md); bottom: 1rem; box-shadow: var(--v2-shadow-card); display: flex; justify-content: space-between; padding: 1rem; position: sticky; z-index: 4; }
+.names-alphabet-lesson .lesson-navigation { bottom: auto; position: static; }
 .role-play, .delayed-recall, .transfer-challenge, .remediation { background: #f6f3ff; border-radius: var(--v2-radius-md); display: grid; gap: 1rem; padding: 1.25rem; }
 .role-play p, .delayed-recall p, .transfer-challenge p { margin: 0; }
 .contrast-grid, .summary-grid { display: grid; gap: var(--v2-space-4); grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -667,6 +682,7 @@ h1, h2, h3 { font-family: "Poppins", "Inter", sans-serif; line-height: 1.2; }
   .lesson-scene { grid-template-columns: 1fr; }
   .lesson-scene > img { min-height: 260px; }
   .lesson-scene__copy { padding: var(--v2-space-6); }
+  .lesson-two-scene .dialogue > div { align-items: start; grid-template-columns: 1fr; }
   .lesson-flow__grid { grid-template-columns: 1fr; }
   .lesson-rule-grid, .phrase-guide { grid-template-columns: 1fr; }
   .contrast-grid, .summary-grid { grid-template-columns: 1fr; }

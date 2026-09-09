@@ -105,6 +105,12 @@ texts.add("À demain ! Bonne journée !");
 texts.add("Au revoir ! À demain !");
 texts.add("Bonjour ! Bonjour ! Ça va ? Ça va bien, merci.");
 texts.add("Au revoir ! À demain ! Bonne journée !");
+// Lesson 2: reception dialogue, spelling chunks, and name sequences.
+texts.add("Bonjour. Votre prénom ? Ira. Comment ça s'écrit ? I, R, A. Merci.");
+texts.add("Votre prénom ?");
+texts.add("Comment ça s'écrit ?");
+texts.add("Ça s'écrit I, R, A.");
+for (const spelling of ["L, É, A", "A, M, I, R", "S, O, F, I, A", "H, U, G, O"]) texts.add(spelling);
 
 // Remove the "…" placeholder so the voice doesn't stumble.
 function clean(t) {

@@ -15,6 +15,7 @@ import LearnPreview from './pages/LearnPreview'
 import CoursePreview from './pages/CoursePreview'
 import UnitPreview from './pages/UnitPreview'
 import LessonFlowPreview from './pages/LessonFlowPreview'
+import NamesAlphabetLesson from './pages/NamesAlphabetLesson'
 import NotFound from './pages/NotFound.jsx'
 import ActivityGallery from './pages/ActivityGallery'
 
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: 'learn/a1', Component: CoursePreview },
       { path: 'learn/a1/unit/first-contact', Component: UnitPreview },
       { path: 'learn/a1/unit/first-contact/lesson/greetings', Component: LessonFlowPreview },
+      { path: 'learn/a1/unit/first-contact/lesson/names-alphabet', Component: NamesAlphabetLesson },
       ...(import.meta.env.DEV ? [{ path: 'debug/activities', Component: ActivityGallery }] : []),
       { path: 'library/basics', Component: Basics },
       { path: 'library/vocabulary', Component: Vocabulary },
