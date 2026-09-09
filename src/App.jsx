@@ -21,6 +21,7 @@ const PAGE_TITLES = {
   "/learn/a1/unit/first-contact/lesson/core-sound-map": "Core sound map",
   "/learn/a1/unit/first-contact/lesson/courtesy": "Courtesy",
   "/learn/a1/unit/first-contact/lesson/classroom-survival": "Classroom survival",
+  "/learn/a1/unit/first-contact/review": "First contact review",
   "/debug/activities": "Activity renderer gallery",
 };
 

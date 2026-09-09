@@ -627,3 +627,11 @@ media:
     uri: /images/course/a1/unit-01/classroom-repair-v1.png
     mime_type: image/png
     accessibility_description: Alex asks for clarification while Morgan responds supportively in a bright language-school classroom.
+  - id: media.image.a1.u01.r01.evening-checkin.v1
+    revision: 1
+    status: draft
+    review: *pending_review
+    kind: image
+    uri: /images/course/a1/unit-01/integrated-review-evening-v1.png
+    mime_type: image/png
+    accessibility_description: Léa asks Lucas to spell his name at an evening French-class check-in table.

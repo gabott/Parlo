@@ -279,6 +279,30 @@ test("Lesson 5 teaches classroom repair and completes the required response", as
   await expect(page.getByRole("heading", { name: /keep a difficult conversation going/ })).toBeVisible();
 });
 
+test("Unit 1 integrated review connects all five lesson skills", async ({ page }) => {
+  await page.goto("/learn/a1/unit/first-contact/review");
+  await expect(page).toHaveTitle("First contact review · Parlo");
+  await expect(page.getByAltText(/Léa asks Lucas/)).toBeVisible();
+  await page.getByRole("group", { name: /time of day/ }).getByRole("button", { name: "Evening" }).click();
+  await page.getByRole("button", { name: /Continue to Greetings/ }).click();
+  for (const [index,answer] of ["Bonsoir !","À demain !","Bonne soirée !"].entries()) await page.locator(".lesson-question").nth(index).getByRole("button",{name:answer,exact:true}).click();
+  await page.getByRole("button", { name: /Continue to Names & sounds/ }).click();
+  await page.getByRole("textbox", { name: /name you hear/ }).fill("Léa"); await page.getByRole("button", { name: "Check answer" }).click();
+  await page.getByRole("group", { name: /ask Lucas to spell/ }).getByRole("button", { name: /Pouvez-vous épeler/ }).click();
+  await page.getByRole("group", { name: "Which word do you hear?" }).getByRole("button", { name: "rue" }).click();
+  await page.getByRole("group", { name: /Which nasal/ }).getByRole("button", { name: "son" }).click();
+  await page.getByRole("button", { name: /Continue to Courtesy/ }).click();
+  for (const [index,answer] of ["Merci.","Excusez-moi.","De rien."].entries()) await page.locator(".lesson-question").nth(index).getByRole("button",{name:answer,exact:true}).click();
+  await page.getByRole("button", { name: /Continue to Repair/ }).click();
+  await page.getByRole("group", { name: /instruction was too fast/ }).getByRole("button", { name: /Plus lentement/ }).click();
+  await page.getByRole("textbox", { name: /I don’t understand/ }).fill("Je ne comprends pas"); await page.getByRole("button", { name: "Check answer" }).click();
+  const builder=page.locator(".sentence-builder"); for(const token of ["Pouvez-vous","répéter",",","s’il vous plaît","?"]) await builder.locator(".sentence-builder__tokens").getByRole("button",{name:token,exact:true}).click(); await builder.getByRole("button",{name:"Check sentence"}).click();
+  await page.getByRole("button", { name: /Continue to Scenario/ }).click();
+  for (const [index,answer] of ["Bonsoir !","Le document, s’il vous plaît.","Merci.","Pouvez-vous répéter, s’il vous plaît ?","Je comprends.","Bonne soirée !"].entries()) await page.locator(".activity-stack .lesson-question").nth(index).getByRole("button",{name:answer,exact:true}).click();
+  await page.getByRole("button", { name: /Finish review/ }).click();
+  await expect(page.getByRole("heading", { name: /Unit 1 skills worked together/ })).toBeVisible();
+});
+
 test("guest enrollment saves Lesson 1 attempts across refresh and can be deleted", async ({ page }) => {
   await page.goto("/learn/a1");
   await page.getByRole("button", { name: "Start A1" }).click();

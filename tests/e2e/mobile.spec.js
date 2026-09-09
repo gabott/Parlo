@@ -67,3 +67,10 @@ test("Lesson 5 player remains usable without horizontal overflow", async ({ page
   await expect(page.getByRole("heading", { name: "Classroom survival" })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBe(false);
 });
+
+test("Unit 1 review remains usable without horizontal overflow", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/a1/unit/first-contact/review");
+  await expect(page.getByRole("heading", { name: "First contact review" })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBe(false);
+});

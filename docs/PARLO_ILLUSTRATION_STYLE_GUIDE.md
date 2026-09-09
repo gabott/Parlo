@@ -65,6 +65,18 @@ Illustrations establish a communicative situation before instruction begins. The
 - Soft lavender overshirt, mustard T-shirt, charcoal trousers, and a slim watch.
 - Calm, grounded, encouraging body language.
 
+### Léa
+
+- French woman around thirty with deep brown skin, dark eyes, a heart-shaped face, and a short sculpted natural-coil hairstyle.
+- Navy blouse with a rounded collar, muted coral trousers, and small mustard drop earrings.
+- Practical, organized, friendly body language.
+
+### Lucas
+
+- French-Canadian man in his early thirties with fair skin, grey-green eyes, a broad friendly face, short wavy auburn hair, and a light auburn beard.
+- Muted teal henley, warm beige utility jacket, and dark navy trousers.
+- Relaxed, gently humorous body language.
+
 Recurring characters' appearance and wardrobe remain stable throughout Unit 1. New scenes change pose, expression, props, and setting—not identity-defining features.
 
 ## Scene template
@@ -101,3 +113,7 @@ The Lesson 4 scene uses the `illustration-story` prompt family: Ana arrives at a
 ## Lesson 5 prompt record
 
 The Lesson 5 scene uses the `illustration-story` prompt family: Alex pauses to ask for clarification while Morgan responds with an open, reassuring gesture. It frames communication repair as normal and welcome. It is stored as `public/images/course/a1/unit-01/classroom-repair-v1.png` and registered as `media.image.a1.u01.l05.classroom-repair.v1`.
+
+## Unit 1 review prompt record
+
+The integrated-review scene uses the `illustration-story` prompt family: Léa asks Lucas to spell his name at an evening class check-in table. Blank cards and a handout support the scenario without exposing answers. It is stored as `public/images/course/a1/unit-01/integrated-review-evening-v1.png` and registered as `media.image.a1.u01.r01.evening-checkin.v1`.

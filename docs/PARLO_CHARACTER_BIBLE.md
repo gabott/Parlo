@@ -80,3 +80,71 @@ full name; do not use `Aadhyantha` or `Aadyantha`.
   neatly tapered sides.
 - Soft lavender overshirt, mustard T-shirt, charcoal trousers, and a slim watch.
 - Calm, grounded, and encouraging; introduced in Unit 1 Lesson 5.
+
+### Léa
+
+- French woman around thirty with deep brown skin, dark eyes, a heart-shaped
+  face, and a short sculpted natural-coil hairstyle.
+- Navy blouse with a rounded collar, muted coral trousers, and small mustard
+  drop earrings.
+- Practical, organized, and friendly; introduced in the Unit 1 review.
+
+### Lucas
+
+- French-Canadian man in his early thirties with fair skin, grey-green eyes, a
+  broad friendly face, short wavy auburn hair, and a light auburn beard.
+- Muted teal henley, warm beige utility jacket, and dark navy trousers.
+- Relaxed and gently humorous; introduced in the Unit 1 review.
+
+## Conversational traits
+
+These traits guide dialogue writing and character behavior across lessons.
+
+| Character | Conversational trait |
+| --- | --- |
+| Camille | Patient, observant, and precise; models language clearly. |
+| Maya | Curious and expressive; asks natural follow-up questions. |
+| Sofia | Confident and sociable; speaks with friendly energy. |
+| Ira | Warm and attentive; responds thoughtfully and has a naturally pleasant laugh. |
+| Ana | Energetic and considerate; uses expressive but polite language. |
+| Léa | Practical and organized; prefers direct, concise exchanges. |
+| Alex | Thoughtful and gently curious; openly asks for clarification. |
+| Sam | Calm and welcoming; speaks at a steady pace. |
+| Lucas | Relaxed and humorous; speaks with a French-Canadian voice. |
+| Charlie | Witty and conversational; speaks with a Belgian Francophone voice. |
+| Morgan | Grounded and encouraging; explains without sounding corrective. |
+| Yan | Quietly confident and concise; appears occasionally. |
+
+## Deferred character voice system
+
+Character-specific voices are an approved future enhancement. Each recurring
+character will eventually receive a stable voice profile covering voice identity,
+French variety, pitch and timbre, natural tempo, articulation, personality,
+default register, and conversational habits.
+
+Implementation principles:
+
+- A word does not have a separate masculine, feminine, or non-binary
+  pronunciation. Characters may differ naturally in pitch, timbre, rhythm,
+  tempo, and delivery.
+- Ethnicity does not determine accent. A character's French variety and personal
+  history must be defined deliberately and represented authentically.
+- Formality belongs to the relationship and situation, not permanently to one
+  character. Every character may use polite, neutral, or casual language when
+  the context supports it.
+- Introduce variation progressively: one clear voice for first exposure,
+  multiple voices during practice, contextual register comparison, and unseen
+  speakers during transfer or assessment.
+- Regional voices must be natural and understandable, never caricatured.
+- Assessment measures comprehension across voices rather than imitation of a
+  single accent.
+- Existing Lessons 1–5 can be upgraded dialogue by dialogue without redesigning
+  their learning flows.
+
+### Ira voice note
+
+Ira has a warm voice with a natural, pleasant laugh. Use her laugh sparingly in
+genuinely light or friendly conversational moments, never as a reaction to a
+learner's mistake or confusion. Keep instructional phrases clean and easy to
+hear; laughter should sit between dialogue turns rather than overlap target
+language.
