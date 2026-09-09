@@ -18,6 +18,7 @@ const PAGE_TITLES = {
   "/learn/a1/unit/first-contact": "French sounds and first contact",
   "/learn/a1/unit/first-contact/lesson/greetings": "Greetings and farewells",
   "/learn/a1/unit/first-contact/lesson/names-alphabet": "Names and alphabet",
+  "/learn/a1/unit/first-contact/lesson/core-sound-map": "Core sound map",
   "/debug/activities": "Activity renderer gallery",
 };
 

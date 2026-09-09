@@ -182,6 +182,29 @@ test("Lesson 2 teaches alphabet groups, name spelling, and completes its check",
   await expect(page.getByRole("heading", { name: /recognize French letters and spell a name/ })).toBeVisible();
 });
 
+test("Lesson 3 teaches core French sound contrasts and completes its check", async ({ page }) => {
+  await page.goto("/learn/a1/unit/first-contact/lesson/core-sound-map");
+  await expect(page).toHaveTitle("Core sound map · Parlo");
+  await page.locator(".listening-activity").nth(0).getByRole("button", { name: "G", exact: true }).click();
+  await page.locator(".listening-activity").nth(1).getByRole("button", { name: "U", exact: true }).click();
+  await page.getByRole("button", { name: /Continue to Meet/ }).click();
+  await expect(page.getByRole("heading", { name: "A pronunciation workshop" })).toBeVisible();
+  await expect(page.getByAltText(/Camille models a French mouth shape/)).toBeVisible();
+  await page.getByRole("group", { name: /What is Maya listening for/ }).getByRole("button", { name: "A changing vowel sound" }).click();
+  await page.getByRole("button", { name: /Continue to Oral vowels/ }).click();
+  for (const [index, word] of ["rue", "roue", "été", "était"].entries()) await page.locator(".listening-activity").nth(index).getByRole("button", { name: word, exact: true }).click();
+  await page.getByRole("button", { name: /Continue to Nasal vowels/ }).click();
+  for (const [index, word] of ["sans", "son", "sain"].entries()) await page.locator(".listening-activity").nth(index).getByRole("button", { name: word, exact: true }).click();
+  await page.getByRole("button", { name: /Continue to French R/ }).click();
+  await page.locator(".listening-activity").nth(0).getByRole("button", { name: "merci", exact: true }).click();
+  await page.locator(".listening-activity").nth(1).getByRole("button", { name: "au revoir", exact: true }).click();
+  await page.getByRole("button", { name: /Continue to Speak/ }).click();
+  await page.getByRole("button", { name: /Continue to Check/ }).click();
+  for (const [index, word] of ["rue", "roue", "été", "son", "au revoir"].entries()) await page.locator(".listening-activity").nth(index).getByRole("button", { name: word, exact: true }).click();
+  await page.getByRole("button", { name: "Check my lesson result" }).click();
+  await expect(page.getByRole("heading", { name: /hear key French sound contrasts/ })).toBeVisible();
+});
+
 test("guest enrollment saves Lesson 1 attempts across refresh and can be deleted", async ({ page }) => {
   await page.goto("/learn/a1");
   await page.getByRole("button", { name: "Start A1" }).click();

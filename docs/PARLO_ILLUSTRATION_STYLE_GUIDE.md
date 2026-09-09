@@ -28,7 +28,19 @@ Illustrations establish a communicative situation before instruction begins. The
 - Muted-teal overshirt, cream top, charcoal trousers, and navy notebook.
 - Warm, attentive, relaxed body language.
 
-Their appearance and wardrobe remain stable throughout Unit 1. New scenes change pose, expression, props, and setting—not identity-defining features.
+### Camille
+
+- French woman in her early thirties with fair warm skin, hazel eyes, and a neat chin-length chestnut-brown bob.
+- Lavender knit top, navy trousers, and small simple earrings.
+- Patient, observant, encouraging body language.
+
+### Maya
+
+- North African–French woman in her late twenties with warm olive-brown skin, dark brown eyes, and thick dark wavy hair in a relaxed low ponytail.
+- Muted coral cardigan, cream top, and charcoal trousers.
+- Curious, expressive, attentive body language.
+
+Recurring characters' appearance and wardrobe remain stable throughout Unit 1. New scenes change pose, expression, props, and setting—not identity-defining features.
 
 ## Scene template
 
@@ -52,3 +64,7 @@ Every generation brief records:
 ## Canonical Lesson 1 prompt
 
 The approved scene uses the `illustration-story` prompt family: Sofia and Ira arriving outside a neighborhood language school in soft morning light, rendered in the canonical editorial style and palette. It is stored as `public/images/course/a1/unit-01/greetings-arrival-v3.png` and registered as `media.image.a1.u01.l01.arrival.v3`.
+
+## Lesson 3 prompt record
+
+The Lesson 3 scene uses the `illustration-story` prompt family: Camille models a French sound with a picture card while Maya listens and mirrors the mouth shape in a bright neighborhood language-school classroom. The scene follows the canonical editorial style and palette, keeps both characters crop-safe, and contains no instructional text. It is stored as `public/images/course/a1/unit-01/core-sound-workshop-v1.png` and registered as `media.image.a1.u01.l03.sound-workshop.v1`.

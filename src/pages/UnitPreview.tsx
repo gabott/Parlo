@@ -12,7 +12,7 @@ export default function UnitPreview() {
     <Link to="/learn/a1">← Back to A1</Link>
     <p className="learn-preview-kicker">A1 · Unit 1 · Draft</p>
     <h1>{bundle.unit.title.en}</h1>
-    <Feedback title="Lessons 1–2 available" tone="info">Greetings and farewells and Names and alphabet are available as complete beta lessons. The remaining lessons are still outlines.</Feedback>
+    <Feedback title="Lessons 1–3 available" tone="info">Greetings and farewells, Names and alphabet, and Core sound map are available as complete beta lessons. The remaining lessons are still outlines.</Feedback>
     <ol className="lesson-outline">
       {orderedLessons.map((lesson) => <li key={lesson.id}>
         <Card title={lesson.title.en}>
@@ -20,6 +20,7 @@ export default function UnitPreview() {
           <span className="tag">{lesson.matrix_id}</span> <span className="tag">{lesson.estimated_minutes} min</span> <span className="tag">{lesson.status.replace("_", " ")}</span>
           {lesson.matrix_id === "A1-U01-L01" && <div className="lesson-outline__action"><Link to="/learn/a1/unit/first-contact/lesson/greetings">Start complete lesson</Link></div>}
           {lesson.matrix_id === "A1-U01-L02" && <div className="lesson-outline__action"><Link to="/learn/a1/unit/first-contact/lesson/names-alphabet">Start complete lesson</Link></div>}
+          {lesson.matrix_id === "A1-U01-L03" && <div className="lesson-outline__action"><Link to="/learn/a1/unit/first-contact/lesson/core-sound-map">Start complete lesson</Link></div>}
         </Card>
       </li>)}
     </ol>

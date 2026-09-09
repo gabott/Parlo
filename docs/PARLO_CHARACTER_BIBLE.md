@@ -1,0 +1,46 @@
+# Parlo Character Bible
+
+This document is the canonical roster for recurring Parlo lesson characters.
+Background information guides respectful writing, casting, and illustration; it
+does not need to be presented as a learner-facing label.
+
+## Central cast
+
+| Character | Gender | Background |
+| --- | --- | --- |
+| Camille | Woman | French |
+| Maya | Woman | North African–French |
+| Léa | Woman | French |
+| Sofia | Woman | Mixed-heritage French/Francophone |
+| Ira | Woman | Indian |
+| Ana | Woman | Latin American |
+| Alex | Man | French |
+| Sam | Man | Indian |
+| Lucas | Man | French-Canadian |
+| Charlie | Man | Belgian Francophone |
+| Morgan | Non-binary | French |
+
+## Supporting cast
+
+| Character | Full name | Gender | Background | Usage |
+| --- | --- | --- | --- | --- |
+| Yan | Aadyanth | Man | East Asian | Occasional/supporting |
+
+Yan is the short form used in lessons and dialogue. **Aadyanth** is the canonical
+full name; do not use `Aadhyantha` or `Aadyantha`.
+
+## Locked visual references
+
+### Camille
+
+- French woman in her early thirties with fair warm skin, hazel eyes, and a neat
+  chin-length chestnut-brown bob.
+- Lavender knit top, navy trousers, and small simple earrings.
+- Patient, observant, and encouraging; introduced in Unit 1 Lesson 3.
+
+### Maya
+
+- North African–French woman in her late twenties with warm olive-brown skin,
+  dark brown eyes, and thick dark wavy hair in a relaxed low ponytail.
+- Muted coral cardigan, cream top, and charcoal trousers.
+- Curious and expressive; introduced in Unit 1 Lesson 3.

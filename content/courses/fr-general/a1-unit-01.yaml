@@ -82,6 +82,9 @@ lessons:
     objective: { en: I can distinguish several high-value French sound contrasts. }
     prerequisite_lesson_ids: [lesson.fr-general.a1.first-contact.names-alphabet]
     concept_ids: []
+    estimated_minutes: 20
+    difficulty: 1
+    content_role: required
   - <<: *lesson_base
     id: lesson.fr-general.a1.first-contact.courtesy
     matrix_id: A1-U01-L04
@@ -594,3 +597,11 @@ media:
     uri: /images/course/a1/unit-01/names-alphabet-reception-v1.png
     mime_type: image/png
     accessibility_description: Ira gives her name at a language-school reception desk while Sofia listens supportively nearby.
+  - id: media.image.a1.u01.l03.sound-workshop.v1
+    revision: 1
+    status: draft
+    review: *pending_review
+    kind: image
+    uri: /images/course/a1/unit-01/core-sound-workshop-v1.png
+    mime_type: image/png
+    accessibility_description: Camille models a French mouth shape while Maya listens and mirrors it in a bright language-school classroom.
