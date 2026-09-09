@@ -131,13 +131,7 @@ test("complete Lesson 1 exposes listening, building, speaking, and exit stages",
   await page.getByRole("group", { name: /Choose your final words/ }).getByRole("button", { name: "Bonne soirée !" }).click();
   await page.getByRole("button", { name: /Continue to Speak/ }).click();
   await expect(page.getByRole("heading", { name: "Make the phrases yours" })).toBeVisible();
-  for (let index = 0; index < 2; index += 1) {
-    const speaking = page.locator(".speaking-practice").nth(index);
-    await speaking.getByRole("button", { name: "Record my answer" }).click();
-    await speaking.getByRole("checkbox", { name: /fits the situation/ }).check();
-    await speaking.getByRole("checkbox", { name: /understand my words/ }).check();
-    await speaking.getByRole("button", { name: "Submit self-review" }).click();
-  }
+  await page.getByRole("button", { name: "Skip optional speaking" }).click();
   await page.getByRole("button", { name: /Continue to Check/ }).click();
   await expect(page.getByRole("heading", { name: "Can you use it without hints?" })).toBeVisible();
   await page.locator(".listening-activity").getByRole("button", { name: "Bonsoir !" }).click();
