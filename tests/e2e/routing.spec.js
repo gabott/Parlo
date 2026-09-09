@@ -205,6 +205,45 @@ test("Lesson 3 teaches core French sound contrasts and completes its check", asy
   await expect(page.getByRole("heading", { name: /hear key French sound contrasts/ })).toBeVisible();
 });
 
+test("Lesson 4 teaches courtesy through context, retrieval, and a complete exchange", async ({ page }) => {
+  await page.goto("/learn/a1/unit/first-contact/lesson/courtesy");
+  await expect(page).toHaveTitle("Courtesy · Parlo");
+  await page.getByRole("group", { name: /Someone helps you/ }).getByRole("button", { name: "Merci." }).click();
+  await page.getByRole("group", { name: /You are leaving/ }).getByRole("button", { name: "Au revoir." }).click();
+  await page.getByRole("button", { name: /Continue to Meet/ }).click();
+  await expect(page.getByAltText(/Ana politely receives/)).toBeVisible();
+  await page.getByRole("group", { name: /What happens/ }).getByRole("button", { name: /politely asks for and receives/ }).click();
+  await page.getByRole("button", { name: /Continue to Meaning/ }).click();
+  for (const [index, answer] of ["Merci.", "S’il vous plaît.", "Excusez-moi.", "Pardon.", "De rien.", "Merci beaucoup."].entries()) await page.locator(".activity-stack .lesson-question").nth(index).getByRole("button", { name: answer, exact: true }).click();
+  await page.getByRole("button", { name: /Continue to Listen/ }).click();
+  await page.locator(".listening-activity").nth(0).getByRole("button", { name: "pardon", exact: true }).click();
+  await page.locator(".listening-activity").nth(1).getByRole("button", { name: "merci beaucoup", exact: true }).click();
+  await page.getByRole("textbox", { name: "Type what you hear." }).nth(0).fill("Merci");
+  await page.getByRole("button", { name: "Check answer" }).nth(0).click();
+  await page.getByRole("textbox", { name: "Type what you hear." }).nth(1).fill("S'il vous plait");
+  await page.getByRole("button", { name: "Check answer" }).nth(1).click();
+  await page.getByRole("button", { name: /Continue to Build/ }).click();
+  const builders = page.locator(".sentence-builder");
+  for (const token of ["Excusez-moi", "."]) await builders.nth(0).locator(".sentence-builder__tokens").getByRole("button", { name: token, exact: true }).click();
+  await builders.nth(0).getByRole("button", { name: "Check sentence" }).click();
+  for (const token of ["Merci", "beaucoup", "."]) await builders.nth(1).locator(".sentence-builder__tokens").getByRole("button", { name: token, exact: true }).click();
+  await builders.nth(1).getByRole("button", { name: "Check sentence" }).click();
+  for (const token of ["S’il", "vous", "plaît", "."]) await builders.nth(2).locator(".sentence-builder__tokens").getByRole("button", { name: token, exact: true }).click();
+  await builders.nth(2).getByRole("button", { name: "Check sentence" }).click();
+  await page.getByRole("button", { name: /Continue to Use/ }).click();
+  for (const [index, answer] of ["Bonjour.", "Le document, s’il vous plaît.", "Merci beaucoup."].entries()) await page.locator(".activity-stack .lesson-question").nth(index).getByRole("button", { name: answer, exact: true }).click();
+  await page.getByRole("button", { name: /Continue to Check/ }).click();
+  await page.getByRole("group", { name: /accidentally bump/ }).getByRole("button", { name: "Pardon." }).click();
+  const response = page.getByRole("group", { name: "Choose your response." });
+  await response.getByRole("button", { name: "S’il vous plaît." }).click();
+  await response.getByRole("button", { name: "De rien." }).click();
+  await page.getByRole("textbox", { name: /polite interruption/ }).fill("Excusez-moi");
+  await page.getByRole("button", { name: "Check answer" }).click();
+  await page.getByRole("group", { name: /complete polite classroom exchange/ }).getByRole("button", { name: "Bonjour. Le document, s’il vous plaît. Merci." }).click();
+  await page.getByRole("button", { name: "Check my lesson result" }).click();
+  await expect(page.getByRole("heading", { name: /handle a polite everyday exchange/ })).toBeVisible();
+});
+
 test("guest enrollment saves Lesson 1 attempts across refresh and can be deleted", async ({ page }) => {
   await page.goto("/learn/a1");
   await page.getByRole("button", { name: "Start A1" }).click();

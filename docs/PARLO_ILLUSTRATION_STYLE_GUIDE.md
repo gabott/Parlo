@@ -41,6 +41,18 @@ Illustrations establish a communicative situation before instruction begins. The
 - Small geometric gold earrings and a slightly tall, angular silhouette.
 - Curious, expressive, attentive body language.
 
+### Ana
+
+- Latin American woman in her early thirties with medium warm tan skin, dark almond-shaped eyes, a softly rounded face, and a sleek jaw-length black bob tucked behind one ear.
+- Muted teal wrap-style blouse, warm beige trousers, and small coral stud earrings.
+- Energetic, considerate body language.
+
+### Sam
+
+- Indian man in his early thirties with medium warm-brown skin and golden undertones, dark brown eyes, a long rectangular face, short neatly textured black hair, and a close-trimmed beard and moustache.
+- Mustard overshirt, navy crew-neck shirt, and charcoal trousers.
+- Calm, welcoming body language.
+
 Recurring characters' appearance and wardrobe remain stable throughout Unit 1. New scenes change pose, expression, props, and setting—not identity-defining features.
 
 ## Scene template
@@ -69,3 +81,7 @@ The approved scene uses the `illustration-story` prompt family: Sofia and Ira ar
 ## Lesson 3 prompt record
 
 The Lesson 3 scene uses the `illustration-story` prompt family: Camille models a French sound with a picture card while Maya listens and mirrors the mouth shape in a bright neighborhood language-school classroom. The scene follows the canonical editorial style and palette, keeps both characters crop-safe, and contains no instructional text. The revised Maya design is stored as `public/images/course/a1/unit-01/core-sound-workshop-v2.png` and registered as `media.image.a1.u01.l03.sound-workshop.v2`.
+
+## Lesson 4 prompt record
+
+The Lesson 4 scene uses the `illustration-story` prompt family: Ana arrives at a neighborhood language-school classroom and politely receives a handout from Sam. The centered handout exchange establishes the communicative purpose without embedded text. The approved, subtly lighter Sam design is stored as `public/images/course/a1/unit-01/courtesy-handout-v2.png` and registered as `media.image.a1.u01.l04.handout.v2`.

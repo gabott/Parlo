@@ -46,3 +46,21 @@ full name; do not use `Aadhyantha` or `Aadyantha`.
 - Muted coral cardigan, cream top, and charcoal trousers.
 - Small geometric gold earrings and a slightly tall, angular silhouette.
 - Curious and expressive; introduced in Unit 1 Lesson 3.
+
+### Ana
+
+- Latin American woman in her early thirties with medium warm tan skin, dark
+  almond-shaped eyes, a softly rounded face, and a sleek jaw-length black bob
+  tucked behind one ear.
+- Muted teal wrap-style blouse, warm beige trousers, and small coral stud
+  earrings.
+- Energetic and considerate; introduced in Unit 1 Lesson 4.
+
+### Sam
+
+- Indian man in his early thirties with medium warm-brown skin and golden
+  undertones, dark brown
+  eyes, a long rectangular face, short neatly textured black hair, and a
+  close-trimmed beard and moustache.
+- Mustard overshirt, navy crew-neck shirt, and charcoal trousers.
+- Calm and welcoming; introduced in Unit 1 Lesson 4.

@@ -92,6 +92,9 @@ lessons:
     objective: { en: I can use basic polite expressions appropriately. }
     prerequisite_lesson_ids: [lesson.fr-general.a1.first-contact.sound-map]
     concept_ids: [concept.pragmatics.formality-awareness]
+    estimated_minutes: 18
+    difficulty: 1
+    content_role: required
   - <<: *lesson_base
     id: lesson.fr-general.a1.first-contact.classroom-survival
     matrix_id: A1-U01-L05
@@ -605,3 +608,11 @@ media:
     uri: /images/course/a1/unit-01/core-sound-workshop-v2.png
     mime_type: image/png
     accessibility_description: Camille models a French mouth shape while Maya listens and mirrors it in a bright language-school classroom.
+  - id: media.image.a1.u01.l04.handout.v2
+    revision: 2
+    status: draft
+    review: *pending_review
+    kind: image
+    uri: /images/course/a1/unit-01/courtesy-handout-v2.png
+    mime_type: image/png
+    accessibility_description: Ana politely receives a class handout from Sam near the classroom doorway.

@@ -52,3 +52,11 @@ test("Lesson 3 player remains usable without horizontal overflow", async ({ page
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
   expect(overflow).toBe(false);
 });
+
+test("Lesson 4 player remains usable without horizontal overflow", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/a1/unit/first-contact/lesson/courtesy");
+  await expect(page.getByRole("heading", { name: "Courtesy" })).toBeVisible();
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
+  expect(overflow).toBe(false);
+});
