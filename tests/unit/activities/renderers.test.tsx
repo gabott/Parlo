@@ -27,6 +27,16 @@ describe("activity renderers", () => {
     await user.click(screen.getByRole("button", { name: "Check sentence" }));
     expect(onSubmit.mock.calls[0][0]).toMatchObject({ envelope: { kind: "sentence_build", response: ["À", "demain", "!"] }, evaluation: { outcome: "correct" } });
   });
+  it("lets a sentence builder recover from a wrong order", async () => {
+    const user = userEvent.setup(); const onSubmit = vi.fn();
+    render(<SentenceBuildRenderer {...base} prompt="Build a greeting" tokens={["Bonjour", "!"]} answer="Bonjour !" onSubmit={onSubmit} />);
+    await user.click(screen.getByRole("button", { name: "!" })); await user.click(screen.getByRole("button", { name: "Bonjour" }));
+    await user.click(screen.getByRole("button", { name: "Check sentence" })); await user.click(screen.getByRole("button", { name: "Try again" }));
+    expect(screen.getByLabelText("Your sentence")).toHaveTextContent("Choose words below");
+    await user.click(screen.getByRole("button", { name: "Bonjour" })); await user.click(screen.getByRole("button", { name: "!" }));
+    await user.click(screen.getByRole("button", { name: "Check sentence" }));
+    expect(screen.getByRole("status")).toHaveTextContent("Well built"); expect(onSubmit).toHaveBeenCalledTimes(2);
+  });
   it("scores typed recall and structured speaking self-review", async () => {
     const user = userEvent.setup(); const typed = vi.fn(); const speaking = vi.fn();
     const { rerender } = render(<TypedRecallRenderer {...base} prompt="Type hello" answers={["Bonjour !"]} policy={{ accents: "required", punctuation: "optional" }} onSubmit={typed} />);
@@ -47,6 +57,13 @@ describe("activity renderers", () => {
     await user.type(input, "À demain"); await user.click(screen.getByRole("button", { name: "Check answer" }));
     expect(screen.getByRole("status")).toHaveTextContent("Correct");
     expect(onSubmit).toHaveBeenCalledTimes(2);
+  });
+  it("accepts an unaccented equivalent when recall uses a forgiving policy", async () => {
+    const user = userEvent.setup(); const onSubmit = vi.fn();
+    render(<TypedRecallRenderer {...base} prompt="Type tomorrow" answers={["À demain !"]} policy={{ accents: "forgiving", punctuation: "optional" }} onSubmit={onSubmit} />);
+    await user.type(screen.getByRole("textbox", { name: "Type tomorrow" }), "A demain"); await user.click(screen.getByRole("button", { name: "Check answer" }));
+    expect(screen.getByRole("status")).toHaveTextContent("Correct");
+    expect(onSubmit.mock.calls[0][0].evaluation).toMatchObject({ outcome: "correct", matchedAnswer: "À demain !" });
   });
   it("exposes normal and slow audio controls", () => {
     render(<AudioTextSelectRenderer {...base} audio="Bonjour" options={["Bonjour", "Bonsoir"]} answer="Bonjour" onSubmit={() => undefined} />);

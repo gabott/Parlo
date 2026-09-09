@@ -114,14 +114,20 @@ test("complete Lesson 1 exposes listening, building, speaking, and exit stages",
   for (let index = 0; index < listeningAnswers.length; index += 1) await page.locator(".listening-activity").nth(index).getByRole("button", { name: listeningAnswers[index] }).click();
   await page.getByRole("button", { name: /Continue to Build/ }).click();
   await expect(page.getByRole("heading", { name: "Bring the expressions back from memory" })).toBeVisible();
-  for (const [index, tokens] of [[0, ["Bonne", "journée", "!"]], [1, ["À", "demain", "!"]], [2, ["Bonjour", "!"]]]) {
+  for (const [index, tokens] of [[0, ["Bonne", "journée", "!"]], [1, ["À", "demain", "!"]]]) {
     const builder = page.locator(".sentence-builder").nth(index);
     for (const token of tokens) await builder.locator(".sentence-builder__tokens").getByRole("button", { name: token, exact: true }).click();
     await builder.getByRole("button", { name: "Check sentence" }).click();
   }
+  const greetingBuilder = page.locator(".sentence-builder").nth(2);
+  for (const token of ["!", "Bonjour"]) await greetingBuilder.locator(".sentence-builder__tokens").getByRole("button", { name: token, exact: true }).click();
+  await greetingBuilder.getByRole("button", { name: "Check sentence" }).click();
+  await greetingBuilder.getByRole("button", { name: "Try again" }).click();
+  for (const token of ["Bonjour", "!"]) await greetingBuilder.locator(".sentence-builder__tokens").getByRole("button", { name: token, exact: true }).click();
+  await greetingBuilder.getByRole("button", { name: "Check sentence" }).click();
   await page.getByRole("textbox", { name: /See you tomorrow/ }).fill("Au revoir"); await page.getByRole("button", { name: "Check answer" }).click();
   await page.getByRole("button", { name: "Try again" }).click();
-  await page.getByRole("textbox", { name: /See you tomorrow/ }).fill("À demain"); await page.getByRole("button", { name: "Check answer" }).click();
+  await page.getByRole("textbox", { name: /See you tomorrow/ }).fill("A demain"); await page.getByRole("button", { name: "Check answer" }).click();
   await page.getByRole("group", { name: /Choose your final words/ }).getByRole("button", { name: "Bonne soirée !" }).click();
   await page.getByRole("button", { name: /Continue to Speak/ }).click();
   await expect(page.getByRole("heading", { name: "Make the phrases yours" })).toBeVisible();
