@@ -36,8 +36,9 @@ Illustrations establish a communicative situation before instruction begins. The
 
 ### Maya
 
-- North African–French woman in her late twenties with warm olive-brown skin, dark brown eyes, and thick dark wavy hair in a relaxed low ponytail.
+- North African–French woman in her late twenties with warm olive-brown skin, dark brown eyes, a longer angular face, straight eyebrows, and shoulder-length dark wavy hair worn loose with a clean side part.
 - Muted coral cardigan, cream top, and charcoal trousers.
+- Small geometric gold earrings and a slightly tall, angular silhouette.
 - Curious, expressive, attentive body language.
 
 Recurring characters' appearance and wardrobe remain stable throughout Unit 1. New scenes change pose, expression, props, and setting—not identity-defining features.
@@ -67,4 +68,4 @@ The approved scene uses the `illustration-story` prompt family: Sofia and Ira ar
 
 ## Lesson 3 prompt record
 
-The Lesson 3 scene uses the `illustration-story` prompt family: Camille models a French sound with a picture card while Maya listens and mirrors the mouth shape in a bright neighborhood language-school classroom. The scene follows the canonical editorial style and palette, keeps both characters crop-safe, and contains no instructional text. It is stored as `public/images/course/a1/unit-01/core-sound-workshop-v1.png` and registered as `media.image.a1.u01.l03.sound-workshop.v1`.
+The Lesson 3 scene uses the `illustration-story` prompt family: Camille models a French sound with a picture card while Maya listens and mirrors the mouth shape in a bright neighborhood language-school classroom. The scene follows the canonical editorial style and palette, keeps both characters crop-safe, and contains no instructional text. The revised Maya design is stored as `public/images/course/a1/unit-01/core-sound-workshop-v2.png` and registered as `media.image.a1.u01.l03.sound-workshop.v2`.

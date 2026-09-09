@@ -41,6 +41,8 @@ full name; do not use `Aadhyantha` or `Aadyantha`.
 ### Maya
 
 - North African–French woman in her late twenties with warm olive-brown skin,
-  dark brown eyes, and thick dark wavy hair in a relaxed low ponytail.
+  dark brown eyes, a longer angular face, straight eyebrows, and shoulder-length
+  dark wavy hair worn loose with a clean side part.
 - Muted coral cardigan, cream top, and charcoal trousers.
+- Small geometric gold earrings and a slightly tall, angular silhouette.
 - Curious and expressive; introduced in Unit 1 Lesson 3.

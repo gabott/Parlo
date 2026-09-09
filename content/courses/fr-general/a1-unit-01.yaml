@@ -597,11 +597,11 @@ media:
     uri: /images/course/a1/unit-01/names-alphabet-reception-v1.png
     mime_type: image/png
     accessibility_description: Ira gives her name at a language-school reception desk while Sofia listens supportively nearby.
-  - id: media.image.a1.u01.l03.sound-workshop.v1
-    revision: 1
+  - id: media.image.a1.u01.l03.sound-workshop.v2
+    revision: 2
     status: draft
     review: *pending_review
     kind: image
-    uri: /images/course/a1/unit-01/core-sound-workshop-v1.png
+    uri: /images/course/a1/unit-01/core-sound-workshop-v2.png
     mime_type: image/png
     accessibility_description: Camille models a French mouth shape while Maya listens and mirrors it in a bright language-school classroom.
