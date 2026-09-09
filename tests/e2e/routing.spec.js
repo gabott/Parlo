@@ -303,6 +303,24 @@ test("Unit 1 integrated review connects all five lesson skills", async ({ page }
   await expect(page.getByRole("heading", { name: /Unit 1 skills worked together/ })).toBeVisible();
 });
 
+test("Unit 1 capability assessment delays feedback and reports readiness", async ({ page }) => {
+  await page.goto("/learn/a1/unit/first-contact/assessment");
+  await expect(page).toHaveTitle("First contact capability assessment · Parlo");
+  await expect(page.getByAltText(/Sofia receives a document from Morgan/)).toBeVisible();
+  await page.getByRole("button", { name: /Begin assessment/ }).click();
+  for (const [prompt, answer] of [["What situation fits?","Evening arrival"],["What is the speaker doing?","Leaving with a daytime wish"],["Which name was spelled?","Maya"],["Which vowel sound is in the word?","u"],["Which sound begins the word?","é"],["What kind of vowel","Nasal vowel"]]) await page.getByRole("group", { name: new RegExp(prompt) }).getByRole("button", { name: answer, exact: true }).click();
+  await expect(page.getByText(/correct|incorrect/i)).toHaveCount(0);
+  await page.getByRole("button", { name: /Continue to Context/ }).click();
+  for (const [prompt, answer] of [["did not understand","Je ne comprends pas."],["speaking too quickly","Plus lentement, s’il vous plaît."],["gives Sofia","Merci."],["interrupt politely","Excusez-moi."]]) await page.getByRole("group", { name: new RegExp(prompt,"i") }).getByRole("button", { name: answer, exact: true }).click();
+  await page.getByRole("button", { name: /Continue to Writing/ }).click();
+  const fields=page.locator(".assessment-writing input"); await fields.nth(0).fill("Inès"); await fields.nth(1).fill("À demain"); await fields.nth(2).fill("Pouvez-vous répéter, s'il vous plaît ?");
+  await page.getByRole("button", { name: /Continue to Speaking/ }).click();
+  const speakingGroups=page.locator(".assessment-question"); for(let index=0;index<4;index++) await speakingGroups.nth(index).getByRole("button", { name: "2", exact: true }).click(); await speakingGroups.nth(4).getByRole("button", { name: "yes", exact: true }).click();
+  await page.getByRole("button", { name: "Submit assessment" }).click();
+  await expect(page.getByRole("heading", { name: "Unit 1 ready" })).toBeVisible();
+  await expect(page.getByText("23/23")).toBeVisible();
+});
+
 test("guest enrollment saves Lesson 1 attempts across refresh and can be deleted", async ({ page }) => {
   await page.goto("/learn/a1");
   await page.getByRole("button", { name: "Start A1" }).click();

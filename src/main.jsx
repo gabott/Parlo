@@ -20,6 +20,7 @@ import CoreSoundMapLesson from './pages/CoreSoundMapLesson'
 import CourtesyLesson from './pages/CourtesyLesson'
 import ClassroomSurvivalLesson from './pages/ClassroomSurvivalLesson'
 import IntegratedReviewLesson from './pages/IntegratedReviewLesson'
+import CapabilityAssessment from './pages/CapabilityAssessment'
 import NotFound from './pages/NotFound.jsx'
 import ActivityGallery from './pages/ActivityGallery'
 
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
       { path: 'learn/a1/unit/first-contact/lesson/courtesy', Component: CourtesyLesson },
       { path: 'learn/a1/unit/first-contact/lesson/classroom-survival', Component: ClassroomSurvivalLesson },
       { path: 'learn/a1/unit/first-contact/review', Component: IntegratedReviewLesson },
+      { path: 'learn/a1/unit/first-contact/assessment', Component: CapabilityAssessment },
       ...(import.meta.env.DEV ? [{ path: 'debug/activities', Component: ActivityGallery }] : []),
       { path: 'library/basics', Component: Basics },
       { path: 'library/vocabulary', Component: Vocabulary },

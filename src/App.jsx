@@ -22,6 +22,7 @@ const PAGE_TITLES = {
   "/learn/a1/unit/first-contact/lesson/courtesy": "Courtesy",
   "/learn/a1/unit/first-contact/lesson/classroom-survival": "Classroom survival",
   "/learn/a1/unit/first-contact/review": "First contact review",
+  "/learn/a1/unit/first-contact/assessment": "First contact capability assessment",
   "/debug/activities": "Activity renderer gallery",
 };
 

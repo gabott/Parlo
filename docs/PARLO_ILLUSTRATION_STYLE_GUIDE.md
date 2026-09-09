@@ -117,3 +117,7 @@ The Lesson 5 scene uses the `illustration-story` prompt family: Alex pauses to a
 ## Unit 1 review prompt record
 
 The integrated-review scene uses the `illustration-story` prompt family: Léa asks Lucas to spell his name at an evening class check-in table. Blank cards and a handout support the scenario without exposing answers. It is stored as `public/images/course/a1/unit-01/integrated-review-evening-v1.png` and registered as `media.image.a1.u01.r01.evening-checkin.v1`.
+
+## Unit 1 assessment prompt record
+
+The capability-assessment scene uses the `illustration-story` prompt family: Sofia arrives at an evening beginner workshop while Morgan gives her a blank document, setting up a new first-contact exchange without exposing any answer. Their established identity, wardrobe, palette, and editorial treatment remain consistent with Lessons 1 and 5. It is stored as `public/images/course/a1/unit-01/capability-assessment-workshop-v1.png` and registered as `media.image.a1.u01.a01.workshop.v1`.

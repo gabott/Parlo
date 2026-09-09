@@ -635,3 +635,11 @@ media:
     uri: /images/course/a1/unit-01/integrated-review-evening-v1.png
     mime_type: image/png
     accessibility_description: Léa asks Lucas to spell his name at an evening French-class check-in table.
+  - id: media.image.a1.u01.a01.workshop.v1
+    revision: 1
+    status: draft
+    review: *pending_review
+    kind: image
+    uri: /images/course/a1/unit-01/capability-assessment-workshop-v1.png
+    mime_type: image/png
+    accessibility_description: Sofia receives a blank workshop document from Morgan as an evening French class begins.
