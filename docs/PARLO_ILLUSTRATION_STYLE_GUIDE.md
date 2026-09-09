@@ -53,6 +53,18 @@ Illustrations establish a communicative situation before instruction begins. The
 - Mustard overshirt, navy crew-neck shirt, and charcoal trousers.
 - Calm, welcoming body language.
 
+### Alex
+
+- French man in his late twenties with fair neutral skin, light freckles, blue-grey eyes, an oval face, short tousled sandy-blond hair, and thin round navy glasses.
+- Muted rust sweater over a pale blue collared shirt and dark teal trousers.
+- Thoughtful, slightly tentative body language.
+
+### Morgan
+
+- French non-binary adult in their early thirties with medium neutral-brown skin, dark eyes, a defined angular face, and short tight dark curls with neatly tapered sides.
+- Soft lavender overshirt, mustard T-shirt, charcoal trousers, and a slim watch.
+- Calm, grounded, encouraging body language.
+
 Recurring characters' appearance and wardrobe remain stable throughout Unit 1. New scenes change pose, expression, props, and setting—not identity-defining features.
 
 ## Scene template
@@ -85,3 +97,7 @@ The Lesson 3 scene uses the `illustration-story` prompt family: Camille models a
 ## Lesson 4 prompt record
 
 The Lesson 4 scene uses the `illustration-story` prompt family: Ana arrives at a neighborhood language-school classroom and politely receives a handout from Sam. The centered handout exchange establishes the communicative purpose without embedded text. The approved, subtly lighter Sam design is stored as `public/images/course/a1/unit-01/courtesy-handout-v2.png` and registered as `media.image.a1.u01.l04.handout.v2`.
+
+## Lesson 5 prompt record
+
+The Lesson 5 scene uses the `illustration-story` prompt family: Alex pauses to ask for clarification while Morgan responds with an open, reassuring gesture. It frames communication repair as normal and welcome. It is stored as `public/images/course/a1/unit-01/classroom-repair-v1.png` and registered as `media.image.a1.u01.l05.classroom-repair.v1`.

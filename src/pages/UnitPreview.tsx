@@ -12,7 +12,7 @@ export default function UnitPreview() {
     <Link to="/learn/a1">← Back to A1</Link>
     <p className="learn-preview-kicker">A1 · Unit 1 · Draft</p>
     <h1>{bundle.unit.title.en}</h1>
-    <Feedback title="Lessons 1–4 available" tone="info">Greetings and farewells, Names and alphabet, Core sound map, and Courtesy are available as complete beta lessons. The remaining lessons are still outlines.</Feedback>
+    <Feedback title="Lessons 1–5 available" tone="info">All five Unit 1 lessons are available as complete beta lessons. The integrated review and assessment remain outlines.</Feedback>
     <ol className="lesson-outline">
       {orderedLessons.map((lesson) => <li key={lesson.id}>
         <Card title={lesson.title.en}>
@@ -22,6 +22,7 @@ export default function UnitPreview() {
           {lesson.matrix_id === "A1-U01-L02" && <div className="lesson-outline__action"><Link to="/learn/a1/unit/first-contact/lesson/names-alphabet">Start complete lesson</Link></div>}
           {lesson.matrix_id === "A1-U01-L03" && <div className="lesson-outline__action"><Link to="/learn/a1/unit/first-contact/lesson/core-sound-map">Start complete lesson</Link></div>}
           {lesson.matrix_id === "A1-U01-L04" && <div className="lesson-outline__action"><Link to="/learn/a1/unit/first-contact/lesson/courtesy">Start complete lesson</Link></div>}
+          {lesson.matrix_id === "A1-U01-L05" && <div className="lesson-outline__action"><Link to="/learn/a1/unit/first-contact/lesson/classroom-survival">Start complete lesson</Link></div>}
         </Card>
       </li>)}
     </ol>

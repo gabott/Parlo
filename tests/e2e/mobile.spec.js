@@ -60,3 +60,10 @@ test("Lesson 4 player remains usable without horizontal overflow", async ({ page
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
   expect(overflow).toBe(false);
 });
+
+test("Lesson 5 player remains usable without horizontal overflow", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/a1/unit/first-contact/lesson/classroom-survival");
+  await expect(page.getByRole("heading", { name: "Classroom survival" })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBe(false);
+});

@@ -18,6 +18,7 @@ import LessonFlowPreview from './pages/LessonFlowPreview'
 import NamesAlphabetLesson from './pages/NamesAlphabetLesson'
 import CoreSoundMapLesson from './pages/CoreSoundMapLesson'
 import CourtesyLesson from './pages/CourtesyLesson'
+import ClassroomSurvivalLesson from './pages/ClassroomSurvivalLesson'
 import NotFound from './pages/NotFound.jsx'
 import ActivityGallery from './pages/ActivityGallery'
 
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { path: 'learn/a1/unit/first-contact/lesson/names-alphabet', Component: NamesAlphabetLesson },
       { path: 'learn/a1/unit/first-contact/lesson/core-sound-map', Component: CoreSoundMapLesson },
       { path: 'learn/a1/unit/first-contact/lesson/courtesy', Component: CourtesyLesson },
+      { path: 'learn/a1/unit/first-contact/lesson/classroom-survival', Component: ClassroomSurvivalLesson },
       ...(import.meta.env.DEV ? [{ path: 'debug/activities', Component: ActivityGallery }] : []),
       { path: 'library/basics', Component: Basics },
       { path: 'library/vocabulary', Component: Vocabulary },

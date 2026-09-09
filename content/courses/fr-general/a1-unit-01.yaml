@@ -102,6 +102,9 @@ lessons:
     objective: { en: "I can ask for repetition, clarification, or slower speech." }
     prerequisite_lesson_ids: [lesson.fr-general.a1.first-contact.courtesy]
     concept_ids: [concept.strategy.communication-repair]
+    estimated_minutes: 20
+    difficulty: 1
+    content_role: required
   - <<: *lesson_base
     id: lesson.fr-general.a1.first-contact.review
     matrix_id: A1-U01-R01
@@ -616,3 +619,11 @@ media:
     uri: /images/course/a1/unit-01/courtesy-handout-v2.png
     mime_type: image/png
     accessibility_description: Ana politely receives a class handout from Sam near the classroom doorway.
+  - id: media.image.a1.u01.l05.classroom-repair.v1
+    revision: 1
+    status: draft
+    review: *pending_review
+    kind: image
+    uri: /images/course/a1/unit-01/classroom-repair-v1.png
+    mime_type: image/png
+    accessibility_description: Alex asks for clarification while Morgan responds supportively in a bright language-school classroom.

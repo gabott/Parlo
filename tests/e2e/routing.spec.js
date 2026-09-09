@@ -244,6 +244,41 @@ test("Lesson 4 teaches courtesy through context, retrieval, and a complete excha
   await expect(page.getByRole("heading", { name: /handle a polite everyday exchange/ })).toBeVisible();
 });
 
+test("Lesson 5 teaches classroom repair and completes the required response", async ({ page }) => {
+  await page.goto("/learn/a1/unit/first-contact/lesson/classroom-survival");
+  await expect(page).toHaveTitle("Classroom survival · Parlo");
+  await page.getByRole("group", { name: /interrupt politely/ }).getByRole("button", { name: "Excusez-moi." }).click();
+  await page.getByRole("group", { name: /polite request/ }).getByRole("button", { name: "S’il vous plaît." }).click();
+  await page.getByRole("button", { name: /Continue to Meet/ }).click();
+  await expect(page.getByAltText(/Alex asks for clarification/)).toBeVisible();
+  await page.getByRole("group", { name: /How does Alex/ }).getByRole("button", { name: /repeat more slowly/ }).click();
+  await page.getByRole("button", { name: /Continue to Choose/ }).click();
+  const meaningAnswers = ["Je ne comprends pas.", "Pouvez-vous répéter, s’il vous plaît ?", "Plus lentement, s’il vous plaît.", "Qu’est-ce que ça veut dire ?", "Comment dit-on “book” en français ?", "Je comprends."];
+  for (const [index, answer] of meaningAnswers.entries()) await page.locator(".activity-stack .lesson-question").nth(index).getByRole("button", { name: answer, exact: true }).click();
+  await page.getByRole("button", { name: /Continue to Listen/ }).click();
+  for (const [index, answer] of ["Slower speech", "The meaning of a word", "Repeat the information"].entries()) await page.locator(".listening-activity").nth(index).getByRole("button", { name: answer, exact: true }).click();
+  await page.getByRole("button", { name: /Continue to Build/ }).click();
+  const builders = page.locator(".sentence-builder");
+  for (const token of ["Je", "ne comprends", "pas", "."]) await builders.nth(0).locator(".sentence-builder__tokens").getByRole("button", { name: token, exact: true }).click();
+  await builders.nth(0).getByRole("button", { name: "Check sentence" }).click();
+  for (const token of ["Pouvez-vous", "répéter", ",", "s’il vous plaît", "?"]) await builders.nth(1).locator(".sentence-builder__tokens").getByRole("button", { name: token, exact: true }).click();
+  await builders.nth(1).getByRole("button", { name: "Check sentence" }).click();
+  await page.getByRole("textbox", { name: /What does that mean/ }).fill("Qu'est-ce que ça veut dire");
+  await page.getByRole("button", { name: "Check answer" }).click();
+  await page.getByRole("button", { name: /Continue to Use/ }).click();
+  for (const [index, answer] of ["Plus lentement, s’il vous plaît.", "Je comprends.", "Qu’est-ce que ça veut dire ?"].entries()) await page.locator(".activity-stack .lesson-question").nth(index).getByRole("button", { name: answer, exact: true }).click();
+  await page.getByRole("button", { name: /Continue to Check/ }).click();
+  await page.getByRole("group", { name: /speaker is too fast/ }).getByRole("button", { name: "Plus lentement, s’il vous plaît." }).click();
+  await page.getByRole("textbox", { name: /I don’t understand/ }).fill("Je ne comprends pas");
+  await page.getByRole("button", { name: "Check answer" }).click();
+  const exitBuilder = page.locator(".sentence-builder");
+  for (const token of ["Pouvez-vous", "répéter", ",", "s’il vous plaît", "?"]) await exitBuilder.locator(".sentence-builder__tokens").getByRole("button", { name: token, exact: true }).click();
+  await exitBuilder.getByRole("button", { name: "Check sentence" }).click();
+  await page.getByRole("group", { name: /Choose Alex's two responses/ }).getByRole("button", { name: /Plus lentement.*Merci.*Je comprends/ }).click();
+  await page.getByRole("button", { name: "Check my lesson result" }).click();
+  await expect(page.getByRole("heading", { name: /keep a difficult conversation going/ })).toBeVisible();
+});
+
 test("guest enrollment saves Lesson 1 attempts across refresh and can be deleted", async ({ page }) => {
   await page.goto("/learn/a1");
   await page.getByRole("button", { name: "Start A1" }).click();

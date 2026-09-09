@@ -64,3 +64,19 @@ full name; do not use `Aadhyantha` or `Aadyantha`.
   close-trimmed beard and moustache.
 - Mustard overshirt, navy crew-neck shirt, and charcoal trousers.
 - Calm and welcoming; introduced in Unit 1 Lesson 4.
+
+### Alex
+
+- French man in his late twenties with fair neutral skin, light freckles,
+  blue-grey eyes, an oval face, short tousled sandy-blond hair, and thin round
+  navy glasses.
+- Muted rust sweater over a pale blue collared shirt and dark teal trousers.
+- Thoughtful and gently curious; introduced in Unit 1 Lesson 5.
+
+### Morgan
+
+- French non-binary adult in their early thirties with medium neutral-brown
+  skin, dark eyes, a defined angular face, and short tight dark curls with
+  neatly tapered sides.
+- Soft lavender overshirt, mustard T-shirt, charcoal trousers, and a slim watch.
+- Calm, grounded, and encouraging; introduced in Unit 1 Lesson 5.
